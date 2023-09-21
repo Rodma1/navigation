@@ -4,9 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @author: 那就叫小智吧
+ * @author:  神的孩子都在歌唱
  * @date: 2023/9/18 14:50
- * @Version 1.0
  * @Description:
  */
 @SpringBootApplication

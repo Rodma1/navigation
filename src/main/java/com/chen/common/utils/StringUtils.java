@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * 字符串工具类
  *
- * @author cwaf
+ * @author 神的孩子都在歌唱
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
@@ -81,7 +81,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * * 判断一个对象是否为空
 	 *
 	 * @param object 要判断的对象数组
-	 *                * @return true：为空 false：非空
+	 *               * @return true：为空 false：非空
 	 */
 	public static boolean isEmpty(Object object) {
 		return ObjectUtil.isEmpty(object);
@@ -352,33 +352,60 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return (T) obj;
 	}
 
-    /**
-     * 将map集合的键值对转化成：key1=value1&key2=value2 的形式
-     *
-     * @param parameterMap 需要转化的键值对集合
-     * @return 字符串
-     */
-    public static String convertStringParameter(Map<String, String> parameterMap) {
-        StringBuilder parameterBuilder = new StringBuilder();
-        if (parameterMap == null) {
-            return null;
-        }
+	/**
+	 * 将map集合的键值对转化成：key1=value1&key2=value2 的形式
+	 *
+	 * @param parameterMap 需要转化的键值对集合
+	 * @return 字符串
+	 */
+	public static String convertStringParameter(Map<String, String> parameterMap) {
+		StringBuilder parameterBuilder = new StringBuilder();
+		if (parameterMap == null) {
+			return null;
+		}
 
-        Iterator<Map.Entry<String, String>> iterator = parameterMap.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, String> entry = iterator.next();
-            String value = entry.getValue();
-            if (isEmpty(value)) {
-                continue;
-            }
-            if ("sign".equals(value)) {
-                continue;
-            }
-            parameterBuilder.append(entry.getKey()).append("=").append(entry.getValue());
-            if (iterator.hasNext()) {
-                parameterBuilder.append("&");
-            }
-        }
-        return parameterBuilder.toString();
-    }
+		Iterator<Map.Entry<String, String>> iterator = parameterMap.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<String, String> entry = iterator.next();
+			String value = entry.getValue();
+			if (isEmpty(value)) {
+				continue;
+			}
+			if ("sign".equals(value)) {
+				continue;
+			}
+			parameterBuilder.append(entry.getKey()).append("=").append(entry.getValue());
+			if (iterator.hasNext()) {
+				parameterBuilder.append("&");
+			}
+		}
+		return parameterBuilder.toString();
+	}
+
+	/**
+	 * 清除掉字符串前后的特殊字符
+	 *
+	 * @param source  原字符串
+	 * @param  要清除的字符串
+	 * @return
+	 */
+	public static String trimFirstAndLastChar(String source, String splitter) {
+		String regex = "^" + splitter + "*|" + splitter + "*$";
+		return source.replaceAll(regex, "");
+
+	}
+
+	/**
+	 * 通过split获取最后一个子字符串
+	 */
+	public static String splitCharacter(String str, String character) {
+		try{
+			// 使用点作为分隔符分割字符串
+			String[] parts = str.split(character);
+			return parts[parts.length - 1];
+		} catch(Exception e) {
+			return null;
+		}
+
+	}
 }

@@ -16,26 +16,26 @@ import java.util.function.Function;
  * 自定义 Service 接口, 实现 数据库实体与 vo 对象转换返回
  *
  * @param <T> 数据实体类
- * @param <V> vo类
+ * @param <D> Dto类
  * @author cwaf
  */
-public interface IServicePlus<T, V> extends IService<T> {
+public interface IServicePlus<T, D> extends IService<T> {
 
 	/**
 	 * @param id          主键id
 	 * @param copyOptions copy条件
 	 * @return V对象
 	 */
-	V getVoById(Serializable id, CopyOptions copyOptions);
+	D getDtoById(Serializable id, CopyOptions copyOptions);
 
-	default V getVoById(Serializable id) {
-		return getVoById(id, new CopyOptions());
+	default D getDtoById(Serializable id) {
+		return getDtoById(id, new CopyOptions());
 	}
 
 	/**
 	 * @param convertor 自定义转换器
 	 */
-	default V getVoById(Serializable id, Function<T, V> convertor) {
+	default D getDtoById(Serializable id, Function<T, D> convertor) {
 		return convertor.apply(getById(id));
 	}
 
@@ -44,17 +44,17 @@ public interface IServicePlus<T, V> extends IService<T> {
 	 * @param copyOptions copy条件
 	 * @return V对象
 	 */
-	List<V> listVoByIds(Collection<? extends Serializable> idList, CopyOptions copyOptions);
+	List<D> listDtoByIds(Collection<? extends Serializable> idList, CopyOptions copyOptions);
 
-	default List<V> listVoByIds(Collection<? extends Serializable> idList) {
-		return listVoByIds(idList, new CopyOptions());
+	default List<D> listDtoByIds(Collection<? extends Serializable> idList) {
+		return listDtoByIds(idList, new CopyOptions());
 	}
 
 	/**
 	 * @param convertor 自定义转换器
 	 */
-	default List<V> listVoByIds(Collection<? extends Serializable> idList,
-								Function<Collection<T>, List<V>> convertor) {
+	default List<D> listVoByIds(Collection<? extends Serializable> idList,
+								Function<Collection<T>, List<D>> convertor) {
 		List<T> list = getBaseMapper().selectBatchIds(idList);
 		if (list == null) {
 			return null;
@@ -67,17 +67,17 @@ public interface IServicePlus<T, V> extends IService<T> {
 	 * @param copyOptions copy条件
 	 * @return V对象
 	 */
-	List<V> listVoByMap(Map<String, Object> columnMap, CopyOptions copyOptions);
+	List<D> listDtoByMap(Map<String, Object> columnMap, CopyOptions copyOptions);
 
-	default List<V> listVoByMap(Map<String, Object> columnMap) {
-		return listVoByMap(columnMap, new CopyOptions());
+	default List<D> listDtoByMap(Map<String, Object> columnMap) {
+		return listDtoByMap(columnMap, new CopyOptions());
 	}
 
 	/**
 	 * @param convertor 自定义转换器
 	 */
-	default List<V> listVoByMap(Map<String, Object> columnMap,
-								Function<Collection<T>, List<V>> convertor) {
+	default List<D> listDtoByMap(Map<String, Object> columnMap,
+								Function<Collection<T>, List<D>> convertor) {
 		List<T> list = getBaseMapper().selectByMap(columnMap);
 		if (list == null) {
 			return null;
@@ -90,16 +90,16 @@ public interface IServicePlus<T, V> extends IService<T> {
 	 * @param copyOptions  copy条件
 	 * @return V对象
 	 */
-	V getVoOne(Wrapper<T> queryWrapper, CopyOptions copyOptions);
+	D getVoOne(Wrapper<T> queryWrapper, CopyOptions copyOptions);
 
-	default V getVoOne(Wrapper<T> queryWrapper) {
+	default D getVoOne(Wrapper<T> queryWrapper) {
 		return getVoOne(queryWrapper, new CopyOptions());
 	}
 
 	/**
 	 * @param convertor 自定义转换器
 	 */
-	default V getVoOne(Wrapper<T> queryWrapper, Function<T, V> convertor) {
+	default D getVoOne(Wrapper<T> queryWrapper, Function<T, D> convertor) {
 		return convertor.apply(getOne(queryWrapper, true));
 	}
 
@@ -108,16 +108,16 @@ public interface IServicePlus<T, V> extends IService<T> {
 	 * @param copyOptions  copy条件
 	 * @return V对象
 	 */
-	List<V> listVo(Wrapper<T> queryWrapper, CopyOptions copyOptions);
+	List<D> listDto(Wrapper<T> queryWrapper, CopyOptions copyOptions);
 
-	default List<V> listVo(Wrapper<T> queryWrapper) {
-		return listVo(queryWrapper, new CopyOptions());
+	default List<D> listDto(Wrapper<T> queryWrapper) {
+		return listDto(queryWrapper, new CopyOptions());
 	}
 
 	/**
 	 * @param convertor 自定义转换器
 	 */
-	default List<V> listVo(Wrapper<T> queryWrapper, Function<Collection<T>, List<V>> convertor) {
+	default List<D> listDto(Wrapper<T> queryWrapper, Function<Collection<T>, List<D>> convertor) {
 		List<T> list = getBaseMapper().selectList(queryWrapper);
 		if (list == null) {
 			return null;
@@ -130,8 +130,8 @@ public interface IServicePlus<T, V> extends IService<T> {
 	/**
 	 * @param convertor 自定义转换器
 	 */
-	default List<V> listVo(Function<Collection<T>, List<V>> convertor) {
-		return listVo(Wrappers.emptyWrapper(), convertor);
+	default List<D> listDto(Function<Collection<T>, List<D>> convertor) {
+		return listDto(Wrappers.emptyWrapper(), convertor);
 	}
 
 	/**
@@ -140,30 +140,30 @@ public interface IServicePlus<T, V> extends IService<T> {
 	 * @param copyOptions  copy条件
 	 * @return V对象
 	 */
-	PagePlus<T, V> pageVo(PagePlus<T, V> page, Wrapper<T> queryWrapper, CopyOptions copyOptions);
+	PagePlus<T, D> pageDto(PagePlus<T, D> page, Wrapper<T> queryWrapper, CopyOptions copyOptions);
 
-	default PagePlus<T, V> pageVo(PagePlus<T, V> page, Wrapper<T> queryWrapper) {
-		return pageVo(page, queryWrapper, new CopyOptions());
+	default PagePlus<T, D> pageDto(PagePlus<T, D> page, Wrapper<T> queryWrapper) {
+		return pageDto(page, queryWrapper, new CopyOptions());
 	}
 
 	/**
 	 * @param convertor 自定义转换器
 	 */
-	default PagePlus<T, V> pageVo(PagePlus<T, V> page, Wrapper<T> queryWrapper,
-								  Function<Collection<T>, List<V>> convertor) {
-		PagePlus<T, V> result = getBaseMapper().selectPage(page, queryWrapper);
+	default PagePlus<T, D> pageDto(PagePlus<T, D> page, Wrapper<T> queryWrapper,
+								  Function<Collection<T>, List<D>> convertor) {
+		PagePlus<T, D> result = getBaseMapper().selectPage(page, queryWrapper);
 		return result.setRecordsVo(convertor.apply(result.getRecords()));
 	}
 
-	default PagePlus<T, V> pageVo(PagePlus<T, V> page) {
-		return pageVo(page, Wrappers.emptyWrapper());
+	default PagePlus<T, D> pageDto(PagePlus<T, D> page) {
+		return pageDto(page, Wrappers.emptyWrapper());
 	}
 
 	/**
 	 * @param convertor 自定义转换器
 	 */
-	default PagePlus<T, V> pageVo(PagePlus<T, V> page, Function<Collection<T>, List<V>> convertor) {
-		return pageVo(page, Wrappers.emptyWrapper(), convertor);
+	default PagePlus<T, D> pageDto(PagePlus<T, D> page, Function<Collection<T>, List<D>> convertor) {
+		return pageDto(page, Wrappers.emptyWrapper(), convertor);
 	}
 
 	boolean saveAll(Collection<T> entityList);

@@ -8,9 +8,11 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chen.common.config.mybatisplus.page.PagePlus;
 import com.chen.common.utils.BeanCopyUtils;
+import com.chen.common.utils.BeanUtils;
 import com.chen.common.utils.ReflectUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,12 @@ import java.util.Map;
  *
  * @param <M> Mapper类
  * @param <T> 数据实体类
- * @param <D> Dto类
+ * @param <B> Bo类
  * @author cwaf
  */
 @Slf4j
 @SuppressWarnings("unchecked")
-public class ServicePlusImpl<M extends BaseMapperPlus<T>, T, D> extends ServiceImpl<M, T> implements IServicePlus<T, D> {
+public class ServicePlusImpl<M extends BaseMapperPlus<T>, T, B> extends ServiceImpl<M, T> implements IServicePlus<T, B> {
 
 	protected M  baseMapper;
 
@@ -50,10 +52,10 @@ public class ServicePlusImpl<M extends BaseMapperPlus<T>, T, D> extends ServiceI
 
 	protected Class<M> mapperClass = currentMapperClass();
 
-	protected Class<D> voClass = currentVoClass();
+	protected Class<B> boClass = currentVoClass();
 
-	public Class<D> getVoClass() {
-		return voClass;
+	public Class<B> getBoClass() {
+		return boClass;
 	}
 
 	@Override
@@ -66,8 +68,8 @@ public class ServicePlusImpl<M extends BaseMapperPlus<T>, T, D> extends ServiceI
 		return (Class<T>) ReflectionKit.getSuperClassGenericType(this.getClass(), ServicePlusImpl.class, 1);
 	}
 
-	protected Class<D> currentVoClass() {
-		return (Class<D>) ReflectionKit.getSuperClassGenericType(this.getClass(), ServicePlusImpl.class, 2);
+	protected Class<B> currentVoClass() {
+		return (Class<B>) ReflectionKit.getSuperClassGenericType(this.getClass(), ServicePlusImpl.class, 2);
 	}
 
 	/**
@@ -81,6 +83,15 @@ public class ServicePlusImpl<M extends BaseMapperPlus<T>, T, D> extends ServiceI
 	@Override
 	public boolean saveOrUpdate(T entity) {
 		return super.saveOrUpdate(entity);
+	}
+
+	@Override
+	public List<B> listBo() {
+		List<T> list = this.list();
+		if (list == null) {
+			return null;
+		}
+		return BeanUtils.copyList(list, boClass);
 	}
 
 	/**
@@ -164,9 +175,9 @@ public class ServicePlusImpl<M extends BaseMapperPlus<T>, T, D> extends ServiceI
 	 * @param id 主键ID
 	 */
 	@Override
-	public D getDtoById(Serializable id, CopyOptions copyOptions) {
+	public B getBoById(Serializable id, CopyOptions copyOptions) {
 		T t = getBaseMapper().selectById(id);
-		return BeanCopyUtils.oneCopy(t, copyOptions, voClass);
+		return BeanCopyUtils.oneCopy(t, copyOptions, boClass);
 	}
 
 	/**
@@ -175,12 +186,12 @@ public class ServicePlusImpl<M extends BaseMapperPlus<T>, T, D> extends ServiceI
 	 * @param idList 主键ID列表
 	 */
 	@Override
-	public List<D> listDtoByIds(Collection<? extends Serializable> idList, CopyOptions copyOptions) {
+	public List<B> listBoByIds(Collection<? extends Serializable> idList, CopyOptions copyOptions) {
 		List<T> list = getBaseMapper().selectBatchIds(idList);
 		if (list == null) {
 			return null;
 		}
-		return BeanCopyUtils.listCopy(list, copyOptions, voClass);
+		return BeanCopyUtils.listCopy(list, copyOptions, boClass);
 	}
 
 	/**
@@ -189,12 +200,12 @@ public class ServicePlusImpl<M extends BaseMapperPlus<T>, T, D> extends ServiceI
 	 * @param columnMap 表字段 map 对象
 	 */
 	@Override
-	public List<D> listDtoByMap(Map<String, Object> columnMap, CopyOptions copyOptions) {
+	public List<B> listBoByMap(Map<String, Object> columnMap, CopyOptions copyOptions) {
 		List<T> list = getBaseMapper().selectByMap(columnMap);
 		if (list == null) {
 			return null;
 		}
-		return BeanCopyUtils.listCopy(list, copyOptions, voClass);
+		return BeanCopyUtils.listCopy(list, copyOptions, boClass);
 	}
 
 	/**
@@ -204,9 +215,9 @@ public class ServicePlusImpl<M extends BaseMapperPlus<T>, T, D> extends ServiceI
 	 * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
 	 */
 	@Override
-	public D getVoOne(Wrapper<T> queryWrapper, CopyOptions copyOptions) {
+	public B getBoOne(Wrapper<T> queryWrapper, CopyOptions copyOptions) {
 		T t = getOne(queryWrapper, true);
-		return BeanCopyUtils.oneCopy(t, copyOptions, voClass);
+		return BeanCopyUtils.oneCopy(t, copyOptions, boClass);
 	}
 
 	/**
@@ -215,12 +226,12 @@ public class ServicePlusImpl<M extends BaseMapperPlus<T>, T, D> extends ServiceI
 	 * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
 	 */
 	@Override
-	public List<D> listDto(Wrapper<T> queryWrapper, CopyOptions copyOptions) {
+	public List<B> listBo(Wrapper<T> queryWrapper, CopyOptions copyOptions) {
 		List<T> list = getBaseMapper().selectList(queryWrapper);
 		if (list == null) {
 			return null;
 		}
-		return BeanCopyUtils.listCopy(list, copyOptions, voClass);
+		return BeanCopyUtils.listCopy(list, copyOptions, boClass);
 	}
 
 	/**
@@ -230,9 +241,9 @@ public class ServicePlusImpl<M extends BaseMapperPlus<T>, T, D> extends ServiceI
 	 * @param queryWrapper 实体对象封装操作类
 	 */
 	@Override
-	public PagePlus<T, D> pageDto(PagePlus<T, D> page, Wrapper<T> queryWrapper, CopyOptions copyOptions) {
-		PagePlus<T, D> result = getBaseMapper().selectPage(page, queryWrapper);
-		List<D> volist = BeanCopyUtils.listCopy(result.getRecords(), copyOptions, voClass);
+	public PagePlus<T, B> pageBo(PagePlus<T, B> page, Wrapper<T> queryWrapper, CopyOptions copyOptions) {
+		PagePlus<T, B> result = getBaseMapper().selectPage(page, queryWrapper);
+		List<B> volist = BeanCopyUtils.listCopy(result.getRecords(), copyOptions, boClass);
 		result.setRecordsVo(volist);
 		return result;
 	}

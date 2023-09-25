@@ -15,6 +15,24 @@ import java.util.*;
  * mybatis-plus代码生成工具
  */
 public class GeneratorConfig {
+
+
+    /**
+     * 生成代码入口main方法
+     *
+     * @param args
+     * @throws Exception
+     */
+    public static void main(String[] args) throws Exception {
+        // 当前项目根路径
+        String property = System.getProperty("user.dir");
+        generateRepositoryAndPO(property);
+        generateController(property);
+        generateEntity(property);
+    }
+
+
+
     // 数据库连接配置
     //数据库ip
     public static final String DATABASE_IP = "127.0.0.1";
@@ -31,8 +49,8 @@ public class GeneratorConfig {
 //    private static final String TABLE_PREFIX = "sys_";
     private static final String TABLE_PREFIX = "";
 
-    //设置父包模块名
-    private static final String TOP_MODULE_NAME = "admin";
+    // 当前包名
+    private static final String MODULE_NAME = "navigatesite";
 
     /**
      * 表名配置
@@ -41,28 +59,10 @@ public class GeneratorConfig {
      */
     private static List<String> getTables() {
         List<String> tables = new ArrayList<>();
-        tables.add("cyz_navigate_category");
-
+        tables.add("cyz_navigate_site");
         return tables;
     }
-
-    // 当前包名
-    private static final String MODULE_NAME = "navigatecategory";
-
-    /**
-     * 生成代码入口main方法
-     *
-     * @param args
-     * @throws Exception
-     */
-    public static void main(String[] args) throws Exception {
-        // 当前项目根路径
-        String property = System.getProperty("user.dir");
-        generateRepositoryAndPO(property);
-//        generateBizService(property);
-        generateController(property);
-        generateEntity(property);
-    }
+    
 
     // 文件输出路径
     private static final String OUTPUT_DIR = "\\src\\main\\java";
@@ -80,8 +80,6 @@ public class GeneratorConfig {
     private static final String COMMON_NAME = "";
     private static final String ENTITY_NAME = "domain";
     private static final String SERVICE_NAME = "service";
-    private static final String SERVICE_IMPL_NAME = "impl";
-    public static final String REPOSITORY_NAME = "repository";
     private static final String MAPPER_INTERFACE_NAME = "mapper";
     private static final String MAPPER_XML_NAME = "mapper";
     private static final String REP_SERVICE_NAME = "service";
@@ -106,10 +104,6 @@ public class GeneratorConfig {
     private static String MAPPER_XML_PACKAGE_NAME = "mapper";
     // control包名
     private static String CONTROLLER_PACKAGE_NAME = "controller." + MODULE_NAME;
-    // service包名
-    private static String SERVICE_INTERFACE_PACKAGE_NAME = "service." + MODULE_NAME;
-    //serviceImpl包名
-    private static String SERVICE_IMPL_PACKAGE_NAME = "service."+ MODULE_NAME + ".impl";
 
     // controller文件路径
     private static String CONTROLLER_PATH = TOP_LEVEL_PACKAGE_PATH + "\\" + CONTROLLER_NAME + "\\" + MODULE_NAME + "\\";
@@ -124,14 +118,7 @@ public class GeneratorConfig {
     // rep接口路径
     public static String REP_INTERFACE_PATH = TOP_LEVEL_PACKAGE_PATH + "\\" + REP_SERVICE_NAME + "\\" + MODULE_NAME  + "\\";
     public static String REP_IMPL_PATH = REP_INTERFACE_PATH + "\\" + REP_SERVICE_IMPL_NAME;
-    // service接口路径
-    public static String SERVICE_INTERFACE_PATH = SERVICE_PATH + "\\";
-    public static String SERVICE_IMPL_PATH = SERVICE_INTERFACE_PATH + "\\" + SERVICE_IMPL_NAME;
 
-    //设置生成实体时的公共父类，例如 com.baomidou.globalEntity  ，根据项目需要配置
-    private static final String superEntityPackageString = null;
-    //设置生成Controller时的公共父类，例如 com.baomidou.globalController   ，根据项目需要配置
-    private static final String superControllerPackageString = null;
 
     /**
      * 生成controller代码
@@ -285,63 +272,6 @@ public class GeneratorConfig {
         return outputFileMap;
     }
 
-    /**
-     * 生成service代码
-     *
-     * @param property
-     */
-    private static void generateBizService(String property) {
-        List<String> tables = getTables();
-        for (String table : tables) {
-            String[] tableNames = table.split(TABLE_PREFIX);
-            FastAutoGenerator.create(JDBC_URL, JDBC_USER_NAME, JDBC_PASSWORD)
-                .globalConfig(builder -> {
-                    // 作者
-                    builder.author(AUTHOR)
-                        // 输出路径(写到java目录)
-                        .outputDir(property + OUTPUT_DIR)
-                        // 开启swagger
-                        .enableSwagger()
-                        // 注释的日期格式
-                        .commentDate("yyyy-MM-dd")
-                        // 日期字段类型
-                        .dateType(DateType.SQL_PACK)
-                        // 开启覆盖之前生成的文件
-                        .fileOverride()
-                        // 不打开生成文件的目录
-                        .disableOpenDir();
-                })
-                .packageConfig(builder -> builder.parent("")
-                    .service(PARENT_PACKAGE_NAME + SERVICE_INTERFACE_PACKAGE_NAME)
-                    .serviceImpl(PARENT_PACKAGE_NAME + SERVICE_IMPL_PACKAGE_NAME)
-                    .pathInfo(getServiceOutputFileStringMap(property)))
-                .strategyConfig(builder -> builder.addInclude(table)
-                    .addTablePrefix(TABLE_PREFIX)
-                    .serviceBuilder()
-                    .formatServiceFileName("%sService")
-                    .formatServiceImplFileName("%sServiceImpl")
-                )
-                .templateConfig(builder ->
-                    builder.disable(TemplateType.CONTROLLER, TemplateType.ENTITY, TemplateType.MAPPER, TemplateType.XML)
-                        .service("templates/Service.java.vm")
-                        .serviceImpl("templates/ServiceImpl.java.vm"))
-                .execute();
-        }
-    }
-
-    /**
-     * 输出文件路径配置
-     *
-     * @param property
-     * @return
-     */
-    private static Map<OutputFile, String> getServiceOutputFileStringMap(String property) {
-        Map<OutputFile, String> outputFileMap = new HashMap<>();
-        outputFileMap.put(OutputFile.entity, property + ENTITY_PATH);
-        outputFileMap.put(OutputFile.service, property + SERVICE_INTERFACE_PATH);
-        outputFileMap.put(OutputFile.serviceImpl, property + SERVICE_IMPL_PATH);
-        return outputFileMap;
-    }
 
     /**
      * 生成VO DTO
@@ -394,33 +324,6 @@ public class GeneratorConfig {
         }
     }
 
-    /**
-     * 生成entity代码
-     *
-     * @param property
-     * @param formatFileName
-     */
-    private static void generateEntity(String property, String formatFileName) {
-    }
-
-    /**
-     * <p>
-     * 读取控制台内容
-     * </p>
-     */
-    public static String scanner(String tip) throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        StringBuilder help = new StringBuilder();
-        help.append("请输入" + tip + "：");
-        System.out.println(help);
-        if (scanner.hasNext()) {
-            String ipt = scanner.next();
-            if (ipt != null && ipt.length() > 0) {
-                return ipt;
-            }
-        }
-        throw new Exception("请输入正确的" + tip + "！");
-    }
 
     /**
      * 实体类输出路径

@@ -1,10 +1,16 @@
 package com.chen.controller.navigatecategory;
 
+import com.chen.common.utils.BeanUtils;
 import com.chen.common.utils.resultreturn.ResultData;
+import com.chen.domain.navigatecategory.CyzNavigateCategoryDTO;
+import com.chen.service.navigatecategory.CyzNavigateCategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import java.util.List;
 
 /**
  * @author: 神的孩子都在歌唱
@@ -12,9 +18,20 @@ import io.swagger.annotations.ApiOperation;
  * @description: Controller
  */
 @RestController
-@Api(value = "接口控制器", tags = "")
+@Api(value = "接口控制器", tags = "导航网站接口")
 @RequestMapping("/cyzNavigateCategory")
 public class CyzNavigateCategoryController {
+
+
+    @Autowired
+    private CyzNavigateCategoryService navigateCategoryService;
+
+    @ApiOperation("获取网站类别树")
+    @GetMapping("/tree")
+    public ResultData<List<NavigateCategoryTreeVo>> getAllCategories() {
+        List<CyzNavigateCategoryDTO> allCategories = navigateCategoryService.getAllCategories();
+        return ResultData.success(BeanUtils.copyList(allCategories,NavigateCategoryTreeVo.class));
+    }
 
     @ApiOperation(value = "分页查询")
     @GetMapping(value = "/pages")

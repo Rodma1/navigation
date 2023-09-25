@@ -51,7 +51,7 @@ public class CyzNavigateCategoryBO implements Serializable {
     private String delFlag;
 
     @ApiModelProperty("子类别")
-    private List<CyzNavigateCategoryDTO> children;
+    private List<CyzNavigateCategoryBO> children;
 
 
 }

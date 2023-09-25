@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * mybatis-plus配置类
  *
- * @author tlws
+ * @author chenyunzhi
  */
 @EnableTransactionManagement(proxyTargetClass = true)
 @Configuration

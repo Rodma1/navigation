@@ -1,5 +1,6 @@
 package com.chen.service.navigatecategory.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chen.common.utils.BeanCopyUtils;
 import com.chen.common.utils.BeanUtils;
 import com.chen.common.utils.StringUtils;
@@ -45,6 +46,8 @@ public class CyzNavigateCategoryServiceImpl extends ServicePlusImpl<CyzNavigateC
         // 遍历子节点
         for (CyzNavigateCategoryBO navigateCategoryBo: categoryBOList) {
 
+            buildSubTree(cyzNavigateCategoryBoMap,navigateCategoryBo);
+
         }
 
         return BeanUtils.copyList(categoryBOList,CyzNavigateCategoryDTO.class);
@@ -61,12 +64,19 @@ public class CyzNavigateCategoryServiceImpl extends ServicePlusImpl<CyzNavigateC
 
         while (!navigateCategories.isEmpty()) {
             CyzNavigateCategoryBO categoryBO = navigateCategories.pop();
-            ArrayList<CyzNavigateCategoryBO> cyzNavigateCategoryBoS = new ArrayList<>();
+            List<CyzNavigateCategoryBO> cyzNavigateCategoryBoS = new ArrayList<>();
+
             // 遍历获取它的子节点
-            for (CyzNavigateCategoryBO navigateCategoryBO: cyzNavigateCategoryBoS) {
+            for (CyzNavigateCategoryBO navigateCategoryBO: cyzNavigateCategoryBoMap.values()) {
+
+                if (Objects.nonNull(navigateCategoryBO.getParentId()) && navigateCategoryBO.getParentId().equals(categoryBO.getId())) {
+                    cyzNavigateCategoryBoS.add(navigateCategoryBO);
+                    navigateCategories.push(navigateCategoryBO);
+                }
 
             }
 
+            categoryBO.setChildren(cyzNavigateCategoryBoS);
         }
     }
 }

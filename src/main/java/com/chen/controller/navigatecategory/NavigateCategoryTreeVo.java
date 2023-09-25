@@ -1,30 +1,20 @@
-package com.chen.domain.navigatecategory;
+package com.chen.controller.navigatecategory;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
+import com.chen.domain.navigatecategory.CyzNavigateCategoryBO;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
 import java.util.Date;
 import java.util.List;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-
 /**
- * <p>
- *
- * </p>
- *
- * @author 神的孩子都在歌唱
- * @since 2023-09-22
+ * @author: 神的孩子都在歌唱
+ * @date: 2023/9/25 9:50
+ * @Description:
  */
-@Getter
-@Setter
-@TableName("cyz_navigate_category")
-@ApiModel(value = "CyzNavigateCategoryDTO对象", description = "")
-public class CyzNavigateCategoryDTO implements Serializable {
-
+@Data
+public class NavigateCategoryTreeVo {
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -52,6 +42,4 @@ public class CyzNavigateCategoryDTO implements Serializable {
 
     @TableField("del_flag")
     private String delFlag;
-
-
 }

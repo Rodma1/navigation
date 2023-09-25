@@ -17,7 +17,7 @@ import java.util.function.Function;
  *
  * @param <T> 数据实体类
  * @param <B> Bo类
- * @author cwaf
+ * @author chenyunzhi
  */
 public interface IServicePlus<T, B> extends IService<T> {
 

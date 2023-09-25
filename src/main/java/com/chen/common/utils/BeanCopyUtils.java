@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * bean深拷贝工具
  *
- * @author cwaf
+ * @author chenyunzhi
  */
 public class BeanCopyUtils {
 

@@ -8,7 +8,7 @@ import java.util.Collection;
 /**
  * 自定义 Mapper 接口, 实现 自定义扩展
  *
- * @author cwaf
+ * @author chenyunzhi
  * @since 2021-05-13
  */
 public interface BaseMapperPlus<T> extends BaseMapper<T> {

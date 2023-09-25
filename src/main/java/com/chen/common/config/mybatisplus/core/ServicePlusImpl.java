@@ -29,12 +29,13 @@ import java.util.Map;
  * @param <M> Mapper类
  * @param <T> 数据实体类
  * @param <B> Bo类
- * @author cwaf
+ * @author chenyunzhi
  */
 @Slf4j
 @SuppressWarnings("unchecked")
 public class ServicePlusImpl<M extends BaseMapperPlus<T>, T, B> extends ServiceImpl<M, T> implements IServicePlus<T, B> {
 
+	@Autowired
 	protected M  baseMapper;
 
 	@Override

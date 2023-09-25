@@ -5,9 +5,13 @@ import com.chen.common.utils.BeanCopyUtils;
 import com.chen.common.utils.BeanUtils;
 import com.chen.common.utils.StringUtils;
 import com.chen.domain.navigatecategory.CyzNavigateCategoryBO;
+import com.chen.domain.navigatesite.CyzNavigateSiteBO;
+import com.chen.domain.navigatesite.CyzNavigateSitePO;
 import com.chen.mapper.CyzNavigateCategoryMapper;
 import com.chen.domain.navigatecategory.CyzNavigateCategoryPO;
 import com.chen.domain.navigatecategory.CyzNavigateCategoryDTO;
+import com.chen.service.navigatesite.CyzNavigateSiteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
 import com.chen.service.navigatecategory.CyzNavigateCategoryService;
@@ -24,6 +28,8 @@ import java.util.stream.Collectors;
 @Service
 public class CyzNavigateCategoryServiceImpl extends ServicePlusImpl<CyzNavigateCategoryMapper, CyzNavigateCategoryPO, CyzNavigateCategoryBO> implements CyzNavigateCategoryService {
 
+    @Autowired
+    private CyzNavigateSiteService navigateSiteService;
     @Override
     public List<CyzNavigateCategoryDTO> getAllCategories() {
 
@@ -63,6 +69,7 @@ public class CyzNavigateCategoryServiceImpl extends ServicePlusImpl<CyzNavigateC
         navigateCategories.push(navigateCategoryBo);
 
         while (!navigateCategories.isEmpty()) {
+
             CyzNavigateCategoryBO categoryBO = navigateCategories.pop();
             List<CyzNavigateCategoryBO> cyzNavigateCategoryBoS = new ArrayList<>();
 
@@ -75,7 +82,8 @@ public class CyzNavigateCategoryServiceImpl extends ServicePlusImpl<CyzNavigateC
                 }
 
             }
-
+            List<CyzNavigateSiteBO> cyzNavigateSiteBoS = navigateSiteService.listBo(new LambdaQueryWrapper<CyzNavigateSitePO>().eq(CyzNavigateSitePO::getCategoryId, categoryBO.getId()));
+            categoryBO.setSites(cyzNavigateSiteBoS);
             categoryBO.setChildren(cyzNavigateCategoryBoS);
         }
     }

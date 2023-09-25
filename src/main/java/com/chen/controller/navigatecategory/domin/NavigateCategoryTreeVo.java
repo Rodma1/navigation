@@ -1,7 +1,9 @@
-package com.chen.controller.navigatecategory;
+package com.chen.controller.navigatecategory.domin;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.chen.domain.navigatecategory.CyzNavigateCategoryBO;
+import com.chen.domain.navigatecategory.CyzNavigateCategoryDTO;
+import com.chen.domain.navigatesite.CyzNavigateSiteBO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -42,4 +44,7 @@ public class NavigateCategoryTreeVo {
 
     @TableField("del_flag")
     private String delFlag;
+
+    @ApiModelProperty("网站")
+    private List<CyzNavigateSiteBO> sites;
 }

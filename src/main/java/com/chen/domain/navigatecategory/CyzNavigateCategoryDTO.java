@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.chen.domain.navigatesite.CyzNavigateSiteBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -52,6 +53,9 @@ public class CyzNavigateCategoryDTO implements Serializable {
 
     @TableField("del_flag")
     private String delFlag;
+
+    @ApiModelProperty("子类别")
+    private List<CyzNavigateSiteBO> sites;
 
 
 }

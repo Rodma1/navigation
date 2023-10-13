@@ -8,7 +8,7 @@ import java.beans.PropertyDescriptor;
 import java.util.*;
 
 /**
- * @author Chennong
+ * @author chenyunzhi
  * @date 2021/8/20
  * @description bean操作工具类
  */

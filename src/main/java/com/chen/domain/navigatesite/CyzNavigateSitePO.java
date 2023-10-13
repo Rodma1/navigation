@@ -12,7 +12,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author 神的孩子都在歌唱
@@ -64,6 +64,9 @@ public class CyzNavigateSitePO implements Serializable {
     @ApiModelProperty("更新者")
     @TableField("update_by")
     private String updateBy;
+
+    @TableField("del_flag")
+    private String delFlag;
 
 
 }

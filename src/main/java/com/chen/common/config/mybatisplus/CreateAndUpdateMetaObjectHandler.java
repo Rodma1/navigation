@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * @author:  MP注入处理器
  * @date: 2023/9/18 14:50
- * @Description:
+ * @Description: 使用方法,在参数上面打上注解  @TableField(value = "update_time",fill = FieldFill.UPDATE)
  */
 @Slf4j
 public class CreateAndUpdateMetaObjectHandler implements MetaObjectHandler {

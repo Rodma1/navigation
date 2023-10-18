@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 单sql批量插入( 全量填充 )
  *
- * @author aiom
+ * @author chenyunzhi
  */
 public class InsertAll extends AbstractMethod {
 

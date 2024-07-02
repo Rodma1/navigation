@@ -25,8 +25,9 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * @author chenyunzhi
  */
+
+
 @Slf4j
-@Configuration
 public class ElasticsearchClientConfig {
 
     private final String hostName;

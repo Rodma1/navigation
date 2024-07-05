@@ -8,10 +8,9 @@ import com.chen.service.elasticsearch.impl.ElasticsearchOperationStrategy;
 import com.chen.service.elasticsearch.operation.ElasticsearchOperationStrategyFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.io.IOException;
 
 /**
  * @author chenyunzhi
@@ -25,7 +24,7 @@ public class ElasticsearchService implements DisposableBean {
 
     private ElasticsearchClientConfig clientConfig;
 
-    public Object performOperation(ElasticsearchFactoryParam factoryParam, ElasticsearchConnectParam connectParam) {
+    public Object performOperation(ElasticsearchFactoryParam factoryParam, ElasticsearchConnectParam connectParam) throws IOException {
         this.clientConfig = new ElasticsearchClientConfig(connectParam);
         ElasticsearchClient client = clientConfig.elasticsearchClient();
         ElasticsearchOperationStrategy strategy = ElasticsearchOperationStrategyFactory.createStrategy(factoryParam);
@@ -40,7 +39,7 @@ public class ElasticsearchService implements DisposableBean {
      */
 
     @Override
-    public void destroy() throws Exception {
+    public void destroy(){
         clientConfig.close();
     }
 }

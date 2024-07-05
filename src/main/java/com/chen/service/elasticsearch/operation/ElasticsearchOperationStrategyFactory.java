@@ -1,10 +1,6 @@
 package com.chen.service.elasticsearch.operation;
-
-import com.chen.domain.elsaticsearch.ElasticsearchConnectParam;
 import com.chen.domain.elsaticsearch.ElasticsearchFactoryParam;
 import com.chen.service.elasticsearch.impl.ElasticsearchOperationStrategy;
-
-import java.util.List;
 
 /**
  * @Author chenyunzhi
@@ -22,6 +18,8 @@ public class ElasticsearchOperationStrategyFactory {
                 return null;
             case  "DELETE":
                 return new DeleteIndexOperationStrategy(factoryParam.getIndices());
+            case "catIndices":
+                return new CatIndicesOperationStrategy();
         }
         return null;
     }

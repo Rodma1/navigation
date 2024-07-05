@@ -30,4 +30,8 @@ public class ElasticsearchFactoryParam {
         this.indices = indies;
     }
 
+    // 添加无参构造函数
+    public ElasticsearchFactoryParam() {
+    }
+
 }

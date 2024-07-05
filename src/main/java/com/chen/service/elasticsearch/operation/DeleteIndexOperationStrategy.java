@@ -1,10 +1,8 @@
 package com.chen.service.elasticsearch.operation;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch.core.DeleteResponse;
 import com.chen.service.elasticsearch.impl.ElasticsearchOperationStrategy;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.List;
 
 /**

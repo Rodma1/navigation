@@ -12,14 +12,19 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLException;
+import java.security.cert.X509Certificate;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -79,12 +84,26 @@ public class ElasticsearchClientConfig {
         final BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, passwd));
 
+        // 跳过证书校验
+        SSLContext sslContext;
+        try {
+            sslContext = SSLContextBuilder.create()
+                    .loadTrustMaterial(new TrustStrategy() {
+                        @Override
+                        public boolean isTrusted(X509Certificate[] chain, String authType) {
+                            return true; // Trust all certificates
+                        }
+                    }).build();
+        } catch (Exception e) {
+            throw new RuntimeException("Error setting up SSL context", e);
+        }
 
         // 包含了账号密码
         RestClientBuilder.HttpClientConfigCallback callback = httpAsyncClientBuilder -> httpAsyncClientBuilder
                 .setDefaultCredentialsProvider(credentialsProvider)
                 .setMaxConnTotal(100) // 设置最大连接数
                 .setMaxConnPerRoute(10) // 每个路由的最大连接数
+                .setSSLContext(sslContext)
                 .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE);
 
         // 用builder创建RestClient对象

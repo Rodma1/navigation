@@ -29,7 +29,8 @@ public class ElasticsearchService implements DisposableBean {
         ElasticsearchClient client = clientConfig.elasticsearchClient();
         ElasticsearchOperationStrategy strategy = ElasticsearchOperationStrategyFactory.createStrategy(factoryParam);
         if (strategy != null) {
-            return strategy.execute(client);
+            Object execute = strategy.execute(client);
+            return execute;
         }
         return null;
     }

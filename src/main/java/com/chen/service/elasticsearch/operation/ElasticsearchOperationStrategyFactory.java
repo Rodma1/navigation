@@ -15,10 +15,10 @@ public class ElasticsearchOperationStrategyFactory {
     public static ElasticsearchOperationStrategy createStrategy(ElasticsearchFactoryParam factoryParam) {
         switch (factoryParam.getOperationType()) {
             case "INFO":
-                return null;
+                return new VersionInfoOperationStrategy();
             case  "DELETE":
                 return new DeleteIndexOperationStrategy(factoryParam.getIndices());
-            case "catIndices":
+            case "CatIndices":
                 return new CatIndicesOperationStrategy();
         }
         return null;

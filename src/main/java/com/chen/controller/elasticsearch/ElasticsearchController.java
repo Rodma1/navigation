@@ -1,5 +1,6 @@
 package com.chen.controller.elasticsearch;
 import com.chen.common.utils.BeanUtils;
+import com.chen.common.utils.resultreturn.ResultData;
 import com.chen.controller.elasticsearch.domin.OperationCommand;
 import com.chen.domain.elsaticsearch.ElasticsearchConnectParam;
 import com.chen.domain.elsaticsearch.ElasticsearchFactoryParam;
@@ -32,10 +33,10 @@ public class ElasticsearchController {
      */
     @ApiOperation("es基本的操作接口")
     @PostMapping("/operation")
-    public Object performOperation(@RequestBody OperationCommand operationCommand) throws IOException {
-        return elasticsearchService.performOperation(
+    public ResultData<Object> performOperation(@RequestBody OperationCommand operationCommand) throws IOException {
+        return ResultData.success(elasticsearchService.performOperation(
                 BeanUtils.copyObject(operationCommand, ElasticsearchFactoryParam.class)
-                ,BeanUtils.copyObject(operationCommand, ElasticsearchConnectParam.class));
+                ,BeanUtils.copyObject(operationCommand, ElasticsearchConnectParam.class)));
     }
 
 }

@@ -22,8 +22,9 @@ public class ElasticsearchOperationStrategyFactory {
                 return new CatIndicesOperationStrategy();
             case "DOCUMENT":
                 return new DocOperationStrategy(factoryParam);
+            default:
+                return null;
         }
-        return null;
     }
 
 }

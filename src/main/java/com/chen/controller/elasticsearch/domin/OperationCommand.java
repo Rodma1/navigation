@@ -31,15 +31,21 @@ public class OperationCommand {
     private String scheme;
 
 
-    @ApiModelProperty("操作类型")
+    @ApiModelProperty("操作类别 文档  索引")
+    public String operationCategory;
+
+    @ApiModelProperty("操作类型 添加 删除 修改等等")
     public String operationType;
 
     @ApiModelProperty("索引名")
     public String indexName;
 
+    @ApiModelProperty("索引列表")
+    public List<String> indices;
+
     @ApiModelProperty("文档")
     public String document;
 
-    @ApiModelProperty("索引列表")
-    public List<String> indices;
+    @ApiModelProperty("文档Id")
+    public String documentId;
 }

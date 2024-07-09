@@ -13,13 +13,15 @@ public class ElasticsearchOperationStrategyFactory {
      * 创建策略
      */
     public static ElasticsearchOperationStrategy createStrategy(ElasticsearchFactoryParam factoryParam) {
-        switch (factoryParam.getOperationType()) {
+        switch (factoryParam.getOperationCategory()) {
             case "INFO":
                 return new VersionInfoOperationStrategy();
             case  "DELETE":
                 return new DeleteIndexOperationStrategy(factoryParam.getIndices());
             case "CatIndices":
                 return new CatIndicesOperationStrategy();
+            case "DOCUMENT":
+                return new DocOperationStrategy(factoryParam);
         }
         return null;
     }

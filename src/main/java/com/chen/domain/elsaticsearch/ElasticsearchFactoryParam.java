@@ -3,6 +3,7 @@ package com.chen.domain.elsaticsearch;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  * @Description:
  */
 @Data
-public class ElasticsearchFactoryParam {
+public class ElasticsearchFactoryParam implements Serializable {
 
 
     @ApiModelProperty("操作类别 文档  索引")

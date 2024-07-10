@@ -16,10 +16,8 @@ public class ElasticsearchOperationStrategyFactory {
         switch (factoryParam.getOperationCategory()) {
             case "INFO":
                 return new VersionInfoOperationStrategy();
-            case  "DELETE":
-                return new DeleteIndexOperationStrategy(factoryParam.getIndices());
-            case "CatIndices":
-                return new CatIndicesOperationStrategy();
+            case  "INDEX":
+                return new IndexOperationStrategy(factoryParam);
             case "DOCUMENT":
                 return new DocOperationStrategy(factoryParam);
             default:

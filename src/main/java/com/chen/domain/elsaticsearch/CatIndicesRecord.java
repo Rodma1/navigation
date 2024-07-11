@@ -14,7 +14,7 @@ public class CatIndicesRecord {
     @ApiModelProperty("健康状态")
     public  String health;
 
-    @ApiModelProperty("索引的名称")
+    @ApiModelProperty("索引的状态")
     public  String status;
 
     @ApiModelProperty("索引的名称")

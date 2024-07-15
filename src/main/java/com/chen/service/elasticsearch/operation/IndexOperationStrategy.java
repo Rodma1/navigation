@@ -4,6 +4,7 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.cat.indices.IndicesRecord;
 import co.elastic.clients.elasticsearch.core.DeleteResponse;
 import co.elastic.clients.elasticsearch.indices.CreateIndexResponse;
+import co.elastic.clients.elasticsearch.indices.DeleteIndexResponse;
 import com.chen.common.utils.BeanUtils;
 import com.chen.domain.elsaticsearch.CatIndicesRecord;
 import com.chen.domain.elsaticsearch.ElasticsearchFactoryParam;
@@ -46,12 +47,11 @@ public class IndexOperationStrategy implements ElasticsearchOperationStrategy {
      * @param indices 索引列表
      */
     private Object batchDeleteIndexList(ElasticsearchClient client, List<String> indices) {
-        for (String indexName:indices) {
-            try {
-                client.delete(d -> d.index(indexName));
-            } catch (Exception e) {
-                log.error("删除索引" + indexName + "失败");
-            }
+        try {
+            DeleteIndexResponse delete = client.indices().delete(i -> i.index(indices));
+            System.out.println(delete.acknowledged());
+        } catch (Exception e) {
+            log.error("删除索引失败");
         }
         return "执行成功";
     }

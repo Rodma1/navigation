@@ -45,6 +45,8 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
             case "PAGE":
                 return this.getDocumentsPage(client, factoryParam.getIndices(), factoryParam.getPageNum()
                         , factoryParam.getPageSize(), factoryParam.getSortField(), factoryParam.getSortOrder());
+            case "COUNT":
+                return this.getDocumentCount(client, factoryParam.getIndices());
             default:
                 return null;
         }
@@ -115,6 +117,16 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
         });
 
         return elasticsearchDocuments;
+    }
+
+    /**
+     * 获取文档数
+     */
+    public Object getDocumentCount(ElasticsearchClient client, List<String> indices) throws IOException {
+        if (ObjectUtil.isNotNull(indices) && !indices.isEmpty()) {
+            return client.count(c -> c.index(indices)).count();
+        }
+        return client.count().count();
     }
 
 

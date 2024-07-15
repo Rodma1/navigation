@@ -40,6 +40,7 @@ public class OperationCommand {
     @ApiModelProperty("索引名")
     public String indexName;
 
+
     @ApiModelProperty("索引列表")
     public List<String> indices;
 
@@ -48,4 +49,10 @@ public class OperationCommand {
 
     @ApiModelProperty("文档Id")
     public String documentId;
+
+    @ApiModelProperty("索引别名")
+    public String alias;
+
+    @ApiModelProperty("索引别名的写入索引")
+    public String aliasWriteIndex;
 }

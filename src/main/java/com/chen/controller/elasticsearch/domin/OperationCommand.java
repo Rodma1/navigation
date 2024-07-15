@@ -48,4 +48,16 @@ public class OperationCommand {
 
     @ApiModelProperty("文档Id")
     public String documentId;
+
+    @ApiModelProperty("页数")
+    public int pageNum;
+
+    @ApiModelProperty("页数大小")
+    public int pageSize;
+
+    @ApiModelProperty("要排序的字段")
+    public String sortField;
+
+    @ApiModelProperty("排序 Asc 升序  Desc降序")
+    public String sortOrder;
 }

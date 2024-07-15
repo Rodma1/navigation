@@ -1,8 +1,13 @@
 package com.chen.service.elasticsearch.operation;
 
+import cn.hutool.core.util.ObjectUtil;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch.core.DeleteResponse;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import com.chen.common.exception.ServiceException;
+import com.chen.common.utils.StringUtils;
 import com.chen.domain.elsaticsearch.ElasticsearchFactoryParam;
 import com.chen.service.elasticsearch.impl.ElasticsearchOperationStrategy;
 import io.swagger.annotations.ApiModelProperty;
@@ -29,25 +34,34 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
     @Override
     public Object execute(ElasticsearchClient client) throws IOException {
         switch (factoryParam.getOperationType()) {
-            case "CREATE":
-                return this.createDoc(client, factoryParam.getIndexName(),factoryParam.getDocument());
+            case "INSERT":
+                return this.insertDoc(client, factoryParam.getIndexName(),factoryParam.getDocument());
             case  "DELETE":
-                return this.deleteDocumentTest(client, factoryParam.getIndexName());
+                return this.deleteDocument(client, factoryParam.getIndexName());
             case "INFO":
                 return this.getDocumentInfo(client ,factoryParam.getIndexName(), factoryParam.getDocumentId());
+            case "PAGE":
+                return this.getDocumentsPage(client, factoryParam.getIndices(), factoryParam.getPageNum()
+                        , factoryParam.getPageSize(), factoryParam.getSortField(), factoryParam.getSortOrder());
+            default:
+                return null;
         }
-        return null;
     }
 
-    private Object createDoc(ElasticsearchClient client, String indexName, String jsonContent) throws IOException {
-        IndexResponse index = client.index(i -> i.index(indexName).document(jsonContent));
-        return index.id();
+    private Object insertDoc(ElasticsearchClient client, String indexName, String jsonContent) throws IOException {
+        try {
+            IndexResponse index = client.index(i -> i.index(indexName).document(jsonContent));
+            return index.id();
+        } catch (Exception e) {
+            throw  new ServiceException("创建失败" + e.getMessage());
+        }
+
     }
 
     public void updateDocument(ElasticsearchClient client, String indexName,String documentId, String jsonContent) throws IOException {
     }
 
-    public Object deleteDocumentTest(ElasticsearchClient client, String indexName) throws IOException {
+    public Object deleteDocument(ElasticsearchClient client, String indexName) throws IOException {
         DeleteResponse deleteResponse = client.delete(d -> d
                 .index(indexName)
         );
@@ -62,5 +76,21 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
                 , HashMap.class
         );
     }
+
+    /**
+     * 获取分页的文档列表
+     */
+    public Object getDocumentsPage(ElasticsearchClient client, List<String> indices, int pageNum, int pageSize,String sortField, String sortOrder) throws IOException {
+        SearchRequest.Builder builder = new SearchRequest.Builder();
+        if (ObjectUtil.isNotNull(indices) && !indices.isEmpty()) {
+            builder.index(indices);
+        }
+        builder.from((pageNum - 1) * pageSize).size(pageSize);
+        if (StringUtils.isNotBlank(sortField) && StringUtils.isNotBlank(sortOrder)) {
+            builder.sort(sort->sort.field(f->f.field(sortField).order(SortOrder.valueOf(sortOrder))));
+        }
+        return client.search(s-> s,HashMap.class).hits().hits();
+    }
+
 
 }

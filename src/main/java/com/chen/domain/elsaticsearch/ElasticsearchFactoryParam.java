@@ -48,6 +48,12 @@ public class ElasticsearchFactoryParam implements Serializable {
     @ApiModelProperty("排序 Asc 升序  Desc降序")
     public String sortOrder;
 
+    @ApiModelProperty("索引别名")
+    public String alias;
+
+    @ApiModelProperty("索引别名的写入索引")
+    public String aliasWriteIndex;
+
     public ElasticsearchFactoryParam(List<String> indies) {
         this.indices = indies;
     }

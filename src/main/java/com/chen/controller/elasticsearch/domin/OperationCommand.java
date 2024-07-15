@@ -49,6 +49,12 @@ public class OperationCommand {
     @ApiModelProperty("文档Id")
     public String documentId;
 
+    @ApiModelProperty("索引别名")
+    public String alias;
+
+    @ApiModelProperty("索引别名的写入索引")
+    public String aliasWriteIndex;
+
     @ApiModelProperty("页数")
     public int pageNum;
 

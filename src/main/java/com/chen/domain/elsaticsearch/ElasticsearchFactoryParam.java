@@ -36,6 +36,9 @@ public class ElasticsearchFactoryParam implements Serializable {
     @ApiModelProperty("文档Id")
     public String documentId;
 
+    @ApiModelProperty("文档Id列表")
+    public List<String> documentIds;
+
     @ApiModelProperty("页数")
     public int pageNum;
 

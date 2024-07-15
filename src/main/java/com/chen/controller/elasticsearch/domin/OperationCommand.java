@@ -49,6 +49,9 @@ public class OperationCommand {
     @ApiModelProperty("文档Id")
     public String documentId;
 
+    @ApiModelProperty("文档Id列表")
+    public List<String> documentIds;
+
     @ApiModelProperty("索引别名")
     public String alias;
 

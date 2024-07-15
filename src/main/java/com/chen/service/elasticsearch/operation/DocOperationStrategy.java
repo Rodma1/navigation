@@ -3,16 +3,18 @@ package com.chen.service.elasticsearch.operation;
 import cn.hutool.core.util.ObjectUtil;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch.core.DeleteResponse;
-import co.elastic.clients.elasticsearch.core.IndexResponse;
-import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.*;
+import co.elastic.clients.elasticsearch.core.search.Hit;
 import com.chen.common.exception.ServiceException;
 import com.chen.common.utils.StringUtils;
+import com.chen.domain.elsaticsearch.ElasticsearchDocument;
 import com.chen.domain.elsaticsearch.ElasticsearchFactoryParam;
 import com.chen.service.elasticsearch.impl.ElasticsearchOperationStrategy;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
             case "INSERT":
                 return this.insertDoc(client, factoryParam.getIndexName(),factoryParam.getDocument());
             case  "DELETE":
-                return this.deleteDocument(client, factoryParam.getIndexName());
+                return this.deleteIndexDocument(client, factoryParam.getIndices(), factoryParam.getDocumentIds());
             case "INFO":
                 return this.getDocumentInfo(client ,factoryParam.getIndexName(), factoryParam.getDocumentId());
             case "PAGE":
@@ -50,7 +52,7 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
 
     private Object insertDoc(ElasticsearchClient client, String indexName, String jsonContent) throws IOException {
         try {
-            IndexResponse index = client.index(i -> i.index(indexName).document(jsonContent));
+            IndexResponse index = client.index(i -> i.index(indexName).withJson(new StringReader(jsonContent)));
             return index.id();
         } catch (Exception e) {
             throw  new ServiceException("创建失败" + e.getMessage());
@@ -61,11 +63,27 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
     public void updateDocument(ElasticsearchClient client, String indexName,String documentId, String jsonContent) throws IOException {
     }
 
-    public Object deleteDocument(ElasticsearchClient client, String indexName) throws IOException {
-        DeleteResponse deleteResponse = client.delete(d -> d
-                .index(indexName)
-        );
-       return deleteResponse.id();
+    public Object deleteDocument(ElasticsearchClient client, List<String> documentIds) throws IOException {
+        try {
+            DeleteByQueryResponse deleteByQueryResponse = client.deleteByQuery(d -> d.query(q -> q.ids(i -> i.values(documentIds))));
+            return deleteByQueryResponse.deleted();
+
+        } catch (Exception e) {
+            throw  new ServiceException(e.getMessage());
+        }
+    }
+
+    /**
+     * 批量删除文档
+     */
+    public Object deleteIndexDocument(ElasticsearchClient client,  List<String> indices, List<String> documentIds) throws IOException {
+        try {
+            DeleteByQueryResponse deleteByQueryResponse = client.deleteByQuery(d -> d.index(indices).query(q -> q.ids(i -> i.values(documentIds))));
+            return deleteByQueryResponse.deleted();
+
+        } catch (Exception e) {
+            throw  new ServiceException(e.getMessage());
+        }
     }
 
     public Object getDocumentInfo(ElasticsearchClient client, String indexName , String documentId) throws IOException {
@@ -89,7 +107,14 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
         if (StringUtils.isNotBlank(sortField) && StringUtils.isNotBlank(sortOrder)) {
             builder.sort(sort->sort.field(f->f.field(sortField).order(SortOrder.valueOf(sortOrder))));
         }
-        return client.search(s-> s,HashMap.class).hits().hits();
+        List<ElasticsearchDocument> elasticsearchDocuments = new ArrayList<>();
+        client.search(s -> s, HashMap.class).hits().hits().forEach(item ->{
+            ElasticsearchDocument elasticsearchDocument = new ElasticsearchDocument();
+            elasticsearchDocument.setId(item.id()).setIndex(item.index()).setSource(item.source());
+            elasticsearchDocuments.add(elasticsearchDocument);
+        });
+
+        return elasticsearchDocuments;
     }
 
 

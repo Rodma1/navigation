@@ -40,9 +40,10 @@ public class AliasesOperationStrategy  implements ElasticsearchOperationStrategy
                 return this.disassociation(elasticsearchClient, factoryParam.getAlias(), factoryParam.getIndices());
             case "WRITE_INDEX":
                 return this.updateAliasWriteIndex(elasticsearchClient, factoryParam.getAlias(), factoryParam.getIndexName());
+            default:
+                return null;
         }
 
-        return null;
     }
 
     /**

@@ -1,8 +1,10 @@
 package com.chen.domain.elsaticsearch;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.annotation.Nullable;
+import java.io.Serializable;
 
 /**
  * @Author chenyunzhi
@@ -10,18 +12,24 @@ import javax.annotation.Nullable;
  * @Description:
  */
 @Data
-public class CatAliasesRecord {
+public class CatAliasesRecord implements Serializable {
 
-    private final String alias;
+    @ApiModelProperty("别名")
+    public String alias;
 
-    private final String index;
+    @ApiModelProperty("索引名")
+    public String index;
 
-    private final String filter;
+    @ApiModelProperty("")
+    public String filter;
 
-    private final String routingIndex;
+    @ApiModelProperty("")
+    public String routingIndex;
 
-    private final String routingSearch;
+    @ApiModelProperty("")
+    public String routingSearch;
 
-    private final String isWriteIndex;
+    @ApiModelProperty("是否是写入索引")
+    public String isWriteIndex;
 
 }

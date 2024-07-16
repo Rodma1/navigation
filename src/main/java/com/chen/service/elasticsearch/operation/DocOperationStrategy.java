@@ -110,7 +110,7 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
             builder.sort(sort->sort.field(f->f.field(sortField).order(SortOrder.valueOf(sortOrder))));
         }
         List<ElasticsearchDocument> elasticsearchDocuments = new ArrayList<>();
-        client.search(s -> s, HashMap.class).hits().hits().forEach(item ->{
+        client.search(builder.build(), HashMap.class).hits().hits().forEach(item ->{
             ElasticsearchDocument elasticsearchDocument = new ElasticsearchDocument();
             elasticsearchDocument.setId(item.id()).setIndex(item.index()).setSource(item.source());
             elasticsearchDocuments.add(elasticsearchDocument);

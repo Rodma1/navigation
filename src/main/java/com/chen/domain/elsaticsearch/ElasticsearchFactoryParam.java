@@ -60,6 +60,9 @@ public class ElasticsearchFactoryParam implements Serializable {
     @ApiModelProperty("索引模板名")
     public String indexTemplate;
 
+    @ApiModelProperty("任务Id")
+    public String taskId;
+
     public ElasticsearchFactoryParam(List<String> indies) {
         this.indices = indies;
     }

@@ -69,4 +69,14 @@ public class OperationCommand {
 
     @ApiModelProperty("排序 Asc 升序  Desc降序")
     public String sortOrder;
+
+
+    @ApiModelProperty("索引模板名")
+    public String indexTemplate;
+
+    @ApiModelProperty("任务Id")
+    public String taskId;
+
+    @ApiModelProperty("索引模板内容")
+    public String indexTemplateContent;
 }

@@ -22,6 +22,8 @@ public class ElasticsearchOperationStrategyFactory {
                 return new DocOperationStrategy(factoryParam);
             case "ALIAS":
                 return new AliasesOperationStrategy(factoryParam);
+            case "TEMPLATE":
+                return new IndexTemplateOperationStrategy(factoryParam);
             default:
                 return null;
         }

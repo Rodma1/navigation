@@ -51,7 +51,7 @@ public class AliasesOperationStrategy  implements ElasticsearchOperationStrategy
      */
     private Object association(ElasticsearchClient client, String alias, List<String> indices) throws IOException {
 
-        PutAliasRequest build = new PutAliasRequest.Builder().index(indices).name(alias).build();
+        PutAliasRequest build = new PutAliasRequest.Builder().index(indices).name(alias).isWriteIndex(false).build();
 
         PutAliasResponse putAliasResponse = client.indices().putAlias(build);
         return putAliasResponse.acknowledged();

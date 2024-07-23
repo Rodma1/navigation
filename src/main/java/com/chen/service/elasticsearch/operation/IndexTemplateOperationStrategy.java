@@ -5,16 +5,14 @@ import cn.hutool.json.JSONUtil;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.cat.component_templates.ComponentTemplate;
 import co.elastic.clients.elasticsearch.cat.templates.TemplatesRecord;
-import co.elastic.clients.elasticsearch.indices.DeleteTemplateResponse;
-import co.elastic.clients.elasticsearch.indices.GetIndexTemplateResponse;
-import co.elastic.clients.elasticsearch.indices.IndexTemplate;
-import co.elastic.clients.elasticsearch.indices.PutIndexTemplateResponse;
+import co.elastic.clients.elasticsearch.indices.*;
 import co.elastic.clients.elasticsearch.indices.get_index_template.IndexTemplateItem;
 import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.json.JsonpSerializable;
 import co.elastic.clients.json.JsonpUtils;
 import com.chen.common.exception.ServiceException;
 import com.chen.common.utils.BeanUtils;
+import com.chen.common.utils.StringUtils;
 import com.chen.common.utils.json.FastJsonUtils;
 import com.chen.domain.elsaticsearch.CatTemplatesRecord;
 import com.chen.domain.elsaticsearch.ElasticsearchFactoryParam;
@@ -43,7 +41,7 @@ public class IndexTemplateOperationStrategy implements ElasticsearchOperationStr
     public Object execute(ElasticsearchClient elasticsearchClient) throws IOException {
         switch (factoryParam.getOperationType()) {
             case "LIST":
-                return this.getTemplateList(elasticsearchClient);
+                return this.getTemplateList(elasticsearchClient, factoryParam.getIndexTemplate());
             case "INFO":
                 return this.getTemplateInfo(elasticsearchClient, factoryParam.getIndexTemplate());
             case "PUT":
@@ -59,8 +57,13 @@ public class IndexTemplateOperationStrategy implements ElasticsearchOperationStr
     /**
      * 获取模板列表
      */
-    public Object getTemplateList(ElasticsearchClient client) throws IOException {
-        List<IndexTemplateItem> indexTemplateItems = client.indices().getIndexTemplate().indexTemplates();
+    public Object getTemplateList(ElasticsearchClient client, String indexTemplate) throws IOException {
+        GetIndexTemplateRequest.Builder builder = new GetIndexTemplateRequest.Builder();
+        if (StringUtils.isNotBlank(indexTemplate)) {
+            builder.name("*" + indexTemplate + "*");
+        }
+
+        List<IndexTemplateItem> indexTemplateItems = client.indices().getIndexTemplate(builder.build()).indexTemplates();
         List<Object> objects = new ArrayList<>();
         indexTemplateItems.forEach(item-> {
             HashMap<String, Object> stringObjectHashMap = new HashMap<>();
@@ -91,7 +94,7 @@ public class IndexTemplateOperationStrategy implements ElasticsearchOperationStr
             PutIndexTemplateResponse putIndexTemplateResponse = client.indices().putIndexTemplate(p -> p.name(indexTemplate).withJson(new StringReader(indexTemplateContent)));
             return putIndexTemplateResponse.acknowledged();
         } catch (Exception e) {
-            return new ServiceException("更新失败:" + e.getMessage());
+            throw new ServiceException("更新失败:" + e.getMessage());
         }
 
     }
@@ -101,10 +104,10 @@ public class IndexTemplateOperationStrategy implements ElasticsearchOperationStr
      */
     public Object deleteTemplate(ElasticsearchClient client, String indexTemplate) {
         try {
-            DeleteTemplateResponse deleteTemplateResponse = client.indices().deleteTemplate(d -> d.name(indexTemplate));
-            return deleteTemplateResponse.acknowledged();
+            DeleteIndexTemplateResponse deleteIndexTemplateResponse = client.indices().deleteIndexTemplate(d -> d.name(indexTemplate));
+            return deleteIndexTemplateResponse.acknowledged();
         } catch (Exception e) {
-            return new ServiceException("删除失败:"  + e.getMessage());
+            throw  new ServiceException("删除失败:"  + e.getMessage());
         }
     }
 

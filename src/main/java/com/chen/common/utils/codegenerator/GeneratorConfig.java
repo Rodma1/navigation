@@ -50,7 +50,7 @@ public class GeneratorConfig {
     private static final String TABLE_PREFIX = "cyz_";
 
     // 当前包名
-    private static final String MODULE_NAME = "phrases";
+    private static final String MODULE_NAME = "article_category";
 
     /**
      * 表名配置
@@ -59,7 +59,7 @@ public class GeneratorConfig {
      */
     private static List<String> getTables() {
         List<String> tables = new ArrayList<>();
-        tables.add("cyz_phrases");
+        tables.add("cyz_article_category");
         return tables;
     }
 

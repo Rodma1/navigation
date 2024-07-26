@@ -46,7 +46,7 @@ public class TaskOperationStrategy implements ElasticsearchOperationStrategy {
             CancelResponse cancel = client.tasks().cancel(c -> c.taskId(taskId));
             return cancel.tasks();
         } catch (Exception e) {
-            return new ServiceException("停止任务失败：" + e.getMessage());
+            throw  new ServiceException("停止任务失败：" + e.getMessage());
         }
     }
 }

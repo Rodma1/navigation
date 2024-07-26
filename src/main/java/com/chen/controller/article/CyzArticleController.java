@@ -58,8 +58,8 @@ public class CyzArticleController {
     @ApiOperation(value = "删除")
     @DeleteMapping(value = "/delete")
     public ResultData<Boolean> delete(@Validated(DeleteGroup.class) @RequestBody ArticleDeleteCommands deleteCommands) {
-        articleService.update(BeanUtils.copyObject(deleteCommands, CyzArticleBO.class));
-        return ResultData.success(true);
+        return ResultData.success(articleService.delete(deleteCommands.getId())
+);
     }
 
     @ApiOperation(value = "更新")

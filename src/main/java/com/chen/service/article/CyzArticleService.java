@@ -26,7 +26,7 @@ public interface CyzArticleService extends IServicePlus<CyzArticlePO,CyzArticleD
     /**
      * 删除
      */
-    void delete(String id);
+    Boolean delete(Integer id);
 
     /**
      * 编辑

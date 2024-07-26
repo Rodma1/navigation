@@ -47,10 +47,10 @@ public class GeneratorConfig {
     //指定数据库表的前缀。指定后，在生成文件时，模板会自动截取掉前缀字符，如表名为sys_user，指定前缀为sys_,生成实体是自动识别生成为user
     //多个前缀可以用逗号隔开，例如 sys_,bs_，根据项目需要配置
 //    private static final String TABLE_PREFIX = "sys_";
-    private static final String TABLE_PREFIX = "";
+    private static final String TABLE_PREFIX = "cyz_";
 
     // 当前包名
-    private static final String MODULE_NAME = "article";
+    private static final String MODULE_NAME = "phrases";
 
     /**
      * 表名配置
@@ -59,7 +59,7 @@ public class GeneratorConfig {
      */
     private static List<String> getTables() {
         List<String> tables = new ArrayList<>();
-        tables.add("cyz_article");
+        tables.add("cyz_phrases");
         return tables;
     }
 

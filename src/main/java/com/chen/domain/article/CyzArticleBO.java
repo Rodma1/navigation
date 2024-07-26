@@ -39,8 +39,8 @@ public class CyzArticleBO implements Serializable, BaseBizCommand<CyzArticlePO> 
     @ApiModelProperty("完成状态 0 未完成 1已完成")
     private String state;
 
-    @ApiModelProperty("文章类别")
-    private String category;
+    @ApiModelProperty("文章类别id")
+    private Integer categoryId;
 
     @ApiModelProperty("创建时间")
     private Date createTime;

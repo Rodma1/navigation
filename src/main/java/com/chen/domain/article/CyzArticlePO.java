@@ -13,7 +13,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author 神的孩子都在歌唱
@@ -39,9 +39,10 @@ public class CyzArticlePO implements Serializable {
     @TableField("state")
     private String state;
 
-    @ApiModelProperty("文章类别")
-    @TableField("category")
-    private String category;
+    @ApiModelProperty("文章类别id")
+    @TableField("category_id")
+    private Integer categoryId;
+
 
     @ApiModelProperty("创建时间")
     @TableField("create_time")

@@ -35,14 +35,14 @@ public class GeneratorConfig {
 
     // 数据库连接配置
     //数据库ip
-    public static final String DATABASE_IP = "127.0.0.1";
+    public static final String DATABASE_IP = "192.168.1.47";
     //数据库端口
     public static final String DATABASE_PORT = "5432";
     //数据库名称
     public static final String DATABASE_NAME = "navigation";
     private static final String JDBC_URL = "jdbc:postgresql://" + DATABASE_IP + ":" + DATABASE_PORT + "/" + DATABASE_NAME + "?serverTimezone=GMT%2b8&&useUnicode=true&characterEncoding=UTF-8";
     private static final String JDBC_USER_NAME = "postgres";
-    private static final String JDBC_PASSWORD = "root";
+    private static final String JDBC_PASSWORD = "chenyunzhi123";
 
     //指定数据库表的前缀。指定后，在生成文件时，模板会自动截取掉前缀字符，如表名为sys_user，指定前缀为sys_,生成实体是自动识别生成为user
     //多个前缀可以用逗号隔开，例如 sys_,bs_，根据项目需要配置
@@ -50,7 +50,7 @@ public class GeneratorConfig {
     private static final String TABLE_PREFIX = "";
 
     // 当前包名
-    private static final String MODULE_NAME = "navigatesite";
+    private static final String MODULE_NAME = "article";
 
     /**
      * 表名配置
@@ -59,10 +59,10 @@ public class GeneratorConfig {
      */
     private static List<String> getTables() {
         List<String> tables = new ArrayList<>();
-        tables.add("cyz_navigate_site");
+        tables.add("cyz_article");
         return tables;
     }
-    
+
 
     // 文件输出路径
     private static final String OUTPUT_DIR = "\\src\\main\\java";

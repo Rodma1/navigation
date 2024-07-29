@@ -28,11 +28,11 @@ public class PhrasesPO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("句子")
-    @TableId("sentence")
+    @TableField("sentence")
     private String sentence;
 
     @ApiModelProperty("创建时间")
-    @TableId("create_time")
+    @TableField("create_time")
     private Timestamp createTime;
 
     @ApiModelProperty("更新时间")

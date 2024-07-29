@@ -28,11 +28,11 @@ public class ArticleCategoryPO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("类别名称")
-    @TableId("name")
+    @TableField("name")
     private String name;
 
     @ApiModelProperty("创建时间")
-    @TableId("create_time")
+    @TableField("create_time")
     private Timestamp createTime;
 
     @ApiModelProperty("更新时间")

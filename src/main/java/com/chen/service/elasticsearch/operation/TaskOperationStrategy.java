@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -37,12 +39,22 @@ public class TaskOperationStrategy implements ElasticsearchOperationStrategy {
 
 
     public Object taskList(ElasticsearchClient client) throws IOException {
+        List<Object> hashMaps = new ArrayList<>();
         List<TasksRecord> tasksRecords = client.cat().tasks().valueBody();
-        return FastJsonUtils.toObject(FastJsonUtils.toJSONString(tasksRecords));
+        tasksRecords.forEach(item->  {
+            String className = item.getClass().getSimpleName() + ": ";
+            String replace = item.toString().replace(className, "");
+            hashMaps.add(FastJsonUtils.toObject(replace));
+        });
+
+        return hashMaps;
     }
 
     public Object stopTask(ElasticsearchClient client, String taskId) {
         try {
+            if (taskId == null) {
+                throw new ServiceException("任务Id不能为空");
+            }
             CancelResponse cancel = client.tasks().cancel(c -> c.taskId(taskId));
             return cancel.tasks();
         } catch (Exception e) {

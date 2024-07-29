@@ -55,5 +55,9 @@ public class ArticleCategoryPO implements Serializable {
     @TableId("id")
     private Integer id;
 
+    @ApiModelProperty("排序")
+    @TableField("sort")
+    private Integer sort;
+
 
 }

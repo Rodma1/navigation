@@ -1,5 +1,6 @@
 package com.chen.domain.article_category;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
@@ -46,5 +47,7 @@ public class ArticleCategoryPagesQuery implements Serializable {
 
     private Integer id;
 
+    @ApiModelProperty("排序")
+    private Integer sort;
 
 }

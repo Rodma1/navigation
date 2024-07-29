@@ -46,5 +46,6 @@ public class ArticleCategoryVO implements Serializable {
 
     private Integer id;
 
-
+    @ApiModelProperty("排序")
+    private Integer sort;
 }

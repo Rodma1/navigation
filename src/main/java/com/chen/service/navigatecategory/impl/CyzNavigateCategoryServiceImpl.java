@@ -63,28 +63,21 @@ public class CyzNavigateCategoryServiceImpl extends ServicePlusImpl<CyzNavigateC
      * 通过出栈入栈的数据结构构造数据
      */
     private void buildSubTree(Map<Long, CyzNavigateCategoryBO> cyzNavigateCategoryBoMap, CyzNavigateCategoryBO navigateCategoryBo) {
-
-        Stack<CyzNavigateCategoryBO> navigateCategories = new Stack<>();
-
+        Deque<CyzNavigateCategoryBO> navigateCategories = new ArrayDeque<>();
         navigateCategories.push(navigateCategoryBo);
 
         while (!navigateCategories.isEmpty()) {
-
             CyzNavigateCategoryBO categoryBO = navigateCategories.pop();
-            List<CyzNavigateCategoryBO> cyzNavigateCategoryBoS = new ArrayList<>();
+            List<CyzNavigateCategoryBO> cyzNavigateCategoryBoS = cyzNavigateCategoryBoMap.values().stream()
+                    .filter(navigateCategoryBO -> Objects.nonNull(navigateCategoryBO.getParentId()) && navigateCategoryBO.getParentId().equals(categoryBO.getId()))
+                    .collect(Collectors.toList());
 
-            // 遍历获取它的子节点
-            for (CyzNavigateCategoryBO navigateCategoryBO: cyzNavigateCategoryBoMap.values()) {
-
-                if (Objects.nonNull(navigateCategoryBO.getParentId()) && navigateCategoryBO.getParentId().equals(categoryBO.getId())) {
-                    cyzNavigateCategoryBoS.add(navigateCategoryBO);
-                    navigateCategories.push(navigateCategoryBO);
-                }
-
-            }
-            List<CyzNavigateSiteBO> cyzNavigateSiteBoS = navigateSiteService.listBo(new LambdaQueryWrapper<CyzNavigateSitePO>().eq(CyzNavigateSitePO::getCategoryId, categoryBO.getId()));
+            List<CyzNavigateSiteBO> cyzNavigateSiteBoS = navigateSiteService.listBo(
+                    new LambdaQueryWrapper<CyzNavigateSitePO>().eq(CyzNavigateSitePO::getCategoryId, categoryBO.getId()));
             categoryBO.setSites(cyzNavigateSiteBoS);
             categoryBO.setChildren(cyzNavigateCategoryBoS);
+
+            cyzNavigateCategoryBoS.forEach(navigateCategories::push);
         }
     }
 }

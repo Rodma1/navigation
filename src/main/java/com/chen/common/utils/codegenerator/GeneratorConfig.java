@@ -173,9 +173,6 @@ public class GeneratorConfig {
 
     /**
      * controller类输出路径
-     *
-     * @param property
-     * @return
      */
     private static Map<OutputFile, String> getControllerOutputFileStringMap(String property) {
         Map<OutputFile, String> outputFileMap = new HashMap<>();
@@ -185,8 +182,6 @@ public class GeneratorConfig {
 
     /**
      * 生成repository代码
-     *
-     * @param property
      */
     private static void generateRepositoryAndPO(String property) {
         List<String> tables = getTables();

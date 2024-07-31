@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+
+import com.chen.domain.common.category.BaseCategory;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -12,7 +14,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author 神的孩子都在歌唱
@@ -22,7 +24,7 @@ import lombok.Setter;
 @Setter
 @TableName("cyz_article_category")
 @ApiModel(value = "ArticleCategoryBO对象", description = "")
-public class ArticleCategoryBO implements Serializable {
+public class ArticleCategoryBO extends BaseCategory implements Serializable  {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,7 +47,7 @@ public class ArticleCategoryBO implements Serializable {
     @ApiModelProperty("更新者")
     private String updateBy;
 
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("排序")
     private Integer sort;

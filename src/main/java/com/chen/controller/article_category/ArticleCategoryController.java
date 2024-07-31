@@ -1,10 +1,11 @@
 package com.chen.controller.article_category;
 
-import com.chen.common.utils.resultreturn.ResultData;
+import com.chen.common.utils.resultreturn.ResultData;;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
 
 /**
  * @author: 神的孩子都在歌唱
@@ -15,12 +16,6 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "接口控制器", tags = "")
 @RequestMapping("/articleCategory")
 public class ArticleCategoryController {
-
-    @ApiOperation(value = "分页查询")
-    @GetMapping(value = "/pages")
-    public ResultData pages() {
-        return ResultData.success();
-    }
 
     @ApiOperation(value = "查询")
     @GetMapping(value = "/query")

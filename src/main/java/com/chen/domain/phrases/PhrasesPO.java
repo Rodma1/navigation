@@ -54,7 +54,7 @@ public class PhrasesPO implements Serializable {
 
     @ApiModelProperty("类别")
     @TableField("category")
-    private String category;
+    private Integer categoryId;
 
     @ApiModelProperty("推荐等级")
     @TableField("rank")

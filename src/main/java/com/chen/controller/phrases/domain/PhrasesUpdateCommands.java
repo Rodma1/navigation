@@ -15,7 +15,7 @@ import lombok.Data;
 public class PhrasesUpdateCommands {
 
     @ApiModelProperty("类别")
-    private String category;
+    private Integer categoryId;
 
     @ApiModelProperty("推荐等级")
     private String rank;

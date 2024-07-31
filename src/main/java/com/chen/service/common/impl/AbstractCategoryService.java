@@ -1,5 +1,7 @@
 package com.chen.service.common.impl;
 
+import com.chen.common.config.mybatisplus.core.BaseMapperPlus;
+import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
 import com.chen.domain.common.category.BaseCategory;
 import com.chen.service.common.CategoryService;
 
@@ -13,13 +15,12 @@ import java.util.stream.Collectors;
 /**
  * @Author chenyunzhi
  * @DATE 2024/7/29 14:02
- * @Description:
+ * @Description: 类别公共方法
  */
-public abstract class AbstractCategoryService<T extends BaseCategory> implements CategoryService<T> {
+public abstract class AbstractCategoryService<T extends BaseCategory>{
 
-    @Override
     public List<T> getAllCategories() {
-        List<T> categories = listBo();
+        List<T> categories = categorieList();
         Map<Long, T> categoryMap = categories.stream().collect(Collectors.toMap(BaseCategory::getId, Function.identity()));
         List<T> categoryList = categories.stream().filter(c -> c.getParentId() == null || c.getParentId() == 0).collect(Collectors.toList());
         categoryList.forEach(c -> buildSubTree(categoryMap, c));
@@ -43,7 +44,7 @@ public abstract class AbstractCategoryService<T extends BaseCategory> implements
     /**
      * 子类实现： 获取列表
      */
-    protected abstract List<T> listBo();
+    protected abstract List<T> categorieList();
 
     /**
      * 子类有需要就实现：设置其他参数

@@ -1,5 +1,9 @@
 package com.chen.service.common;
 
+import com.chen.common.config.mybatisplus.core.IServicePlus;
+import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
+import com.chen.domain.article_category.ArticleCategoryBO;
+import com.chen.domain.article_category.ArticleCategoryPO;
 import com.chen.domain.common.category.BaseCategory;
 
 import java.util.List;
@@ -9,7 +13,7 @@ import java.util.List;
  * @DATE 2024/7/29 14:01
  * @Description:
  */
-public interface CategoryService<T extends BaseCategory> {
+public interface CategoryService<T extends BaseCategory>{
 
     /**
      * 获取所有类别

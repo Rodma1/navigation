@@ -1,6 +1,5 @@
 package com.chen.common.exception;
 
-import cn.hutool.core.util.ObjectUtil;
 import com.chen.common.utils.StringUtils;
 import com.chen.common.utils.resultreturn.ResultData;
 import org.slf4j.Logger;
@@ -29,7 +28,7 @@ public class GlobalExceptionHandler {
     public ResultData<Object> handleServiceException(ServiceException e, HttpServletRequest request) {
         log.error(e.getMessage(), e);
         Integer code = e.getCode();
-        return StringUtils.isNotNull(code) ? ResultData.error(code, e.getMessage()) : ResultData.error(e.getMessage());
+        return StringUtils.isNotNull(code) ? ResultData.error(code, e.getMessage()) : ResultData.error(500,e.getMessage());
     }
 
     /**

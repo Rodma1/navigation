@@ -1,9 +1,6 @@
-package com.chen.service.common.impl;
+package com.chen.service.category.common.impl;
 
-import com.chen.common.config.mybatisplus.core.BaseMapperPlus;
-import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
 import com.chen.domain.common.category.BaseCategory;
-import com.chen.service.common.CategoryService;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -15,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * @Author chenyunzhi
  * @DATE 2024/7/29 14:02
- * @Description: 类别公共方法
+ * @Description: 类别公共方法 模板设计模式
  */
 public abstract class AbstractCategoryService<T extends BaseCategory>{
 

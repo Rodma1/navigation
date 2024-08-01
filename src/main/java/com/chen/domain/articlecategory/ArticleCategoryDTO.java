@@ -1,6 +1,5 @@
-package com.chen.domain.article_category;
+package com.chen.domain.articlecategory;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
@@ -12,7 +11,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author 神的孩子都在歌唱
@@ -21,8 +20,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("cyz_article_category")
-@ApiModel(value = "ArticleCategoryPagesQuery对象", description = "")
-public class ArticleCategoryPagesQuery implements Serializable {
+@ApiModel(value = "ArticleCategoryDTO对象", description = "")
+public class ArticleCategoryDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -50,4 +49,9 @@ public class ArticleCategoryPagesQuery implements Serializable {
     @ApiModelProperty("排序")
     private Integer sort;
 
+    @ApiModelProperty("图标")
+    private String icon;
+
+    @ApiModelProperty("父id")
+    private Long parentId;
 }

@@ -1,12 +1,9 @@
-package com.chen.domain.article_category;
+package com.chen.domain.phrasesCategory;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
-
-import com.chen.domain.common.category.BaseCategory;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -18,13 +15,13 @@ import lombok.Setter;
  * </p>
  *
  * @author 神的孩子都在歌唱
- * @since 2024-07-26
+ * @since 2024-08-01
  */
 @Getter
 @Setter
-@TableName("cyz_article_category")
-@ApiModel(value = "ArticleCategoryBO对象", description = "")
-public class ArticleCategoryBO extends BaseCategory implements Serializable  {
+@TableName("cyz_phrases_category")
+@ApiModel(value = "PhrasesCategoryQuery对象", description = "")
+public class PhrasesCategoryQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,10 +44,16 @@ public class ArticleCategoryBO extends BaseCategory implements Serializable  {
     @ApiModelProperty("更新者")
     private String updateBy;
 
-    private Long id;
-
     @ApiModelProperty("排序")
     private Integer sort;
+
+    @ApiModelProperty("图标")
+    private String icon;
+
+    @ApiModelProperty("父id")
+    private Long parentId;
+
+    private Integer id;
 
 
 }

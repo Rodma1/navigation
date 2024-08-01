@@ -1,10 +1,13 @@
-package com.chen.domain.article_category;
+package com.chen.domain.phrasesCategory;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+
+import com.chen.common.config.mybatisplus.core.command.BaseBizCommand;
+import com.chen.common.exception.ServiceException;
+import com.chen.domain.common.category.BaseCategory;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -12,17 +15,17 @@ import lombok.Setter;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author 神的孩子都在歌唱
- * @since 2024-07-26
+ * @since 2024-08-01
  */
 @Getter
 @Setter
-@TableName("cyz_article_category")
-@ApiModel(value = "ArticleCategoryDTO对象", description = "")
-public class ArticleCategoryDTO implements Serializable {
+@TableName("cyz_phrases_category")
+@ApiModel(value = "PhrasesCategoryBO对象", description = "")
+public class PhrasesCategoryBO extends BaseCategory implements Serializable, BaseBizCommand<PhrasesCategoryPO> {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,10 +48,30 @@ public class ArticleCategoryDTO implements Serializable {
     @ApiModelProperty("更新者")
     private String updateBy;
 
-    private Integer id;
-
     @ApiModelProperty("排序")
     private Integer sort;
 
+    @ApiModelProperty("图标")
+    private String icon;
 
+    @ApiModelProperty("父id")
+    private Long parentId;
+
+    private Integer id;
+
+
+    @Override
+    public PhrasesCategoryPO buildInsertPo() throws ServiceException {
+        return null;
+    }
+
+    @Override
+    public PhrasesCategoryPO buildDeletePo() throws ServiceException {
+        return null;
+    }
+
+    @Override
+    public PhrasesCategoryPO buildUpdatePo() throws ServiceException {
+        return null;
+    }
 }

@@ -1,4 +1,4 @@
-package com.chen.service.navigatecategory;
+package com.chen.service.category.navigatecategory;
 import com.chen.domain.navigatecategory.CyzNavigateCategoryBO;
 import com.chen.domain.navigatecategory.CyzNavigateCategoryPO;
 import com.chen.domain.navigatecategory.CyzNavigateCategoryDTO;

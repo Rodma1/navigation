@@ -1,9 +1,5 @@
-package com.chen.service.common;
+package com.chen.service.category.common;
 
-import com.chen.common.config.mybatisplus.core.IServicePlus;
-import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
-import com.chen.domain.article_category.ArticleCategoryBO;
-import com.chen.domain.article_category.ArticleCategoryPO;
 import com.chen.domain.common.category.BaseCategory;
 
 import java.util.List;

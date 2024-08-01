@@ -1,15 +1,14 @@
-package com.chen.service.article_category.impl;
+package com.chen.service.category.articlecategory.impl;
 
-import com.chen.domain.common.category.BaseCategory;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.chen.common.exception.ServiceException;
 import com.chen.mapper.ArticleCategoryMapper;
-import com.chen.domain.article_category.ArticleCategoryPO;
-import com.chen.domain.article_category.ArticleCategoryBO;
-import com.chen.domain.article_category.ArticleCategoryVO;
-import com.chen.service.common.CategoryService;
-import com.chen.service.common.impl.AbstractCategoryService;
+import com.chen.domain.articlecategory.ArticleCategoryPO;
+import com.chen.domain.articlecategory.ArticleCategoryBO;
+import com.chen.service.category.articlecategory.ArticleCategoryService;
+import com.chen.service.category.common.impl.AbstractCategoryService;
 import org.springframework.stereotype.Service;
 import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
-import com.chen.service.article_category.ArticleCategoryService;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ import java.util.List;
  * @description:  业务层接口实现类
  */
 @Service
-public class ArticleCategoryServiceImpl extends ServicePlusImpl<ArticleCategoryMapper, ArticleCategoryPO, ArticleCategoryBO>  implements ArticleCategoryService{
+public class ArticleCategoryServiceImpl extends ServicePlusImpl<ArticleCategoryMapper, ArticleCategoryPO, ArticleCategoryBO>  implements ArticleCategoryService {
 
 
     private final AbstractCategoryService<ArticleCategoryBO> categoryServiceTemplate = new AbstractCategoryService<ArticleCategoryBO>() {
@@ -46,21 +45,30 @@ public class ArticleCategoryServiceImpl extends ServicePlusImpl<ArticleCategoryM
 
     @Override
     public ArticleCategoryBO getCategoryById(Long id) {
-        return null;
+        return this.getBoById(id);
     }
 
     @Override
     public void createCategory(ArticleCategoryBO category) {
-
+        boolean save = this.save(category.buildInsertPo());
+        if (!save) {
+            throw new ServiceException("创建类别失败");
+        }
     }
 
     @Override
     public void updateCategory(ArticleCategoryBO category) {
-
+        boolean update = this.updateById(category.buildUpdatePo());
+        if (!update) {
+            throw new ServiceException("更新类别失败");
+        }
     }
 
     @Override
     public void deleteCategory(Long id) {
-
+        boolean remove = this.removeById(id);
+        if (!remove) {
+            throw new ServiceException("删除类别失败");
+        }
     }
 }

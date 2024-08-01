@@ -12,6 +12,6 @@ import org.springframework.stereotype.Service;
 public class HelloWord {
     public String helloWord() {
         System.out.println("你好呀");
-        return "你好";
+        return "你好n";
     }
 }

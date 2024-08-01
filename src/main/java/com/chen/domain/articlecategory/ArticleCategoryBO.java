@@ -27,7 +27,7 @@ import lombok.Setter;
 @Setter
 @TableName("cyz_article_category")
 @ApiModel(value = "ArticleCategoryBO对象", description = "")
-public class ArticleCategoryBO extends BaseCategory implements Serializable, BaseBizCommand {
+public class ArticleCategoryBO extends BaseCategory implements Serializable, BaseBizCommand<ArticleCategoryPO> {
 
     private static final long serialVersionUID = 1L;
 

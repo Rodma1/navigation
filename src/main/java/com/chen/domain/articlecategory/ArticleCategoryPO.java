@@ -60,5 +60,10 @@ public class ArticleCategoryPO implements Serializable {
     private Integer sort;
 
     @ApiModelProperty("图标")
+    @TableField("icon")
     private String icon;
+
+    @ApiModelProperty("父id")
+    @TableField("parent_id")
+    private Long parentId;
 }

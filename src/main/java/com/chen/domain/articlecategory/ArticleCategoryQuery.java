@@ -48,4 +48,8 @@ public class ArticleCategoryQuery implements Serializable {
 
     @ApiModelProperty("图标")
     private String icon;
+
+
+    @ApiModelProperty("父id")
+    private Long parentId;
 }

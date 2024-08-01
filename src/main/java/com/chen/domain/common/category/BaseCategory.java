@@ -1,6 +1,7 @@
 package com.chen.domain.common.category;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.chen.common.config.mybatisplus.core.command.BaseBizCommand;
 import com.chen.domain.navigatecategory.CyzNavigateCategoryBO;
 import com.chen.domain.navigatesite.CyzNavigateSiteBO;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public abstract class BaseCategory {
+public abstract class BaseCategory{
 
     private Long id;
 

@@ -1,5 +1,7 @@
 package com.chen.service.category.articlecategory.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.chen.common.exception.ServiceException;
 import com.chen.mapper.ArticleCategoryMapper;
 import com.chen.domain.articlecategory.ArticleCategoryPO;
 import com.chen.domain.articlecategory.ArticleCategoryBO;
@@ -43,21 +45,30 @@ public class ArticleCategoryServiceImpl extends ServicePlusImpl<ArticleCategoryM
 
     @Override
     public ArticleCategoryBO getCategoryById(Long id) {
-        return null;
+        return this.getBoById(id);
     }
 
     @Override
     public void createCategory(ArticleCategoryBO category) {
-
+        boolean save = this.save(category.buildInsertPo());
+        if (!save) {
+            throw new ServiceException("创建类别失败");
+        }
     }
 
     @Override
     public void updateCategory(ArticleCategoryBO category) {
-
+        boolean update = this.updateById(category.buildUpdatePo());
+        if (!update) {
+            throw new ServiceException("更新类别失败");
+        }
     }
 
     @Override
     public void deleteCategory(Long id) {
-
+        boolean remove = this.removeById(id);
+        if (!remove) {
+            throw new ServiceException("删除类别失败");
+        }
     }
 }

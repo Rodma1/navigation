@@ -1,6 +1,8 @@
 package com.chen.controller.category;
 
+import com.chen.common.utils.BeanUtils;
 import com.chen.common.utils.resultreturn.ResultData;
+import com.chen.controller.category.domain.CategoryTreeVo;
 import com.chen.domain.common.category.BaseCategory;
 import com.chen.service.category.CategoryServiceFactory;
 import com.chen.service.category.common.CategoryService;
@@ -30,7 +32,7 @@ public class CategoryController {
     @GetMapping("/{categoryType}")
     public ResultData<List<? extends BaseCategory>> getAllCategories(@PathVariable String categoryType)  {
         CategoryService<? extends BaseCategory> service = categoryServiceFactory.getService(categoryType);
-        return ResultData.success(service.getAllCategories());
+        return ResultData.success(BeanUtils.copyList(service.getAllCategories(), CategoryTreeVo.class));
     }
 
 }

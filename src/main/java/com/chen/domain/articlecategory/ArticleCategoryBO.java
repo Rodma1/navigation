@@ -3,8 +3,12 @@ package com.chen.domain.articlecategory;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
+import com.chen.common.config.mybatisplus.core.command.BaseBizCommand;
+import com.chen.common.exception.ServiceException;
+import com.chen.common.utils.BeanUtils;
 import com.chen.domain.common.category.BaseCategory;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -23,7 +27,7 @@ import lombok.Setter;
 @Setter
 @TableName("cyz_article_category")
 @ApiModel(value = "ArticleCategoryBO对象", description = "")
-public class ArticleCategoryBO extends BaseCategory implements Serializable  {
+public class ArticleCategoryBO extends BaseCategory implements Serializable, BaseBizCommand {
 
     private static final long serialVersionUID = 1L;
 
@@ -55,4 +59,22 @@ public class ArticleCategoryBO extends BaseCategory implements Serializable  {
     private String icon;
 
 
+    @Override
+    public ArticleCategoryPO buildInsertPo() throws ServiceException {
+        ArticleCategoryPO articleCategoryPo = BeanUtils.copyObject(this, ArticleCategoryPO.class);
+        articleCategoryPo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        return articleCategoryPo;
+    }
+
+    @Override
+    public ArticleCategoryPO buildDeletePo() throws ServiceException {
+        return null;
+    }
+
+    @Override
+    public ArticleCategoryPO buildUpdatePo() throws ServiceException {
+        ArticleCategoryPO articleCategoryPo = BeanUtils.copyObject(this, ArticleCategoryPO.class);
+        articleCategoryPo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        return articleCategoryPo;
+    }
 }

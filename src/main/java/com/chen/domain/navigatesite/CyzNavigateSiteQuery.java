@@ -24,7 +24,7 @@ public class CyzNavigateSiteQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private Integer id;
 
     @ApiModelProperty("类别id")
     private Long categoryId;

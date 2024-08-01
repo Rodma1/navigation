@@ -27,7 +27,7 @@ public class CyzNavigateCategoryPO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId("id")
-    private Long id;
+    private Integer id;
 
     @ApiModelProperty("父id")
     @TableField("parent_id")

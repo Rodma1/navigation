@@ -19,7 +19,7 @@ import java.util.List;
 public class NavigateCategoryTreeVo {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private Integer id;
 
     @ApiModelProperty("父id")
     private Long parentId;

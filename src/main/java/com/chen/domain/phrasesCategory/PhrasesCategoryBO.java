@@ -10,6 +10,7 @@ import com.chen.common.exception.ServiceException;
 import com.chen.domain.common.category.BaseCategory;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,8 +22,7 @@ import lombok.Setter;
  * @author 神的孩子都在歌唱
  * @since 2024-08-01
  */
-@Getter
-@Setter
+@Data
 @TableName("cyz_phrases_category")
 @ApiModel(value = "PhrasesCategoryBO对象", description = "")
 public class PhrasesCategoryBO extends BaseCategory implements Serializable, BaseBizCommand<PhrasesCategoryPO> {
@@ -39,7 +39,6 @@ public class PhrasesCategoryBO extends BaseCategory implements Serializable, Bas
     private Date updateTime;
 
     @ApiModelProperty("删除标志(0代表存在 1代表删除)")
-    @TableLogic
     private String delFlag;
 
     @ApiModelProperty("创建者")

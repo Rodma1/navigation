@@ -65,7 +65,7 @@ public class PhrasesPO implements Serializable {
     private String parentClass;
 
     @TableId("id")
-    private Integer id;
+    private Long id;
 
 
 }

@@ -38,7 +38,7 @@ public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, Cyz
     }
 
     @Override
-    public Boolean delete(Integer id) {
+    public Boolean delete(Long id) {
         boolean remove = this.removeById(id);
         if (!remove) {
             throw new ServiceException("删除失败");

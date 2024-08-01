@@ -13,7 +13,7 @@ import lombok.Data;
 @ApiModel("文章更新")
 public class ArticleUpdateCommands {
 
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("文章地址")
     private String url;

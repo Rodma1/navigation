@@ -66,7 +66,7 @@ public class CyzArticlePO implements Serializable {
     private String updateBy;
 
     @TableId("id")
-    private Integer id;
+    private Long id;
 
 
 }

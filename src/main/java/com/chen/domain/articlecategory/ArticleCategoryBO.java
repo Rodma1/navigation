@@ -50,7 +50,7 @@ public class ArticleCategoryBO extends BaseCategory implements Serializable, Bas
     @ApiModelProperty("更新者")
     private String updateBy;
 
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("排序")
     private Integer sort;

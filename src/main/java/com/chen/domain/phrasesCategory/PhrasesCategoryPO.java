@@ -28,11 +28,11 @@ public class PhrasesCategoryPO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("类别名称")
-    @TableId("name")
+    @TableField("name")
     private String name;
 
     @ApiModelProperty("创建时间")
-    @TableId("create_time")
+    @TableField("create_time")
     private Timestamp createTime;
 
     @ApiModelProperty("更新时间")
@@ -61,11 +61,11 @@ public class PhrasesCategoryPO implements Serializable {
     private String icon;
 
     @ApiModelProperty("父id")
-    @TableId("parent_id")
+    @TableField("parent_id")
     private Long parentId;
 
     @TableId("id")
-    private Integer id;
+    private Long id;
 
 
 }

@@ -30,7 +30,7 @@ public interface PhrasesService extends IServicePlus<PhrasesPO, PhrasesDTO> {
     /**
      * 删除
      */
-    Boolean delete(Integer id);
+    Boolean delete(Long id);
 
     /**
      * 编辑

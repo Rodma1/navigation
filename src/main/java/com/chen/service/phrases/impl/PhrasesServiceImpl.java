@@ -39,7 +39,7 @@ public class PhrasesServiceImpl extends ServicePlusImpl<PhrasesMapper, PhrasesPO
     }
 
     @Override
-    public Boolean delete(Integer id) {
+    public Boolean delete(Long id) {
         boolean remove = this.removeById(id);
         if (!remove) {
             throw new ServiceException("删除失败");

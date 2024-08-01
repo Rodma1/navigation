@@ -53,7 +53,7 @@ public class PhrasesCategoryDTO implements Serializable {
     @ApiModelProperty("父id")
     private Long parentId;
 
-    private Integer id;
+    private Long id;
 
 
 }

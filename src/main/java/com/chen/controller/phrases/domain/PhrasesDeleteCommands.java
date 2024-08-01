@@ -10,5 +10,5 @@ import lombok.Data;
 @ApiModel("文章删除")
 public class PhrasesDeleteCommands {
 
-    private Integer id;
+    private Long id;
 }

@@ -53,7 +53,7 @@ public class ArticleCategoryPO implements Serializable {
     private String updateBy;
 
     @TableId("id")
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("排序")
     @TableField("sort")

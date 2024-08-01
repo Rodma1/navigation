@@ -58,7 +58,7 @@ public class PhrasesBO implements Serializable, BaseBizCommand<PhrasesPO> {
     @ApiModelProperty("父类")
     private String parentClass;
 
-    private Integer id;
+    private Long id;
 
 
     @Override

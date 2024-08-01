@@ -21,7 +21,7 @@ import java.util.List;
 @Setter
 public abstract class BaseCategory{
 
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("父id")
     private Long parentId;

@@ -44,7 +44,7 @@ public class ArticleCategoryQuery implements Serializable {
     @ApiModelProperty("更新者")
     private String updateBy;
 
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("图标")
     private String icon;

@@ -44,7 +44,7 @@ public class ArticleCategoryDTO implements Serializable {
     @ApiModelProperty("更新者")
     private String updateBy;
 
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty("排序")
     private Integer sort;

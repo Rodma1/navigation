@@ -56,7 +56,7 @@ public class PhrasesCategoryBO extends BaseCategory implements Serializable, Bas
     @ApiModelProperty("父id")
     private Long parentId;
 
-    private Integer id;
+    private Long id;
 
 
     @Override

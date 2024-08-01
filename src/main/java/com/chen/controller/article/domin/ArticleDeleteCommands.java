@@ -13,5 +13,5 @@ import lombok.Data;
 @ApiModel("文章删除")
 public class ArticleDeleteCommands {
 
-    private Integer id;
+    private Long id;
 }

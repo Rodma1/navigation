@@ -58,7 +58,7 @@ public class CyzArticleBO implements Serializable, BaseBizCommand<CyzArticlePO> 
     @ApiModelProperty("更新者")
     private String updateBy;
 
-    private Integer id;
+    private Long id;
 
 
     @Override

@@ -53,7 +53,7 @@ public class CyzArticleQuery implements Serializable {
     @ApiModelProperty("更新者")
     private String updateBy;
 
-    private Integer id;
+    private Long id;
 
 
 }

@@ -53,7 +53,7 @@ public class PhrasesVO implements Serializable {
     @ApiModelProperty("父类")
     private String parentClass;
 
-    private Integer id;
+    private Long id;
 
 
 }

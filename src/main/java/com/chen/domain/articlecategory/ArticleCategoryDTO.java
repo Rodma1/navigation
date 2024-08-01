@@ -1,4 +1,4 @@
-package com.chen.domain.article_category;
+package com.chen.domain.articlecategory;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -20,8 +20,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("cyz_article_category")
-@ApiModel(value = "ArticleCategoryVO对象", description = "")
-public class ArticleCategoryVO implements Serializable {
+@ApiModel(value = "ArticleCategoryDTO对象", description = "")
+public class ArticleCategoryDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

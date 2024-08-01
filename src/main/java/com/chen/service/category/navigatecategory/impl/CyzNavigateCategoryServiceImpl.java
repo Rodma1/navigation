@@ -1,9 +1,7 @@
-package com.chen.service.navigatecategory.impl;
+package com.chen.service.category.navigatecategory.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.chen.common.utils.BeanCopyUtils;
 import com.chen.common.utils.BeanUtils;
-import com.chen.common.utils.StringUtils;
 import com.chen.domain.navigatecategory.CyzNavigateCategoryBO;
 import com.chen.domain.navigatesite.CyzNavigateSiteBO;
 import com.chen.domain.navigatesite.CyzNavigateSitePO;
@@ -14,7 +12,7 @@ import com.chen.service.navigatesite.CyzNavigateSiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
-import com.chen.service.navigatecategory.CyzNavigateCategoryService;
+import com.chen.service.category.navigatecategory.CyzNavigateCategoryService;
 
 import java.util.*;
 import java.util.function.Function;

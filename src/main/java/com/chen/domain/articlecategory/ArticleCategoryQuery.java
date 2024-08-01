@@ -1,6 +1,5 @@
-package com.chen.domain.article_category;
+package com.chen.domain.articlecategory;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
@@ -21,8 +20,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("cyz_article_category")
-@ApiModel(value = "ArticleCategoryDTO对象", description = "")
-public class ArticleCategoryDTO implements Serializable {
+@ApiModel(value = "ArticleCategoryQuery对象", description = "")
+public class ArticleCategoryQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -46,9 +45,6 @@ public class ArticleCategoryDTO implements Serializable {
     private String updateBy;
 
     private Integer id;
-
-    @ApiModelProperty("排序")
-    private Integer sort;
 
     @ApiModelProperty("图标")
     private String icon;

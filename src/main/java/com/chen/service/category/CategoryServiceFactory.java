@@ -1,7 +1,7 @@
 package com.chen.service.category;
 
 import com.chen.domain.common.category.BaseCategory;
-import com.chen.service.common.CategoryService;
+import com.chen.service.category.common.CategoryService;
 
 /**
  * @Author chenyunzhi

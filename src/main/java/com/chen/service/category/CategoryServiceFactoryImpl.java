@@ -1,8 +1,8 @@
 package com.chen.service.category;
 
 import com.chen.domain.common.category.BaseCategory;
-import com.chen.service.article_category.ArticleCategoryService;
-import com.chen.service.common.CategoryService;
+import com.chen.service.category.articlecategory.ArticleCategoryService;
+import com.chen.service.category.common.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

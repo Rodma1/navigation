@@ -3,7 +3,7 @@ package com.chen.controller.category;
 import com.chen.common.utils.resultreturn.ResultData;
 import com.chen.domain.common.category.BaseCategory;
 import com.chen.service.category.CategoryServiceFactory;
-import com.chen.service.common.CategoryService;
+import com.chen.service.category.common.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

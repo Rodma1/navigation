@@ -1,9 +1,11 @@
-package com.chen.domain.article_category;
+package com.chen.domain.articlecategory;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -20,31 +22,42 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("cyz_article_category")
-@ApiModel(value = "ArticleCategoryQuery对象", description = "")
-public class ArticleCategoryQuery implements Serializable {
+@ApiModel(value = "ArticleCategoryPO对象", description = "")
+public class ArticleCategoryPO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("类别名称")
+    @TableField("name")
     private String name;
 
     @ApiModelProperty("创建时间")
-    private Date createTime;
+    @TableField("create_time")
+    private Timestamp createTime;
 
     @ApiModelProperty("更新时间")
-    private Date updateTime;
+    @TableField("update_time")
+    private Timestamp updateTime;
 
     @ApiModelProperty("删除标志(0代表存在 1代表删除)")
+    @TableField("del_flag")
     @TableLogic
     private String delFlag;
 
     @ApiModelProperty("创建者")
+    @TableField("create_by")
     private String createBy;
 
     @ApiModelProperty("更新者")
+    @TableField("update_by")
     private String updateBy;
 
+    @TableId("id")
     private Integer id;
+
+    @ApiModelProperty("排序")
+    @TableField("sort")
+    private Integer sort;
 
     @ApiModelProperty("图标")
     private String icon;

@@ -11,7 +11,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author 神的孩子都在歌唱
@@ -46,5 +46,6 @@ public class ArticleCategoryQuery implements Serializable {
 
     private Integer id;
 
-
+    @ApiModelProperty("图标")
+    private String icon;
 }

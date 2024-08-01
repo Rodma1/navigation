@@ -52,5 +52,8 @@ public class ArticleCategoryBO extends BaseCategory implements Serializable  {
     @ApiModelProperty("排序")
     private Integer sort;
 
+    @ApiModelProperty("图标")
+    private String icon;
+
 
 }

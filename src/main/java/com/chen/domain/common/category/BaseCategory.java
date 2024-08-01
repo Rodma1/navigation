@@ -43,4 +43,7 @@ public abstract class BaseCategory {
     @TableField("del_flag")
     private String delFlag;
 
+    @ApiModelProperty("图标")
+    private String icon;
+
 }

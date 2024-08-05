@@ -27,6 +27,11 @@ public class CyzArticlePO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+
+    @TableId("id")
+    private Long id;
+
+
     @ApiModelProperty("文章地址")
     @TableField("url")
     private String url;
@@ -52,9 +57,9 @@ public class CyzArticlePO implements Serializable {
     @TableField("update_time")
     private Timestamp updateTime;
 
+    @TableLogic
     @ApiModelProperty("删除标志(0代表存在 1代表删除)")
     @TableField("del_flag")
-    @TableLogic
     private String delFlag;
 
     @ApiModelProperty("创建者")
@@ -64,9 +69,6 @@ public class CyzArticlePO implements Serializable {
     @ApiModelProperty("更新者")
     @TableField("update_by")
     private String updateBy;
-
-    @TableId("id")
-    private Long id;
 
 
 }

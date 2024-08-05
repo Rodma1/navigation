@@ -32,17 +32,8 @@ public abstract class BaseCategory extends CommandCategory{
     @ApiModelProperty("类别名称")
     private String name;
 
-    @ApiModelProperty("创建时间")
-    private Date createTime;
-
-    @ApiModelProperty("更新时间")
-    private Date updateTime;
-
     @ApiModelProperty("子类别")
     private List<? extends BaseCategory> children;
-
-    @TableField("del_flag")
-    private String delFlag;
 
     @ApiModelProperty("图标")
     private String icon;

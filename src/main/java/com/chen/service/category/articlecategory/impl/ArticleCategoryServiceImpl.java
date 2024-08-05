@@ -50,7 +50,8 @@ public class ArticleCategoryServiceImpl extends ServicePlusImpl<ArticleCategoryM
 
     @Override
     public void createCategory(ArticleCategoryBO category) {
-        boolean save = this.save(category.buildInsertPo());
+        ArticleCategoryPO articleCategoryPO = category.buildInsertPo();
+        boolean save = this.save(articleCategoryPO);
         if (!save) {
             throw new ServiceException("创建类别失败");
         }

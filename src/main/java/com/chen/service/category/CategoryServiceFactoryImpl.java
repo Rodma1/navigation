@@ -4,6 +4,7 @@ import com.chen.domain.articlecategory.ArticleCategoryBO;
 import com.chen.domain.common.category.BaseCategory;
 import com.chen.domain.common.category.CommandCategory;
 import com.chen.domain.phrasesCategory.PhrasesCategoryBO;
+import com.chen.domain.phrasesCategory.PhrasesCategoryPO;
 import com.chen.service.category.articlecategory.ArticleCategoryService;
 import com.chen.service.category.common.CategoryService;
 import com.chen.service.category.phrasesCategory.PhrasesCategoryService;
@@ -27,7 +28,7 @@ public class CategoryServiceFactoryImpl implements CategoryServiceFactory{
 
     private final PhrasesCategoryService phrasesCategoryService;
 
-    private final Map<Class<? extends BaseCategory>, CategoryService<? extends BaseCategory>> services = new HashMap<>();
+    private final Map<Class<? extends CommandCategory>, CategoryService<? extends CommandCategory>> services = new HashMap<>();
 
     @PostConstruct
     public void init() {
@@ -35,20 +36,7 @@ public class CategoryServiceFactoryImpl implements CategoryServiceFactory{
         services.put(PhrasesCategoryBO.class, phrasesCategoryService);
     }
 
-
     @Override
-    @SuppressWarnings("unchecked")
-    public <T extends CommandCategory> CategoryService<T> getService(String categoryType) {
-        switch (categoryType) {
-            case "ARTICLE":
-                return (CategoryService<T>) this.getService(ArticleCategoryBO.class);
-            case "PHRASES":
-                return (CategoryService<T>) phrasesCategoryService;
-            default:
-                return null;
-        }
-    }
-
     @SuppressWarnings("unchecked")
     public <T extends CommandCategory> CategoryService<T> getService(Class<T> categoryType) {
         CategoryService<? extends CommandCategory> service = services.get(categoryType);
@@ -57,5 +45,18 @@ public class CategoryServiceFactoryImpl implements CategoryServiceFactory{
         }
         return (CategoryService<T>) service;
     }
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends CommandCategory> Class<T> getDataClass(String categoryType) {
+        switch (categoryType) {
+            case "ARTICLE":
+                return (Class<T>) ArticleCategoryBO.class;
+            case "PHRASES":
+                return (Class<T>) PhrasesCategoryBO.class;
+            default:
+                return null;
+        }
+    }
+
 
 }

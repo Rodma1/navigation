@@ -32,21 +32,24 @@ public class CategoryController {
     @ApiOperation("获取类别树")
     @GetMapping("/getAllCategoryTree/{categoryType}")
     public ResultData<List<? extends BaseCategory>> getAllCategories(@PathVariable String categoryType)  {
-        CategoryService<CommandCategory> service = categoryServiceFactory.getService(categoryType);
+        Class<CommandCategory> dataClass = categoryServiceFactory.getDataClass(categoryType);
+        CategoryService<CommandCategory> service = categoryServiceFactory.getService(dataClass);
         return ResultData.success(BeanUtils.copyList(service.getAllCategories(), CategoryTreeVo.class));
     }
 
     @ApiOperation("创建类别")
-    @PostMapping("/create")
+    @PostMapping("/insert")
     public ResultData<Object> create(@RequestBody CategoryInsertCommands insertCommands)  {
-        CategoryService<CommandCategory> service = categoryServiceFactory.getService(insertCommands.getCategoryType());
-        service.createCategory(insertCommands);
+        Class<CommandCategory> dataClass = categoryServiceFactory.getDataClass(insertCommands.getCategoryType());
+        CategoryService<CommandCategory> service = categoryServiceFactory.getService(dataClass);
+        service.createCategory(BeanUtils.copyObject(insertCommands, dataClass));
         return ResultData.success();
     }
     @ApiOperation("更新类别")
     @PostMapping("/update")
     public ResultData<Object> update(@RequestBody CategoryUpdateCommands updateCommands)  {
-        CategoryService<CommandCategory> service = categoryServiceFactory.getService(updateCommands.getCategoryType());
+        Class<CommandCategory> dataClass = categoryServiceFactory.getDataClass(updateCommands.getCategoryType());
+        CategoryService<CommandCategory> service = categoryServiceFactory.getService(dataClass);
         service.updateCategory(updateCommands);
         return ResultData.success();
     }

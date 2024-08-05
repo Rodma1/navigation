@@ -1,6 +1,6 @@
 package com.chen.service.category;
 
-import com.chen.domain.common.category.BaseCategory;
+import com.chen.domain.common.category.CommandCategory;
 import com.chen.service.category.common.CategoryService;
 
 /**
@@ -9,5 +9,5 @@ import com.chen.service.category.common.CategoryService;
  * @Description:
  */
 public interface CategoryServiceFactory {
-    <T extends BaseCategory> CategoryService<T> getService(String categoryType);
+    <T extends CommandCategory> CategoryService<T> getService(String categoryType);
 }

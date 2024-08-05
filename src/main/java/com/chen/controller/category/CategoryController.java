@@ -2,17 +2,18 @@ package com.chen.controller.category;
 
 import com.chen.common.utils.BeanUtils;
 import com.chen.common.utils.resultreturn.ResultData;
+import com.chen.controller.category.domain.CategoryInsertCommands;
 import com.chen.controller.category.domain.CategoryTreeVo;
+import com.chen.controller.category.domain.CategoryUpdateCommands;
+import com.chen.domain.articlecategory.ArticleCategoryBO;
 import com.chen.domain.common.category.BaseCategory;
+import com.chen.domain.common.category.CommandCategory;
 import com.chen.service.category.CategoryServiceFactory;
 import com.chen.service.category.common.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,10 +30,27 @@ public class CategoryController {
 
     private final CategoryServiceFactory categoryServiceFactory;
     @ApiOperation("获取类别树")
-    @GetMapping("/{categoryType}")
+    @GetMapping("/getAllCategoryTree/{categoryType}")
     public ResultData<List<? extends BaseCategory>> getAllCategories(@PathVariable String categoryType)  {
-        CategoryService<? extends BaseCategory> service = categoryServiceFactory.getService(categoryType);
+        CategoryService<CommandCategory> service = categoryServiceFactory.getService(categoryType);
         return ResultData.success(BeanUtils.copyList(service.getAllCategories(), CategoryTreeVo.class));
     }
+
+    @ApiOperation("创建类别")
+    @PostMapping("/create")
+    public ResultData<Object> create(@RequestBody CategoryInsertCommands insertCommands)  {
+        CategoryService<CommandCategory> service = categoryServiceFactory.getService(insertCommands.getCategoryType());
+        service.createCategory(insertCommands);
+        return ResultData.success();
+    }
+    @ApiOperation("更新类别")
+    @PostMapping("/update")
+    public ResultData<Object> update(@RequestBody CategoryUpdateCommands updateCommands)  {
+        CategoryService<CommandCategory> service = categoryServiceFactory.getService(updateCommands.getCategoryType());
+        service.updateCategory(updateCommands);
+        return ResultData.success();
+    }
+
+
 
 }

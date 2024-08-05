@@ -19,7 +19,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public abstract class BaseCategory{
+public abstract class BaseCategory extends CommandCategory{
 
     private Long id;
 

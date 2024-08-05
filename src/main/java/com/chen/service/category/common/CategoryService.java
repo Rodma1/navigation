@@ -1,6 +1,7 @@
 package com.chen.service.category.common;
 
 import com.chen.domain.common.category.BaseCategory;
+import com.chen.domain.common.category.CommandCategory;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * @DATE 2024/7/29 14:01
  * @Description:
  */
-public interface CategoryService<T extends BaseCategory>{
+public interface CategoryService<T extends CommandCategory>{
 
     /**
      * 获取所有类别

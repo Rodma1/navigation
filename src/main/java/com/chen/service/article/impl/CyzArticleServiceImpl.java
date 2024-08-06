@@ -16,7 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
 import com.chen.service.article.CyzArticleService;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -54,12 +56,26 @@ public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, Cyz
         });
     }
 
+    @Transactional(rollbackFor = ServiceException.class)
     @Override
     public void insert(CyzArticleBO cyzArticleBO) {
-        boolean save = this.save(cyzArticleBO.buildInsertPo());
-        if (!save) {
-            throw new ServiceException("新增失败");
+        try {
+            ArrayList<CyzArticlePO> cyzArticlePoS = new ArrayList<>();
+            cyzArticleBO.getCategoryIds().forEach(item-> {
+                CyzArticlePO cyzArticlePo = cyzArticleBO.buildInsertPo();
+                cyzArticlePo.setCategoryId(item);
+                cyzArticlePoS.add(cyzArticlePo);
+
+            });
+
+            boolean save = this.saveBatch(cyzArticlePoS);
+            if (!save) {
+                throw new ServiceException("新增失败");
+            }
+        } catch (Exception e) {
+            throw new ServiceException("新增失败" + e.getMessage());
         }
+
     }
 
     @Override

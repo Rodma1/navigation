@@ -1,6 +1,5 @@
 package com.chen.service.category.articlecategory.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chen.common.exception.ServiceException;
 import com.chen.mapper.ArticleCategoryMapper;
 import com.chen.domain.articlecategory.ArticleCategoryPO;
@@ -50,8 +49,7 @@ public class ArticleCategoryServiceImpl extends ServicePlusImpl<ArticleCategoryM
 
     @Override
     public void createCategory(ArticleCategoryBO category) {
-        ArticleCategoryPO articleCategoryPO = category.buildInsertPo();
-        boolean save = this.save(articleCategoryPO);
+        boolean save = this.save(category.buildInsertPo());
         if (!save) {
             throw new ServiceException("创建类别失败");
         }

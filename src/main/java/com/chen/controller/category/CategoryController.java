@@ -5,7 +5,6 @@ import com.chen.common.utils.resultreturn.ResultData;
 import com.chen.controller.category.domain.CategoryInsertCommands;
 import com.chen.controller.category.domain.CategoryTreeVo;
 import com.chen.controller.category.domain.CategoryUpdateCommands;
-import com.chen.domain.articlecategory.ArticleCategoryBO;
 import com.chen.domain.common.category.BaseCategory;
 import com.chen.domain.common.category.CommandCategory;
 import com.chen.service.category.CategoryServiceFactory;
@@ -43,15 +42,15 @@ public class CategoryController {
         Class<CommandCategory> dataClass = categoryServiceFactory.getDataClass(insertCommands.getCategoryType());
         CategoryService<CommandCategory> service = categoryServiceFactory.getService(dataClass);
         service.createCategory(BeanUtils.copyObject(insertCommands, dataClass));
-        return ResultData.success();
+        return ResultData.success(true);
     }
     @ApiOperation("更新类别")
     @PostMapping("/update")
     public ResultData<Object> update(@RequestBody CategoryUpdateCommands updateCommands)  {
         Class<CommandCategory> dataClass = categoryServiceFactory.getDataClass(updateCommands.getCategoryType());
         CategoryService<CommandCategory> service = categoryServiceFactory.getService(dataClass);
-        service.updateCategory(updateCommands);
-        return ResultData.success();
+        service.updateCategory(BeanUtils.copyObject(updateCommands, dataClass));
+        return ResultData.success(true);
     }
 
 

@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @ApiModel(value = "创建类别")
-public class CategoryInsertCommands extends CommandCategory {
+public class CategoryInsertCommands {
 
 
     @ApiModelProperty("父id")

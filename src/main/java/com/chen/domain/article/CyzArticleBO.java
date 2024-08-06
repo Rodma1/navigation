@@ -40,7 +40,7 @@ public class CyzArticleBO implements Serializable, BaseBizCommand<CyzArticlePO> 
     private String state;
 
     @ApiModelProperty("文章类别id")
-    private Integer categoryId;
+    private Long categoryId;
 
     @ApiModelProperty("创建时间")
     private Date createTime;

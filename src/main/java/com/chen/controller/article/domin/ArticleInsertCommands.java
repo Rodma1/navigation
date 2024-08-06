@@ -23,5 +23,5 @@ public class ArticleInsertCommands {
     private String state;
 
     @ApiModelProperty("文章类别id")
-    private Integer categoryId;
+    private Long categoryId;
 }

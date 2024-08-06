@@ -14,7 +14,7 @@ import lombok.Data;
 public class PhrasesInsertCommands {
 
     @ApiModelProperty("类别Id")
-    private Integer categoryId;
+    private Long categoryId;
 
     @ApiModelProperty("推荐等级")
     private String rank;

@@ -52,9 +52,9 @@ public class PhrasesPO implements Serializable {
     @TableField("update_by")
     private String updateBy;
 
-    @ApiModelProperty("类别")
-    @TableField("category")
-    private Integer categoryId;
+    @ApiModelProperty("类别id")
+    @TableField("category_id")
+    private Long categoryId;
 
     @ApiModelProperty("推荐等级")
     @TableField("rank")

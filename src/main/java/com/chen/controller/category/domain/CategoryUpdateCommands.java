@@ -17,6 +17,8 @@ import lombok.Setter;
 @ApiModel(value = "创建类别")
 public class CategoryUpdateCommands {
 
+    @ApiModelProperty("类别Id")
+    private Long id;
 
     @ApiModelProperty("父id")
     private Long parentId;

@@ -2,6 +2,7 @@ package com.chen.controller.category;
 
 import com.chen.common.utils.BeanUtils;
 import com.chen.common.utils.resultreturn.ResultData;
+import com.chen.controller.category.domain.CategoryDeleteCommands;
 import com.chen.controller.category.domain.CategoryInsertCommands;
 import com.chen.controller.category.domain.CategoryTreeVo;
 import com.chen.controller.category.domain.CategoryUpdateCommands;
@@ -50,6 +51,15 @@ public class CategoryController {
         Class<CommandCategory> dataClass = categoryServiceFactory.getDataClass(updateCommands.getCategoryType());
         CategoryService<CommandCategory> service = categoryServiceFactory.getService(dataClass);
         service.updateCategory(BeanUtils.copyObject(updateCommands, dataClass));
+        return ResultData.success(true);
+    }
+
+    @ApiOperation("删除类别")
+    @PostMapping("/delete")
+    public ResultData<Object> delete(@RequestBody CategoryDeleteCommands deleteCommands)  {
+        Class<CommandCategory> dataClass = categoryServiceFactory.getDataClass(deleteCommands.getCategoryType());
+        CategoryService<CommandCategory> service = categoryServiceFactory.getService(dataClass);
+        service.updateCategory(BeanUtils.copyObject(deleteCommands, dataClass));
         return ResultData.success(true);
     }
 

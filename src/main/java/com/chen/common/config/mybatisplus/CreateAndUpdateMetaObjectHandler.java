@@ -6,6 +6,7 @@ import com.chen.common.utils.http.HttpStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -21,7 +22,7 @@ public class CreateAndUpdateMetaObjectHandler implements MetaObjectHandler {
 		try {
 			//根据属性名字设置要填充的值
 			if (metaObject.hasGetter("createTime")) {
-				this.setFieldValByName("createTime", new Date(), metaObject);
+				this.setFieldValByName("createTime", new Timestamp(System.currentTimeMillis()), metaObject);
 			}
 		} catch (Exception e) {
 			throw new ServiceException("自动注入异常 => " + e.getMessage(), HttpStatus.HTTP_UNAUTHORIZED);
@@ -33,7 +34,7 @@ public class CreateAndUpdateMetaObjectHandler implements MetaObjectHandler {
 	public void updateFill(MetaObject metaObject) {
 		try {
 			if (metaObject.hasGetter("updateTime")) {
-				this.setFieldValByName("updateTime", new Date(), metaObject);
+				this.setFieldValByName("updateTime", new Timestamp(System.currentTimeMillis()), metaObject);
 			}
 		} catch (Exception e) {
 			throw new ServiceException("自动注入异常 => " + e.getMessage(), HttpStatus.HTTP_UNAUTHORIZED);

@@ -138,9 +138,9 @@ spring:
         # 主库数据源
         master:
           driverClassName: org.postgresql.Driver
-          url: jdbc:postgresql://111.230.112.151:5432/navigation
+          url: jdbc:postgresql://192.168.1.47:5432/navigation
           username: postgres
-          password: chenyunzhi
+          password: chenyunzhi123
         # 从库数据源
         slave:
           lazy: true

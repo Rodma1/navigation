@@ -1,9 +1,7 @@
-package com.chen.service.navigatecategory.impl;
+package com.chen.service.category.navigatecategory.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.chen.common.utils.BeanCopyUtils;
 import com.chen.common.utils.BeanUtils;
-import com.chen.common.utils.StringUtils;
 import com.chen.domain.navigatecategory.CyzNavigateCategoryBO;
 import com.chen.domain.navigatesite.CyzNavigateSiteBO;
 import com.chen.domain.navigatesite.CyzNavigateSitePO;
@@ -14,7 +12,7 @@ import com.chen.service.navigatesite.CyzNavigateSiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
-import com.chen.service.navigatecategory.CyzNavigateCategoryService;
+import com.chen.service.category.navigatecategory.CyzNavigateCategoryService;
 
 import java.util.*;
 import java.util.function.Function;
@@ -63,28 +61,21 @@ public class CyzNavigateCategoryServiceImpl extends ServicePlusImpl<CyzNavigateC
      * 通过出栈入栈的数据结构构造数据
      */
     private void buildSubTree(Map<Long, CyzNavigateCategoryBO> cyzNavigateCategoryBoMap, CyzNavigateCategoryBO navigateCategoryBo) {
-
-        Stack<CyzNavigateCategoryBO> navigateCategories = new Stack<>();
-
+        Deque<CyzNavigateCategoryBO> navigateCategories = new ArrayDeque<>();
         navigateCategories.push(navigateCategoryBo);
 
         while (!navigateCategories.isEmpty()) {
-
             CyzNavigateCategoryBO categoryBO = navigateCategories.pop();
-            List<CyzNavigateCategoryBO> cyzNavigateCategoryBoS = new ArrayList<>();
+            List<CyzNavigateCategoryBO> cyzNavigateCategoryBoS = cyzNavigateCategoryBoMap.values().stream()
+                    .filter(navigateCategoryBO -> Objects.nonNull(navigateCategoryBO.getParentId()) && navigateCategoryBO.getParentId().equals(categoryBO.getId()))
+                    .collect(Collectors.toList());
 
-            // 遍历获取它的子节点
-            for (CyzNavigateCategoryBO navigateCategoryBO: cyzNavigateCategoryBoMap.values()) {
-
-                if (Objects.nonNull(navigateCategoryBO.getParentId()) && navigateCategoryBO.getParentId().equals(categoryBO.getId())) {
-                    cyzNavigateCategoryBoS.add(navigateCategoryBO);
-                    navigateCategories.push(navigateCategoryBO);
-                }
-
-            }
-            List<CyzNavigateSiteBO> cyzNavigateSiteBoS = navigateSiteService.listBo(new LambdaQueryWrapper<CyzNavigateSitePO>().eq(CyzNavigateSitePO::getCategoryId, categoryBO.getId()));
+            List<CyzNavigateSiteBO> cyzNavigateSiteBoS = navigateSiteService.listBo(
+                    new LambdaQueryWrapper<CyzNavigateSitePO>().eq(CyzNavigateSitePO::getCategoryId, categoryBO.getId()));
             categoryBO.setSites(cyzNavigateSiteBoS);
             categoryBO.setChildren(cyzNavigateCategoryBoS);
+
+            cyzNavigateCategoryBoS.forEach(navigateCategories::push);
         }
     }
 }

@@ -11,7 +11,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author 神的孩子都在歌唱
@@ -45,7 +45,7 @@ public class PhrasesDTO implements Serializable {
     private String updateBy;
 
     @ApiModelProperty("类别")
-    private Integer categoryId;
+    private Long categoryId;
 
     @ApiModelProperty("推荐等级")
     private String rank;
@@ -55,5 +55,8 @@ public class PhrasesDTO implements Serializable {
 
     private Long id;
 
+
+    @ApiModelProperty("类别名称")
+    private String categoryName;
 
 }

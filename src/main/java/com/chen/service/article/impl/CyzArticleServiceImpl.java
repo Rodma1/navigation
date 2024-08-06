@@ -1,5 +1,6 @@
 package com.chen.service.article.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chen.common.config.mybatisplus.core.TableDataInfo;
 import com.chen.common.config.mybatisplus.page.PagePlus;
@@ -34,6 +35,8 @@ public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, Cyz
     public TableDataInfo<CyzArticleDTO> page(CyzArticlePagesQuery pagesQuery) {
         LambdaQueryWrapper<CyzArticlePO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(pagesQuery.getName()),CyzArticlePO::getName,pagesQuery.getName());
+        queryWrapper.eq(ObjectUtil.isNotNull(pagesQuery.getCategoryId()),CyzArticlePO::getCategoryId,pagesQuery.getCategoryId());
+
         queryWrapper.orderByDesc(CyzArticlePO:: getCreateTime);
         PagePlus<CyzArticlePO, CyzArticleDTO> pagedBo= this.pageBo(PageUtils.buildPagePlus(new PageRequest.Builder(pagesQuery.getPageNum(), pagesQuery.getPageSize()).build()));
         this.parameterConversion(pagedBo.getRecordsVo());

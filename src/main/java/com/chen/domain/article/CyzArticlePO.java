@@ -46,7 +46,7 @@ public class CyzArticlePO implements Serializable {
 
     @ApiModelProperty("文章类别id")
     @TableField("category_id")
-    private Integer categoryId;
+    private Long categoryId;
 
 
     @ApiModelProperty("创建时间")

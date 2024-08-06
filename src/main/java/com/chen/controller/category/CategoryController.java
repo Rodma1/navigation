@@ -59,7 +59,7 @@ public class CategoryController {
     public ResultData<Object> delete(@RequestBody CategoryDeleteCommands deleteCommands)  {
         Class<CommandCategory> dataClass = categoryServiceFactory.getDataClass(deleteCommands.getCategoryType());
         CategoryService<CommandCategory> service = categoryServiceFactory.getService(dataClass);
-        service.updateCategory(BeanUtils.copyObject(deleteCommands, dataClass));
+        service.deleteCategory(deleteCommands.getId());
         return ResultData.success(true);
     }
 

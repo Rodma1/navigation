@@ -36,7 +36,7 @@ public class CyzArticleDTO implements Serializable {
 
 
     @ApiModelProperty("文章类别id")
-    private Integer categoryId;
+    private Long categoryId;
 
     @ApiModelProperty("创建时间")
     private Date createTime;
@@ -55,6 +55,10 @@ public class CyzArticleDTO implements Serializable {
     private String updateBy;
 
     private Long id;
+
+
+    @ApiModelProperty("文章类别名称")
+    private String categoryName;
 
 
 }

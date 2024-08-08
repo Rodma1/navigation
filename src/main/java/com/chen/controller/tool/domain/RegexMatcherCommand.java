@@ -18,5 +18,8 @@ public class RegexMatcherCommand {
     private String regex;
 
     @ApiModelProperty("匹配项")
-    private List<String> value;
+    private List<String> values;
+
+    @ApiModelProperty("匹配项")
+    private String value;
 }

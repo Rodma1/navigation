@@ -29,8 +29,8 @@ public class ToolController {
     @ApiOperation(value = "正则匹配")
     @PostMapping(value = "/regexMatcher")
     public ResultData<List<String>> regexMatcher(RegexMatcherCommand matcherCommand) {
-
-        return ResultData.success(toolService.regexMatcher(matcherCommand.getRegex(),matcherCommand.getValue()));
+        matcherCommand.getValues().add(matcherCommand.getValue());
+        return ResultData.success(toolService.regexMatcher(matcherCommand.getRegex(),matcherCommand.getValues()));
 
     }
 

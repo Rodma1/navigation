@@ -1,5 +1,6 @@
 package com.chen.service.category.articlecategory.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chen.common.exception.ServiceException;
 import com.chen.domain.article.CyzArticlePO;
@@ -55,6 +56,9 @@ public class ArticleCategoryServiceImpl extends ServicePlusImpl<ArticleCategoryM
 
     @Override
     public void createCategory(ArticleCategoryBO category) {
+        if (ObjectUtil.isNull(category.getParentId())) {
+            category.setParentId(0L);
+        }
         boolean save = this.save(category.buildInsertPo());
         if (!save) {
             throw new ServiceException("创建类别失败");

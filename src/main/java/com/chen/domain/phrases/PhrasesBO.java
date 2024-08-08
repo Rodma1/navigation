@@ -50,7 +50,7 @@ public class PhrasesBO implements Serializable, BaseBizCommand<PhrasesPO> {
     private String updateBy;
 
     @ApiModelProperty("类别")
-    private Integer categoryId;
+    private Long categoryId;
 
     @ApiModelProperty("推荐等级")
     private String rank;

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import com.chen.common.config.mybatisplus.core.command.BaseBizCommand;
 import com.chen.common.exception.ServiceException;
@@ -40,7 +41,11 @@ public class CyzArticleBO implements Serializable, BaseBizCommand<CyzArticlePO> 
     private String state;
 
     @ApiModelProperty("文章类别id")
-    private Integer categoryId;
+    private Long categoryId;
+
+    @ApiModelProperty("文章类别ids")
+    private List<Long> categoryIds;
+
 
     @ApiModelProperty("创建时间")
     private Date createTime;

@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @Author chenyunzhi
  * @DATE 2024/7/24 16:57
@@ -23,5 +25,9 @@ public class ArticleInsertCommands {
     private String state;
 
     @ApiModelProperty("文章类别id")
-    private Integer categoryId;
+
+    private Long categoryId;
+    @ApiModelProperty("文章类别ids")
+    private List<Long> categoryIds;
+
 }

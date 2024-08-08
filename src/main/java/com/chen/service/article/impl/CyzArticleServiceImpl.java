@@ -9,9 +9,12 @@ import com.chen.common.exception.ServiceException;
 import com.chen.common.utils.StringUtils;
 import com.chen.common.utils.page.PageUtils;
 import com.chen.domain.article.*;
+import com.chen.domain.articlebindcategory.ArticleBindCategoryBO;
+import com.chen.domain.articlebindcategory.ArticleBindCategoryPO;
 import com.chen.domain.articlecategory.ArticleCategoryPO;
 import com.chen.mapper.ArticleCategoryMapper;
 import com.chen.mapper.CyzArticleMapper;
+import com.chen.service.articlebindcategory.ArticleBindCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
@@ -33,6 +36,9 @@ import java.util.stream.Collectors;
 public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, CyzArticlePO, CyzArticleDTO> implements CyzArticleService {
 
     private final ArticleCategoryMapper categoryService;
+
+    private final ArticleBindCategoryService articleBindCategoryService;
+
     @Override
     public TableDataInfo<CyzArticleDTO> page(CyzArticlePagesQuery pagesQuery) {
         LambdaQueryWrapper<CyzArticlePO> queryWrapper = new LambdaQueryWrapper<>();
@@ -41,7 +47,7 @@ public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, Cyz
 
         queryWrapper.orderByDesc(CyzArticlePO:: getCreateTime);
         PagePlus<CyzArticlePO, CyzArticleDTO> pagedBo= this.pageBo(PageUtils.buildPagePlus(new PageRequest.Builder(pagesQuery.getPageNum(), pagesQuery.getPageSize()).build()));
-        this.parameterConversion(pagedBo.getRecordsVo());
+        pagedBo.getRecordsVo().forEach(this::parameterConversion);
         return PageUtils.buildDataInfo(pagedBo);
     }
 
@@ -49,50 +55,73 @@ public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, Cyz
      * 转化特定参数
      * @param articleDtoS 文章
      */
-    private void parameterConversion(List<CyzArticleDTO> articleDtoS) {
+    private void parameterConversion(CyzArticleDTO articleDtoS) {
         Map<Long, String> collect = categoryService.selectList(new LambdaQueryWrapper<>()).stream().collect(Collectors.toMap(ArticleCategoryPO::getId, ArticleCategoryPO::getName));
-        articleDtoS.forEach(item->{
-            item.setCategoryName(collect.get(item.getCategoryId()));
-        });
+        List<ArticleBindCategoryBO> articleBindCategoryBoS = articleBindCategoryService.listBo(new LambdaQueryWrapper<ArticleBindCategoryPO>().eq(ArticleBindCategoryPO::getArticleId, articleDtoS.getId()));
+
+        articleDtoS.setCategoryName(articleBindCategoryBoS.stream().map(item -> collect.get(item.getCategoryId())).collect(Collectors.joining(", ")));
     }
 
     @Transactional(rollbackFor = ServiceException.class)
     @Override
     public void insert(CyzArticleBO cyzArticleBO) {
         try {
-            ArrayList<CyzArticlePO> cyzArticlePoS = new ArrayList<>();
-            cyzArticleBO.getCategoryIds().forEach(item-> {
-                CyzArticlePO cyzArticlePo = cyzArticleBO.buildInsertPo();
-                cyzArticlePo.setCategoryId(item);
-                cyzArticlePoS.add(cyzArticlePo);
-
-            });
-
-            boolean save = this.saveBatch(cyzArticlePoS);
+            CyzArticlePO cyzArticlePo = cyzArticleBO.buildInsertPo();
+            boolean save = this.save(cyzArticlePo);
             if (!save) {
                 throw new ServiceException("新增失败");
             }
+            this.articleBindCategory(cyzArticleBO.getCategoryIds(), cyzArticlePo.getId());
         } catch (Exception e) {
             throw new ServiceException("新增失败" + e.getMessage());
         }
 
     }
 
+    @Transactional(rollbackFor = ServiceException.class)
     @Override
     public Boolean delete(Long id) {
-        boolean remove = this.removeById(id);
-        if (!remove) {
-            throw new ServiceException("删除失败");
+
+        try {
+            boolean remove = this.removeById(id);
+            if (!remove) {
+                throw new ServiceException("删除失败");
+            }
+            articleBindCategoryService.remove(new LambdaQueryWrapper<ArticleBindCategoryPO>().eq(ArticleBindCategoryPO::getArticleId,id));
+        } catch (ServiceException e) {
+            throw new ServiceException(e);
         }
         return true;
+
     }
 
     @Override
     public void update(CyzArticleBO cyzArticleBO) {
-        boolean update = this.save(cyzArticleBO.buildUpdatePo());
-        if (!update) {
-            throw new ServiceException("更新失败");
+
+        try {
+            boolean update = this.save(cyzArticleBO.buildUpdatePo());
+            if (!update) {
+                throw new ServiceException("更新失败");
+            }
+            articleBindCategoryService.remove(new LambdaQueryWrapper<ArticleBindCategoryPO>().eq(ArticleBindCategoryPO::getArticleId,cyzArticleBO.getId()));
+            this.articleBindCategory(cyzArticleBO.getCategoryIds(), cyzArticleBO.getId());
+        } catch (ServiceException e) {
+            throw new ServiceException(e);
         }
+    }
+
+
+    private void articleBindCategory(List<Long> categoryIds,Long articleId) {
+        ArrayList<ArticleBindCategoryPO> articleBindCategoryPoS = new ArrayList<>();
+
+        categoryIds.forEach(item-> {
+            ArticleBindCategoryPO articleBindCategoryPo = new ArticleBindCategoryPO();
+            articleBindCategoryPo.setCategoryId(item);
+            articleBindCategoryPo.setArticleId(articleId);
+            articleBindCategoryPoS.add(articleBindCategoryPo);
+
+        });
+        articleBindCategoryService.saveBatch(articleBindCategoryPoS);
     }
 
 

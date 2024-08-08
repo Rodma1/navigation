@@ -4,10 +4,12 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chen.common.exception.ServiceException;
 import com.chen.domain.article.CyzArticlePO;
+import com.chen.domain.articlebindcategory.ArticleBindCategoryPO;
 import com.chen.mapper.ArticleCategoryMapper;
 import com.chen.domain.articlecategory.ArticleCategoryPO;
 import com.chen.domain.articlecategory.ArticleCategoryBO;
 import com.chen.service.article.CyzArticleService;
+import com.chen.service.articlebindcategory.ArticleBindCategoryService;
 import com.chen.service.category.articlecategory.ArticleCategoryService;
 import com.chen.service.category.common.impl.AbstractCategoryService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +28,7 @@ import java.util.List;
 @Service
 public class ArticleCategoryServiceImpl extends ServicePlusImpl<ArticleCategoryMapper, ArticleCategoryPO, ArticleCategoryBO>  implements ArticleCategoryService {
 
-    private final CyzArticleService articleService;
+    private final ArticleBindCategoryService articleBindCategoryService;
     private final AbstractCategoryService<ArticleCategoryBO> categoryServiceTemplate = new AbstractCategoryService<ArticleCategoryBO>() {
 
 
@@ -75,7 +77,7 @@ public class ArticleCategoryServiceImpl extends ServicePlusImpl<ArticleCategoryM
 
     @Override
     public void deleteCategory(Long id) {
-        long count = articleService.count(new LambdaQueryWrapper<CyzArticlePO>().eq(CyzArticlePO::getCategoryId, id));
+        long count = articleBindCategoryService.count(new LambdaQueryWrapper<ArticleBindCategoryPO>().eq(ArticleBindCategoryPO::getCategoryId, id));
         if (count > 0) {
             throw new ServiceException("已有" + count + "文章关联类别无法删除");
         }

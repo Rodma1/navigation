@@ -1,5 +1,6 @@
 package com.chen.domain.articledomain.articlebindcategory;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
@@ -25,11 +26,11 @@ public class ArticleBindCategoryPO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("文章id")
-    @TableId("article_id")
+    @TableField("article_id")
     private Long articleId;
 
     @ApiModelProperty("文章类别id")
-    @TableId("category_id")
+    @TableField("category_id")
     private Long categoryId;
 
 

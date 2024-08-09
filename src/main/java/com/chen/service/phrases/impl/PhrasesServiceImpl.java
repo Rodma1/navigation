@@ -8,7 +8,6 @@ import com.chen.common.config.mybatisplus.page.PageRequest;
 import com.chen.common.exception.ServiceException;
 import com.chen.common.utils.StringUtils;
 import com.chen.common.utils.page.PageUtils;
-import com.chen.domain.phrases.*;
 import com.chen.domain.phrasesdomain.phrases.PhrasesBO;
 import com.chen.domain.phrasesdomain.phrases.PhrasesDTO;
 import com.chen.domain.phrasesdomain.phrases.PhrasesPO;

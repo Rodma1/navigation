@@ -1,6 +1,6 @@
 package com.chen.mapper;
 
-import com.chen.domain.article.CyzArticlePO;
+import com.chen.domain.articledomain.article.CyzArticlePO;
 import com.chen.common.config.mybatisplus.core.BaseMapperPlus;
 import org.springframework.stereotype.Repository;
 

@@ -1,11 +1,9 @@
 package com.chen.service.category.phrasesCategory.impl;
 
 import com.chen.common.exception.ServiceException;
-import com.chen.domain.articlecategory.ArticleCategoryBO;
 import com.chen.mapper.PhrasesCategoryMapper;
-import com.chen.domain.phrasesCategory.PhrasesCategoryPO;
-import com.chen.domain.phrasesCategory.PhrasesCategoryBO;
-import com.chen.service.category.articlecategory.impl.ArticleCategoryServiceImpl;
+import com.chen.domain.phrasesdomain.phrasesCategory.PhrasesCategoryPO;
+import com.chen.domain.phrasesdomain.phrasesCategory.PhrasesCategoryBO;
 import com.chen.service.category.common.impl.AbstractCategoryService;
 import com.chen.service.category.phrasesCategory.PhrasesCategoryService;
 import org.springframework.stereotype.Service;

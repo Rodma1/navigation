@@ -1,14 +1,9 @@
 package com.chen.domain.common.category;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.chen.common.config.mybatisplus.core.command.BaseBizCommand;
-import com.chen.domain.navigatecategory.CyzNavigateCategoryBO;
-import com.chen.domain.navigatesite.CyzNavigateSiteBO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.List;
 
 /**

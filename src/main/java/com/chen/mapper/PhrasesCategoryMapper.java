@@ -1,6 +1,6 @@
 package com.chen.mapper;
 
-import com.chen.domain.phrasesCategory.PhrasesCategoryPO;
+import com.chen.domain.phrasesdomain.phrasesCategory.PhrasesCategoryPO;
 import com.chen.common.config.mybatisplus.core.BaseMapperPlus;
 import org.springframework.stereotype.Repository;
 

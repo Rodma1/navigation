@@ -1,10 +1,8 @@
 package com.chen.service.category;
 
-import com.chen.domain.articlecategory.ArticleCategoryBO;
-import com.chen.domain.common.category.BaseCategory;
+import com.chen.domain.articledomain.articlecategory.ArticleCategoryBO;
 import com.chen.domain.common.category.CommandCategory;
-import com.chen.domain.phrasesCategory.PhrasesCategoryBO;
-import com.chen.domain.phrasesCategory.PhrasesCategoryPO;
+import com.chen.domain.phrasesdomain.phrasesCategory.PhrasesCategoryBO;
 import com.chen.service.category.articlecategory.ArticleCategoryService;
 import com.chen.service.category.common.CategoryService;
 import com.chen.service.category.phrasesCategory.PhrasesCategoryService;

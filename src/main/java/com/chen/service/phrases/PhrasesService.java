@@ -1,14 +1,10 @@
 package com.chen.service.phrases;
 import com.chen.common.config.mybatisplus.core.TableDataInfo;
-import com.chen.domain.article.CyzArticleBO;
-import com.chen.domain.article.CyzArticleDTO;
-import com.chen.domain.article.CyzArticlePagesQuery;
-import com.chen.domain.phrases.PhrasesDTO;
-import com.chen.domain.phrases.PhrasesPO;
-import com.chen.domain.phrases.PhrasesBO;
+import com.chen.domain.phrasesdomain.phrases.PhrasesDTO;
+import com.chen.domain.phrasesdomain.phrases.PhrasesPO;
+import com.chen.domain.phrasesdomain.phrases.PhrasesBO;
 import com.chen.common.config.mybatisplus.core.IServicePlus;
-import com.chen.domain.phrases.PhrasesPagesQuery;
-import io.swagger.models.auth.In;
+import com.chen.domain.phrasesdomain.phrases.PhrasesPagesQuery;
 
 /**
  * @author: 神的孩子都在歌唱

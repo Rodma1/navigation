@@ -1,6 +1,6 @@
 package com.chen.mapper;
 
-import com.chen.domain.navigatecategory.CyzNavigateCategoryPO;
+import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryPO;
 import com.chen.common.config.mybatisplus.core.BaseMapperPlus;
 import org.springframework.stereotype.Repository;
 

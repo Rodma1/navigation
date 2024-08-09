@@ -1,9 +1,8 @@
 package com.chen.service.navigatesite.impl;
 
 import com.chen.mapper.CyzNavigateSiteMapper;
-import com.chen.domain.navigatesite.CyzNavigateSitePO;
-import com.chen.domain.navigatesite.CyzNavigateSiteBO;
-import com.chen.domain.navigatesite.CyzNavigateSiteVO;
+import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSitePO;
+import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSiteBO;
 import org.springframework.stereotype.Service;
 import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
 import com.chen.service.navigatesite.CyzNavigateSiteService;

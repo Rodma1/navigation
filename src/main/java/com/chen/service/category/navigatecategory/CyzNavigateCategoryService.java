@@ -1,7 +1,7 @@
 package com.chen.service.category.navigatecategory;
-import com.chen.domain.navigatecategory.CyzNavigateCategoryBO;
-import com.chen.domain.navigatecategory.CyzNavigateCategoryPO;
-import com.chen.domain.navigatecategory.CyzNavigateCategoryDTO;
+import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryBO;
+import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryPO;
+import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryDTO;
 import com.chen.common.config.mybatisplus.core.IServicePlus;
 
 import java.util.List;

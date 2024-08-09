@@ -1,5 +1,5 @@
 package com.chen.service.category.articlecategory;
-import com.chen.domain.articlecategory.ArticleCategoryBO;
+import com.chen.domain.articledomain.articlecategory.ArticleCategoryBO;
 import com.chen.service.category.common.CategoryService;
 
 /**

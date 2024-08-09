@@ -1,6 +1,6 @@
 package com.chen.service.navigatesite;
-import com.chen.domain.navigatesite.CyzNavigateSitePO;
-import com.chen.domain.navigatesite.CyzNavigateSiteBO;
+import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSitePO;
+import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSiteBO;
 import com.chen.common.config.mybatisplus.core.IServicePlus;
 /**
  * @author: 神的孩子都在歌唱

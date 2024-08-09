@@ -1,6 +1,6 @@
 package com.chen.mapper;
 
-import com.chen.domain.articlebindcategory.ArticleBindCategoryPO;
+import com.chen.domain.articledomain.articlebindcategory.ArticleBindCategoryPO;
 import com.chen.common.config.mybatisplus.core.BaseMapperPlus;
 import org.springframework.stereotype.Repository;
 

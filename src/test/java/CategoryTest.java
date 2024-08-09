@@ -1,6 +1,6 @@
 import com.chen.ChenApplication;
 import com.chen.common.utils.json.FastJsonUtils;
-import com.chen.domain.articlecategory.ArticleCategoryBO;
+import com.chen.domain.articledomain.articlecategory.ArticleCategoryBO;
 import com.chen.service.category.articlecategory.ArticleCategoryService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

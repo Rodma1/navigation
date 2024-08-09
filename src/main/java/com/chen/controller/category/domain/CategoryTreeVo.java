@@ -1,6 +1,6 @@
 package com.chen.controller.category.domain;
 import com.chen.domain.common.category.BaseCategory;
-import com.chen.domain.navigatesite.CyzNavigateSiteBO;
+import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSiteBO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;

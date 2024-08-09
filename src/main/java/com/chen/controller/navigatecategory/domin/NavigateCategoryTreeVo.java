@@ -1,9 +1,8 @@
 package com.chen.controller.navigatecategory.domin;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.chen.domain.navigatecategory.CyzNavigateCategoryBO;
-import com.chen.domain.navigatecategory.CyzNavigateCategoryDTO;
-import com.chen.domain.navigatesite.CyzNavigateSiteBO;
+import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryBO;
+import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSiteBO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

@@ -3,7 +3,7 @@ package com.chen.controller.navigatecategory;
 import com.chen.common.utils.BeanUtils;
 import com.chen.common.utils.resultreturn.ResultData;
 import com.chen.controller.navigatecategory.domin.NavigateCategoryTreeVo;
-import com.chen.domain.navigatecategory.CyzNavigateCategoryDTO;
+import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryDTO;
 import com.chen.service.category.navigatecategory.CyzNavigateCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;

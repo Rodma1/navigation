@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RequiredArgsConstructor
 @RestController
-@Api(value = "接口控制器", tags = "")
+@Api(value = "接口控制器", tags = "文章接口")
 @RequestMapping("/cyzArticle")
 public class CyzArticleController {
 

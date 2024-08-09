@@ -18,6 +18,7 @@ import com.chen.domain.articledomain.articlecategory.ArticleCategoryPO;
 import com.chen.mapper.ArticleCategoryMapper;
 import com.chen.mapper.CyzArticleMapper;
 import com.chen.service.articleservice.articlebindcategory.ArticleBindCategoryService;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
@@ -44,12 +45,14 @@ public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, Cyz
 
     @Override
     public TableDataInfo<CyzArticleDTO> page(CyzArticlePagesQuery pagesQuery) {
-        LambdaQueryWrapper<CyzArticlePO> queryWrapper = new LambdaQueryWrapper<>();
+        MPJLambdaWrapper<CyzArticlePO> queryWrapper = new MPJLambdaWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(pagesQuery.getName()),CyzArticlePO::getName,pagesQuery.getName());
-        queryWrapper.eq(ObjectUtil.isNotNull(pagesQuery.getCategoryId()),CyzArticlePO::getCategoryId,pagesQuery.getCategoryId());
+        queryWrapper.leftJoin(ArticleBindCategoryPO.class, ArticleBindCategoryPO::getArticleId,CyzArticlePO::getId);
+        queryWrapper.leftJoin(ArticleCategoryPO.class, ArticleCategoryPO::getId,ArticleBindCategoryPO::getArticleId);
+        queryWrapper.eq(ObjectUtil.isNotNull(pagesQuery.getCategoryId()),ArticleCategoryPO::getId,pagesQuery.getCategoryId());
 
         queryWrapper.orderByDesc(CyzArticlePO:: getCreateTime);
-        PagePlus<CyzArticlePO, CyzArticleDTO> pagedBo= this.pageBo(PageUtils.buildPagePlus(new PageRequest.Builder(pagesQuery.getPageNum(), pagesQuery.getPageSize()).build()));
+        PagePlus<CyzArticlePO, CyzArticleDTO> pagedBo= this.pageBo(PageUtils.buildPagePlus(new PageRequest.Builder(pagesQuery.getPageNum(), pagesQuery.getPageSize()).build()),queryWrapper);
         pagedBo.getRecordsVo().forEach(this::parameterConversion);
         return PageUtils.buildDataInfo(pagedBo);
     }

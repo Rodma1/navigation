@@ -24,5 +24,9 @@ public class PageQueryParams extends BasePagesQuery {
     @ApiModelProperty("文章地址")
     private String url;
 
+    @ApiModelProperty("文章类别id")
+    private Long categoryId;
+
+
 
 }

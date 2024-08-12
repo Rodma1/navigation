@@ -13,7 +13,7 @@ import com.chen.domain.phrasesdomain.phrases.PhrasesBO;
 import com.chen.domain.phrasesdomain.phrases.PhrasesDTO;
 import com.chen.domain.phrasesdomain.phrases.PhrasesPagesQuery;
 import com.chen.domain.phrasesdomain.phrases.PhrasesVO;
-import com.chen.service.phrases.PhrasesService;
+import com.chen.service.phrasesservice.phrases.PhrasesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;

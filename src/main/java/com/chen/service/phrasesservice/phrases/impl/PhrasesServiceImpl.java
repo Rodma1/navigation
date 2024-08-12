@@ -1,4 +1,4 @@
-package com.chen.service.phrases.impl;
+package com.chen.service.phrasesservice.phrases.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -13,12 +13,14 @@ import com.chen.domain.phrasesdomain.phrases.PhrasesDTO;
 import com.chen.domain.phrasesdomain.phrases.PhrasesPO;
 import com.chen.domain.phrasesdomain.phrases.PhrasesPagesQuery;
 import com.chen.domain.phrasesdomain.phrasesCategory.PhrasesCategoryPO;
+import com.chen.domain.phrasesdomain.phrasesbindcategory.PhrasesBindCategoryPO;
 import com.chen.mapper.PhrasesCategoryMapper;
 import com.chen.mapper.PhrasesMapper;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
-import com.chen.service.phrases.PhrasesService;
+import com.chen.service.phrasesservice.phrases.PhrasesService;
 
 import java.util.List;
 import java.util.Map;
@@ -36,9 +38,11 @@ public class PhrasesServiceImpl extends ServicePlusImpl<PhrasesMapper, PhrasesPO
     private final PhrasesCategoryMapper categoryMapper;
     @Override
     public TableDataInfo<PhrasesDTO> page(PhrasesPagesQuery pagesQuery) {
-        LambdaQueryWrapper<PhrasesDTO> queryWrapper = new LambdaQueryWrapper<>();
+        MPJLambdaWrapper<PhrasesDTO> queryWrapper = new MPJLambdaWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(pagesQuery.getSentence()),PhrasesDTO::getSentence,pagesQuery.getSentence());
-        queryWrapper.eq(ObjectUtil.isNotNull(pagesQuery.getCategoryId()), PhrasesDTO::getCategoryId,pagesQuery.getCategoryId());
+        queryWrapper.leftJoin(PhrasesBindCategoryPO.class, PhrasesBindCategoryPO::getPhrasesId,PhrasesPO::getId);
+        queryWrapper.leftJoin(PhrasesCategoryPO.class,PhrasesCategoryPO::getId,PhrasesBindCategoryPO::getCategoryId);
+        queryWrapper.eq(ObjectUtil.isNotNull(pagesQuery.getCategoryId()), PhrasesCategoryPO::getId,pagesQuery.getCategoryId());
 
         queryWrapper.orderByDesc(PhrasesDTO:: getCreateTime);
         PagePlus<PhrasesPO, PhrasesDTO>  pagedBo = this.pageBo(PageUtils.buildPagePlus(new PageRequest.Builder(pagesQuery.getPageNum(), pagesQuery.getPageSize()).build()));

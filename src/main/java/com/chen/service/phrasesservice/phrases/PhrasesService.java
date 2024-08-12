@@ -1,4 +1,4 @@
-package com.chen.service.phrases;
+package com.chen.service.phrasesservice.phrases;
 import com.chen.common.config.mybatisplus.core.TableDataInfo;
 import com.chen.domain.phrasesdomain.phrases.PhrasesDTO;
 import com.chen.domain.phrasesdomain.phrases.PhrasesPO;

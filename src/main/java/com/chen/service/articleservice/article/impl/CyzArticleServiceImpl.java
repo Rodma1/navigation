@@ -48,7 +48,7 @@ public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, Cyz
         MPJLambdaWrapper<CyzArticlePO> queryWrapper = new MPJLambdaWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(pagesQuery.getName()),CyzArticlePO::getName,pagesQuery.getName());
         queryWrapper.leftJoin(ArticleBindCategoryPO.class, ArticleBindCategoryPO::getArticleId,CyzArticlePO::getId);
-        queryWrapper.leftJoin(ArticleCategoryPO.class, ArticleCategoryPO::getId,ArticleBindCategoryPO::getArticleId);
+        queryWrapper.leftJoin(ArticleCategoryPO.class, ArticleCategoryPO::getId,ArticleBindCategoryPO::getCategoryId);
         queryWrapper.eq(ObjectUtil.isNotNull(pagesQuery.getCategoryId()),ArticleCategoryPO::getId,pagesQuery.getCategoryId());
 
         queryWrapper.orderByDesc(CyzArticlePO:: getCreateTime);

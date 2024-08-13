@@ -66,7 +66,7 @@ public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, Cyz
     private void parameterConversion(CyzArticleDTO articleDtoS) {
         Map<Long, String> collect = categoryService.selectList(new LambdaQueryWrapper<>()).stream().collect(Collectors.toMap(ArticleCategoryPO::getId, ArticleCategoryPO::getName));
         List<ArticleBindCategoryBO> articleBindCategoryBoS = articleBindCategoryService.listBo(new LambdaQueryWrapper<ArticleBindCategoryPO>().eq(ArticleBindCategoryPO::getArticleId, articleDtoS.getId()));
-
+        articleDtoS.setCategoryIds(articleBindCategoryBoS.stream().map(ArticleBindCategoryBO::getCategoryId).collect(Collectors.toList()));
         articleDtoS.setCategoryName(articleBindCategoryBoS.stream().map(item -> collect.get(item.getCategoryId())).collect(Collectors.joining(", ")));
     }
 
@@ -107,7 +107,7 @@ public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, Cyz
     public void update(CyzArticleBO cyzArticleBO) {
 
         try {
-            boolean update = this.save(cyzArticleBO.buildUpdatePo());
+            boolean update = this.updateById(cyzArticleBO.buildUpdatePo());
             if (!update) {
                 throw new ServiceException("更新失败");
             }

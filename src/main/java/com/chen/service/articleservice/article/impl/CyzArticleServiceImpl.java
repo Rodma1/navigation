@@ -47,9 +47,11 @@ public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, Cyz
     public TableDataInfo<CyzArticleDTO> page(CyzArticlePagesQuery pagesQuery) {
         MPJLambdaWrapper<CyzArticlePO> queryWrapper = new MPJLambdaWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(pagesQuery.getName()),CyzArticlePO::getName,pagesQuery.getName());
-        queryWrapper.leftJoin(ArticleBindCategoryPO.class, ArticleBindCategoryPO::getArticleId,CyzArticlePO::getId);
-        queryWrapper.leftJoin(ArticleCategoryPO.class, ArticleCategoryPO::getId,ArticleBindCategoryPO::getCategoryId);
-        queryWrapper.eq(ObjectUtil.isNotNull(pagesQuery.getCategoryId()),ArticleCategoryPO::getId,pagesQuery.getCategoryId());
+        if (ObjectUtil.isNotNull(pagesQuery.getCategoryId())) {
+            queryWrapper.leftJoin(ArticleBindCategoryPO.class, ArticleBindCategoryPO::getArticleId,CyzArticlePO::getId);
+            queryWrapper.leftJoin(ArticleCategoryPO.class, ArticleCategoryPO::getId,ArticleBindCategoryPO::getCategoryId);
+            queryWrapper.eq(ObjectUtil.isNotNull(pagesQuery.getCategoryId()),ArticleCategoryPO::getId,pagesQuery.getCategoryId());
+        }
 
         queryWrapper.orderByDesc(CyzArticlePO:: getCreateTime);
         PagePlus<CyzArticlePO, CyzArticleDTO> pagedBo= this.pageBo(PageUtils.buildPagePlus(new PageRequest.Builder(pagesQuery.getPageNum(), pagesQuery.getPageSize()).build()),queryWrapper);

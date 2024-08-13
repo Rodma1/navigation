@@ -67,5 +67,12 @@ public class CyzArticleController {
         articleService.update(BeanUtils.copyObject(updateCommands, CyzArticleBO.class));
         return ResultData.success(true);
     }
+
+    @ApiOperation(value = "更新状态")
+    @PutMapping(value = "/updateStatus")
+    public ResultData<Boolean> updateStatus(@Validated(EditGroup.class) @RequestBody ArticleUpdateCommands updateCommands) {
+        articleService.updateStatus(BeanUtils.copyObject(updateCommands, CyzArticleBO.class));
+        return ResultData.success(true);
+    }
 }
 

@@ -118,6 +118,18 @@ public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, Cyz
         }
     }
 
+    @Override
+    public void updateStatus(CyzArticleBO cyzArticleBO) {
+        try {
+            boolean update = this.updateById(cyzArticleBO.buildUpdatePo());
+            if (!update) {
+                throw new ServiceException("更新失败");
+            }
+        } catch (ServiceException e) {
+            throw new ServiceException(e);
+        }
+    }
+
 
     private void articleBindCategory(List<Long> categoryIds,Long articleId) {
         ArrayList<ArticleBindCategoryPO> articleBindCategoryPoS = new ArrayList<>();

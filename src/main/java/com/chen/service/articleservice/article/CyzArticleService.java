@@ -32,4 +32,9 @@ public interface CyzArticleService extends IServicePlus<CyzArticlePO,CyzArticleD
      * 编辑
      */
     void update(CyzArticleBO cyzArticleBO);
+
+    /**
+     * 编辑状态
+     */
+    void updateStatus(CyzArticleBO cyzArticleBO);
 }

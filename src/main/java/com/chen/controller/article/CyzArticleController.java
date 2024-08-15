@@ -57,7 +57,7 @@ public class CyzArticleController {
     @ApiOperation(value = "删除")
     @DeleteMapping(value = "/delete")
     public ResultData<Boolean> delete(@Validated(DeleteGroup.class) @RequestBody ArticleDeleteCommands deleteCommands) {
-        return ResultData.success(articleService.delete(deleteCommands.getId())
+        return ResultData.success(articleService.delete(deleteCommands.getIds())
 );
     }
 

@@ -88,14 +88,14 @@ public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, Cyz
 
     @Transactional(rollbackFor = ServiceException.class)
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(List<Long> ids) {
 
         try {
-            boolean remove = this.removeById(id);
+            boolean remove = this.removeByIds(ids);
             if (!remove) {
                 throw new ServiceException("删除失败");
             }
-            articleBindCategoryService.remove(new LambdaQueryWrapper<ArticleBindCategoryPO>().eq(ArticleBindCategoryPO::getArticleId,id));
+            articleBindCategoryService.remove(new LambdaQueryWrapper<ArticleBindCategoryPO>().in(ArticleBindCategoryPO::getArticleId,ids));
         } catch (ServiceException e) {
             throw new ServiceException(e);
         }

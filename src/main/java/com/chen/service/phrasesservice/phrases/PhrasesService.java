@@ -6,6 +6,8 @@ import com.chen.domain.phrasesdomain.phrases.PhrasesBO;
 import com.chen.common.config.mybatisplus.core.IServicePlus;
 import com.chen.domain.phrasesdomain.phrases.PhrasesPagesQuery;
 
+import java.util.List;
+
 /**
  * @author: 神的孩子都在歌唱
  * @date: 2024-07-26
@@ -26,7 +28,7 @@ public interface PhrasesService extends IServicePlus<PhrasesPO, PhrasesDTO> {
     /**
      * 删除
      */
-    Boolean delete(Long id);
+    Boolean delete(List<Long> ids);
 
     /**
      * 编辑

@@ -1,5 +1,6 @@
 package com.chen.service.category.phrasesCategory.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.chen.common.exception.ServiceException;
 import com.chen.mapper.PhrasesCategoryMapper;
 import com.chen.domain.phrasesdomain.phrasesCategory.PhrasesCategoryPO;
@@ -45,6 +46,9 @@ public class PhrasesCategoryServiceImpl extends ServicePlusImpl<PhrasesCategoryM
 
     @Override
     public void createCategory(PhrasesCategoryBO category) {
+        if (ObjectUtil.isNull(category.getParentId())) {
+            category.setParentId(0L);
+        }
         boolean save = this.save(category.buildInsertPo());
         if (!save) {
             throw new ServiceException("创建类别失败");

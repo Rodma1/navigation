@@ -3,6 +3,8 @@ package com.chen.controller.phrases.domain;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author chenyunzhi
  */
@@ -10,5 +12,5 @@ import lombok.Data;
 @ApiModel("文章删除")
 public class PhrasesDeleteCommands {
 
-    private Long id;
+    private List<Long> ids;
 }

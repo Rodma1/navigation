@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -47,11 +49,11 @@ public class PhrasesDTO implements Serializable {
     @ApiModelProperty("类别")
     private Long categoryId;
 
+    @ApiModelProperty("文章类别ids")
+    private List<Long> categoryIds;
+
     @ApiModelProperty("推荐等级")
     private String rank;
-
-    @ApiModelProperty("父类")
-    private String parentClass;
 
     private Long id;
 

@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @Author chenyunzhi
  * @DATE 2024/7/26 10:43
@@ -14,7 +16,7 @@ import lombok.Data;
 public class PhrasesInsertCommands {
 
     @ApiModelProperty("类别Id")
-    private Long categoryId;
+    private List<Long> categoryIds;
 
     @ApiModelProperty("推荐等级")
     private String rank;

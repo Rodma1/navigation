@@ -8,17 +8,16 @@ import com.chen.common.config.mybatisplus.page.PageRequest;
 import com.chen.common.exception.ServiceException;
 import com.chen.common.utils.StringUtils;
 import com.chen.common.utils.page.PageUtils;
-import com.chen.domain.phrasesdomain.phrasesbindcategory.PhrasesBindCategoryPO;
-import com.chen.domain.phrasesdomain.phrasesbindcategory.PhrasesBindCategoryPO;
+
 import com.chen.domain.phrasesdomain.phrasesbindcategory.PhrasesBindCategoryBO;
 import com.chen.domain.phrasesdomain.phrasesbindcategory.PhrasesBindCategoryPO;
+
 import com.chen.domain.phrasesdomain.phrases.PhrasesBO;
 import com.chen.domain.phrasesdomain.phrases.PhrasesDTO;
 import com.chen.domain.phrasesdomain.phrases.PhrasesPO;
 import com.chen.domain.phrasesdomain.phrases.PhrasesPagesQuery;
 import com.chen.domain.phrasesdomain.phrasesCategory.PhrasesCategoryPO;
-import com.chen.domain.phrasesdomain.phrasesbindcategory.PhrasesBindCategoryBO;
-import com.chen.domain.phrasesdomain.phrasesbindcategory.PhrasesBindCategoryPO;
+
 import com.chen.mapper.PhrasesCategoryMapper;
 import com.chen.mapper.PhrasesMapper;
 import com.chen.service.phrasesservice.phrasesbindcategory.PhrasesBindCategoryService;
@@ -47,14 +46,16 @@ public class PhrasesServiceImpl extends ServicePlusImpl<PhrasesMapper, PhrasesPO
     private final PhrasesBindCategoryService phrasesBindCategoryService;
     @Override
     public TableDataInfo<PhrasesDTO> page(PhrasesPagesQuery pagesQuery) {
-        MPJLambdaWrapper<PhrasesDTO> queryWrapper = new MPJLambdaWrapper<>();
-        queryWrapper.like(StringUtils.isNotBlank(pagesQuery.getSentence()),PhrasesDTO::getSentence,pagesQuery.getSentence());
-        queryWrapper.leftJoin(PhrasesBindCategoryPO.class, PhrasesBindCategoryPO::getPhrasesId,PhrasesPO::getId);
-        queryWrapper.leftJoin(PhrasesCategoryPO.class,PhrasesCategoryPO::getId,PhrasesBindCategoryPO::getCategoryId);
-        queryWrapper.eq(ObjectUtil.isNotNull(pagesQuery.getCategoryId()), PhrasesCategoryPO::getId,pagesQuery.getCategoryId());
-
-        queryWrapper.orderByDesc(PhrasesDTO:: getCreateTime);
-        PagePlus<PhrasesPO, PhrasesDTO>  pagedBo = this.pageBo(PageUtils.buildPagePlus(new PageRequest.Builder(pagesQuery.getPageNum(), pagesQuery.getPageSize()).build()));
+        MPJLambdaWrapper<PhrasesPO> queryWrapper = new MPJLambdaWrapper<>();
+        queryWrapper.like(StringUtils.isNotBlank(pagesQuery.getSentence()),PhrasesPO::getSentence,pagesQuery.getSentence());
+        if (ObjectUtil.isNotNull(pagesQuery.getCategoryId())) {
+            queryWrapper.leftJoin(PhrasesBindCategoryPO.class, PhrasesBindCategoryPO::getPhrasesId,PhrasesPO::getId);
+            queryWrapper.leftJoin(PhrasesCategoryPO.class,PhrasesCategoryPO::getId,PhrasesBindCategoryPO::getCategoryId);
+            queryWrapper.eq(ObjectUtil.isNotNull(pagesQuery.getCategoryId()), PhrasesCategoryPO::getId,pagesQuery.getCategoryId());
+        }
+        
+        queryWrapper.orderByDesc(PhrasesPO:: getCreateTime);
+        PagePlus<PhrasesPO, PhrasesDTO> pagedBo = this.pageBo(PageUtils.buildPagePlus(new PageRequest.Builder(pagesQuery.getPageNum(), pagesQuery.getPageSize()).build()), queryWrapper);
         pagedBo.getRecordsVo().forEach(this::parameterConversion);
         return PageUtils.buildDataInfo(pagedBo);
     }
@@ -66,7 +67,7 @@ public class PhrasesServiceImpl extends ServicePlusImpl<PhrasesMapper, PhrasesPO
     private void parameterConversion(PhrasesDTO phrasesDtoS) {
         Map<Long, String> collect = categoryMapper.selectList(new LambdaQueryWrapper<>()).stream().collect(Collectors.toMap(PhrasesCategoryPO::getId, PhrasesCategoryPO::getName));
         List<PhrasesBindCategoryBO> phrasesBindCategoryBoS = phrasesBindCategoryService.listBo(new LambdaQueryWrapper<PhrasesBindCategoryPO>().eq(PhrasesBindCategoryPO::getPhrasesId, phrasesDtoS.getId()));
-
+        phrasesDtoS.setCategoryIds(phrasesBindCategoryBoS.stream().map(PhrasesBindCategoryBO::getCategoryId).collect(Collectors.toList()));
         phrasesDtoS.setCategoryName(phrasesBindCategoryBoS.stream().map(item -> collect.get(item.getCategoryId())).collect(Collectors.joining(", ")));
     }
     @Transactional(rollbackFor = ServiceException.class)
@@ -87,14 +88,14 @@ public class PhrasesServiceImpl extends ServicePlusImpl<PhrasesMapper, PhrasesPO
 
     @Transactional(rollbackFor = ServiceException.class)
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(List<Long> ids) {
 
         try {
-            boolean remove = this.removeById(id);
+            boolean remove = this.removeByIds(ids);
             if (!remove) {
                 throw new ServiceException("删除失败");
             }
-            phrasesBindCategoryService.remove(new LambdaQueryWrapper<PhrasesBindCategoryPO>().eq(PhrasesBindCategoryPO::getPhrasesId,id));
+            phrasesBindCategoryService.remove(new LambdaQueryWrapper<PhrasesBindCategoryPO>().in(PhrasesBindCategoryPO::getPhrasesId,ids));
         } catch (ServiceException e) {
             throw new ServiceException(e);
         }

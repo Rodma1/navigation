@@ -56,9 +56,6 @@ public class PhrasesBO implements Serializable, BaseBizCommand<PhrasesPO> {
     @ApiModelProperty("推荐等级")
     private String rank;
 
-    @ApiModelProperty("父类")
-    private String parentClass;
-
 
     @ApiModelProperty("文章类别ids")
     private List<Long> categoryIds;

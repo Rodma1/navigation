@@ -60,9 +60,6 @@ public class PhrasesPO implements Serializable {
     @TableField("rank")
     private String rank;
 
-    @ApiModelProperty("父类")
-    @TableField("parent_class")
-    private String parentClass;
 
     @TableId("id")
     private Long id;

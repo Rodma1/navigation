@@ -50,8 +50,6 @@ public class PhrasesQuery implements Serializable {
     @ApiModelProperty("推荐等级")
     private String rank;
 
-    @ApiModelProperty("父类")
-    private String parentClass;
 
     private Long id;
 

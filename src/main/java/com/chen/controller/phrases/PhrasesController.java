@@ -55,7 +55,7 @@ public class PhrasesController {
     @ApiOperation(value = "删除")
     @DeleteMapping(value = "/delete")
     public ResultData<Boolean> delete(@Validated(DeleteGroup.class) @RequestBody PhrasesDeleteCommands deleteCommands) {
-        return ResultData.success(phrasesService.delete(deleteCommands.getId()));
+        return ResultData.success(phrasesService.delete(deleteCommands.getIds()));
     }
 
     @ApiOperation(value = "更新")

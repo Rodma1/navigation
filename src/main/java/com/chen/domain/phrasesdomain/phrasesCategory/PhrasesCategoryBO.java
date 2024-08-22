@@ -2,10 +2,13 @@ package com.chen.domain.phrasesdomain.phrasesCategory;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import com.chen.common.config.mybatisplus.core.command.BaseBizCommand;
 import com.chen.common.exception.ServiceException;
+import com.chen.common.utils.BeanUtils;
+import com.chen.domain.articledomain.article.CyzArticlePO;
 import com.chen.domain.common.category.BaseCategory;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -58,7 +61,9 @@ public class PhrasesCategoryBO extends BaseCategory implements Serializable, Bas
 
     @Override
     public PhrasesCategoryPO buildInsertPo() throws ServiceException {
-        return null;
+        PhrasesCategoryPO phrasesCategoryPo = BeanUtils.copyObject(this, PhrasesCategoryPO.class);
+        phrasesCategoryPo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        return phrasesCategoryPo;
     }
 
     @Override

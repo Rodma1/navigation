@@ -106,7 +106,7 @@ public class PhrasesServiceImpl extends ServicePlusImpl<PhrasesMapper, PhrasesPO
     @Override
     public Boolean update(PhrasesBO phrasesBO) {
         try {
-            boolean update = this.save(phrasesBO.buildUpdatePo());
+            boolean update = this.updateById(phrasesBO.buildUpdatePo());
             if (!update) {
                 throw new ServiceException("更新失败");
             }

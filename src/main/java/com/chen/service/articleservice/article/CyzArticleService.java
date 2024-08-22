@@ -6,6 +6,8 @@ import com.chen.domain.articledomain.article.CyzArticleBO;
 import com.chen.common.config.mybatisplus.core.IServicePlus;
 import com.chen.domain.articledomain.article.CyzArticlePagesQuery;
 
+import java.util.List;
+
 /**
  * @author: 神的孩子都在歌唱
  * @date: 2024-07-17
@@ -26,7 +28,7 @@ public interface CyzArticleService extends IServicePlus<CyzArticlePO,CyzArticleD
     /**
      * 删除
      */
-    Boolean delete(Long id);
+    Boolean delete(List<Long> ids);
 
     /**
      * 编辑

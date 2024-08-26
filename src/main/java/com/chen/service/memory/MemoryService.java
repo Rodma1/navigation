@@ -6,6 +6,8 @@ import com.chen.domain.memory.MemoryBO;
 import com.chen.common.config.mybatisplus.core.IServicePlus;
 import com.chen.domain.memory.MemoryPagesQuery;
 
+import java.util.List;
+
 /**
  * @author: 神的孩子都在歌唱
  * @date: 2024-08-15
@@ -25,7 +27,7 @@ public interface MemoryService extends IServicePlus<MemoryPO,MemoryDTO> {
     /**
      * 删除
      */
-    Boolean delete(Long id);
+    Boolean delete(List<Long> ids);
 
     /**
      * 编辑

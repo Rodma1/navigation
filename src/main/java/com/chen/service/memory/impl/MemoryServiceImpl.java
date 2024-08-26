@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
 import com.chen.service.memory.MemoryService;
 
+import java.util.List;
+
 /**
  * @author: 神的孩子都在歌唱
  * @date: 2024-08-15
@@ -45,9 +47,9 @@ public class MemoryServiceImpl extends ServicePlusImpl<MemoryMapper, MemoryPO, M
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(List<Long> ids) {
         try {
-            boolean remove = this.removeById(id);
+            boolean remove = this.removeByIds(ids);
             if (!remove) {
                 throw new ServiceException("删除失败");
             }

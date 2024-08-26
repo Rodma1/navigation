@@ -52,6 +52,7 @@ public class CyzArticleServiceImpl extends ServicePlusImpl<CyzArticleMapper, Cyz
             queryWrapper.leftJoin(ArticleCategoryPO.class, ArticleCategoryPO::getId,ArticleBindCategoryPO::getCategoryId);
             queryWrapper.eq(ObjectUtil.isNotNull(pagesQuery.getCategoryId()),ArticleCategoryPO::getId,pagesQuery.getCategoryId());
         }
+        queryWrapper.like(StringUtils.isNotBlank(pagesQuery.getUrl()),CyzArticlePO::getUrl,pagesQuery.getUrl());
 
         queryWrapper.orderByDesc(CyzArticlePO:: getCreateTime);
         PagePlus<CyzArticlePO, CyzArticleDTO> pagedBo= this.pageBo(PageUtils.buildPagePlus(new PageRequest.Builder(pagesQuery.getPageNum(), pagesQuery.getPageSize()).build()),queryWrapper);

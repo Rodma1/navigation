@@ -10,7 +10,6 @@ import com.chen.common.utils.StringUtils;
 import com.chen.domain.elsaticsearch.ElasticsearchDocument;
 import com.chen.domain.elsaticsearch.ElasticsearchFactoryParam;
 import com.chen.service.elasticsearch.impl.ElasticsearchOperationStrategy;
-import io.swagger.annotations.ApiModelProperty;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -43,7 +42,7 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
             case "INFO":
                 return this.getDocumentInfo(client ,factoryParam.getIndexName(), factoryParam.getDocumentId());
             case "PAGE":
-                return this.getDocumentsPage(client, factoryParam.getIndices(), factoryParam.getPageNum()
+                return this.getDocumentsPage(client, factoryParam.getIndices(),factoryParam.getDocumentId(), factoryParam.getPageNum()
                         , factoryParam.getPageSize(), factoryParam.getSortField(), factoryParam.getSortOrder());
             case "COUNT":
                 return this.getDocumentCount(client, factoryParam.getIndices());
@@ -100,7 +99,7 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
     /**
      * 获取分页的文档列表
      */
-    public Object getDocumentsPage(ElasticsearchClient client, List<String> indices, int pageNum, int pageSize,String sortField, String sortOrder) throws IOException {
+    public Object getDocumentsPage(ElasticsearchClient client, List<String> indices,String documentId, int pageNum, int pageSize,String sortField, String sortOrder) throws IOException {
         SearchRequest.Builder builder = new SearchRequest.Builder();
         if (ObjectUtil.isNotNull(indices) && !indices.isEmpty()) {
             builder.index(indices);
@@ -109,7 +108,21 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
         if (StringUtils.isNotBlank(sortField) && StringUtils.isNotBlank(sortOrder)) {
             builder.sort(sort->sort.field(f->f.field(sortField).order(SortOrder.valueOf(sortOrder))));
         }
+
         List<ElasticsearchDocument> elasticsearchDocuments = new ArrayList<>();
+        // 根据id精确查询
+        if (StringUtils.isNotBlank(documentId)) {
+            List<Hit<HashMap>> hits = client.search(s -> s.index(indices).query(q -> q.term(t -> t.field("_id").value(documentId))), HashMap.class).hits().hits();
+            if (hits.isEmpty()) {
+                return elasticsearchDocuments;
+            }
+            Hit<HashMap> hashMapGetResponse = hits.stream().findFirst().get();
+
+            ElasticsearchDocument elasticsearchDocument = new ElasticsearchDocument();
+            elasticsearchDocument.setId(hashMapGetResponse.id()).setIndex(hashMapGetResponse.index()).setSource(hashMapGetResponse.source());
+            elasticsearchDocuments.add(elasticsearchDocument);
+            return  elasticsearchDocuments;
+        }
         client.search(builder.build(), HashMap.class).hits().hits().forEach(item ->{
             ElasticsearchDocument elasticsearchDocument = new ElasticsearchDocument();
             elasticsearchDocument.setId(item.id()).setIndex(item.index()).setSource(item.source());

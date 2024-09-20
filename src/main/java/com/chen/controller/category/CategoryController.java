@@ -31,7 +31,7 @@ public class CategoryController {
     private final CategoryServiceFactory categoryServiceFactory;
     @ApiOperation("获取类别树")
     @GetMapping("/getAllCategoryTree/{categoryType}")
-    public ResultData<List<? extends BaseCategory>> getAllCategories(@PathVariable String categoryType)  {
+    public ResultData<List<? extends BaseCategory>> getAllCategories(@PathVariable("categoryType") String categoryType)  {
         Class<CommandCategory> dataClass = categoryServiceFactory.getDataClass(categoryType);
         CategoryService<CommandCategory> service = categoryServiceFactory.getService(dataClass);
         return ResultData.success(BeanUtils.copyList(service.getAllCategories(), CategoryTreeVo.class));

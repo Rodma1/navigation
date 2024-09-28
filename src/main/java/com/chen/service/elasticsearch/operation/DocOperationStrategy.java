@@ -3,12 +3,18 @@ package com.chen.service.elasticsearch.operation;
 import cn.hutool.core.util.ObjectUtil;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import co.elastic.clients.elasticsearch.core.*;
 import co.elastic.clients.elasticsearch.core.search.Hit;
+import co.elastic.clients.json.JsonData;
 import com.chen.common.exception.ServiceException;
 import com.chen.common.utils.StringUtils;
+import com.chen.common.utils.date.DateTimeUtils;
 import com.chen.domain.elsaticsearch.ElasticsearchDocument;
 import com.chen.domain.elsaticsearch.ElasticsearchFactoryParam;
+import com.chen.domain.elsaticsearch.SearchFields;
 import com.chen.service.elasticsearch.impl.ElasticsearchOperationStrategy;
 
 import java.io.IOException;
@@ -43,7 +49,7 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
                 return this.getDocumentInfo(client ,factoryParam.getIndexName(), factoryParam.getDocumentId());
             case "PAGE":
                 return this.getDocumentsPage(client, factoryParam.getIndices(),factoryParam.getDocumentId(), factoryParam.getPageNum()
-                        , factoryParam.getPageSize(), factoryParam.getSortField(), factoryParam.getSortOrder());
+                        , factoryParam.getPageSize(), factoryParam.getSortField(), factoryParam.getSortOrder(), factoryParam.getSearchFields());
             case "COUNT":
                 return this.getDocumentCount(client, factoryParam.getIndices());
             default:
@@ -99,7 +105,7 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
     /**
      * 获取分页的文档列表
      */
-    public Object getDocumentsPage(ElasticsearchClient client, List<String> indices,String documentId, int pageNum, int pageSize,String sortField, String sortOrder) throws IOException {
+    public Object getDocumentsPage(ElasticsearchClient client, List<String> indices, String documentId, int pageNum, int pageSize, String sortField, String sortOrder, List<SearchFields> searchFields) throws IOException {
         SearchRequest.Builder builder = new SearchRequest.Builder();
         if (ObjectUtil.isNotNull(indices) && !indices.isEmpty()) {
             builder.index(indices);
@@ -123,6 +129,9 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
             elasticsearchDocuments.add(elasticsearchDocument);
             return  elasticsearchDocuments;
         }
+
+        builder.query(q -> q.bool(b -> b.filter(this.searchFilter(searchFields, null, null))));
+
         client.search(builder.build(), HashMap.class).hits().hits().forEach(item ->{
             ElasticsearchDocument elasticsearchDocument = new ElasticsearchDocument();
             elasticsearchDocument.setId(item.id()).setIndex(item.index()).setSource(item.source());
@@ -130,6 +139,26 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
         });
 
         return elasticsearchDocuments;
+    }
+
+    /**
+     * 分页查询构造过滤条件
+     */
+    private List<Query> searchFilter(List<SearchFields> searchFields, String beginTime, String endTime) {
+        // 存储查询条件
+        List<Query> filterQuery = new ArrayList<>();
+        // 判断是否需要加入时间条件查询
+        if (StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
+            long begin = DateTimeUtils.toDate(beginTime, DateTimeUtils.y4M2d2H2m2s2).getTime();
+            long end = DateTimeUtils.toDate(endTime, DateTimeUtils.y4M2d2H2m2s2).getTime();
+            Query rangeQuery = RangeQuery.of(rangeQueryBuilder -> rangeQueryBuilder.field("timestamp").gte(JsonData.of(begin)).lt(JsonData.of(end)))._toQuery();
+            filterQuery.add(rangeQuery);
+        }
+
+        for (SearchFields searchField: searchFields) {
+            filterQuery.add(TermQuery.of(m -> m.field(searchField.getKey()).value(searchField.getValue()))._toQuery());
+        }
+        return filterQuery;
     }
 
     /**

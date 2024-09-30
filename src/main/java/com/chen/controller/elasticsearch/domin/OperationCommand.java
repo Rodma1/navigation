@@ -1,5 +1,6 @@
 package com.chen.controller.elasticsearch.domin;
 
+import com.chen.domain.elsaticsearch.SearchFields;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -79,4 +80,7 @@ public class OperationCommand {
 
     @ApiModelProperty("索引模板内容")
     public String indexTemplateContent;
+
+    @ApiModelProperty("查询字段")
+    public List<SearchFields> searchFields;
 }

@@ -1,19 +1,21 @@
 package com.chen.controller.elasticsearch;
 import com.chen.common.utils.BeanUtils;
+import com.chen.common.utils.json.FastJsonUtils;
+import com.chen.common.utils.json.ReadJsonUtils;
 import com.chen.common.utils.resultreturn.ResultData;
 import com.chen.controller.elasticsearch.domin.OperationCommand;
 import com.chen.domain.elsaticsearch.ElasticsearchConnectParam;
 import com.chen.domain.elsaticsearch.ElasticsearchFactoryParam;
 import com.chen.service.elasticsearch.ElasticsearchService;
+import com.chen.service.elasticsearch.impl.ElasticsearchOperationStrategy;
+import com.chen.service.elasticsearch.operation.ElasticsearchOperationStrategyFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @Author chenyunzhi
@@ -37,6 +39,16 @@ public class ElasticsearchController {
         return ResultData.success(elasticsearchService.performOperation(
                 BeanUtils.copyObject(operationCommand, ElasticsearchFactoryParam.class)
                 ,BeanUtils.copyObject(operationCommand, ElasticsearchConnectParam.class)));
+    }
+
+    /**
+     * 基本的操作接口
+     */
+    @ApiOperation("获取es连接详细")
+    @GetMapping("/connectParam")
+    public ResultData<List<ElasticsearchConnectParam>> getConnectParam() {
+        String jsonObject = ReadJsonUtils.readJsonFile("E:\\study\\code\\项目\\cyz_navigate\\data\\esConnectParam.json");
+        return ResultData.success(FastJsonUtils.toList(jsonObject, ElasticsearchConnectParam.class));
     }
 
 }

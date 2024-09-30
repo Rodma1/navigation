@@ -13,6 +13,7 @@ import com.chen.common.exception.ServiceException;
 import com.chen.common.utils.StringUtils;
 import com.chen.common.utils.date.DateTimeUtils;
 import com.chen.domain.elsaticsearch.ElasticsearchDocument;
+import com.chen.domain.elsaticsearch.ElasticsearchDocumentPage;
 import com.chen.domain.elsaticsearch.ElasticsearchFactoryParam;
 import com.chen.domain.elsaticsearch.SearchFields;
 import com.chen.service.elasticsearch.impl.ElasticsearchOperationStrategy;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -107,17 +109,16 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
      */
     public Object getDocumentsPage(ElasticsearchClient client, List<String> indices, String documentId, int pageNum, int pageSize, String sortField, String sortOrder, List<SearchFields> searchFields) throws IOException {
         SearchRequest.Builder builder = new SearchRequest.Builder();
+        CountRequest.Builder countBuilder = new CountRequest.Builder();
         if (ObjectUtil.isNotNull(indices) && !indices.isEmpty()) {
             builder.index(indices);
+            countBuilder.index(indices);
         }
         builder.from((pageNum - 1) * pageSize).size(pageSize);
-        if (StringUtils.isNotBlank(sortField) && StringUtils.isNotBlank(sortOrder)) {
-            builder.sort(sort->sort.field(f->f.field(sortField).order(SortOrder.valueOf(sortOrder))));
-        }
 
         List<ElasticsearchDocument> elasticsearchDocuments = new ArrayList<>();
         // 根据id精确查询
-        if (StringUtils.isNotBlank(documentId)) {
+        if (StringUtils.isNotBlank(documentId) && documentId.length() != 0) {
             List<Hit<HashMap>> hits = client.search(s -> s.index(indices).query(q -> q.term(t -> t.field("_id").value(documentId))), HashMap.class).hits().hits();
             if (hits.isEmpty()) {
                 return elasticsearchDocuments;
@@ -127,18 +128,27 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
             ElasticsearchDocument elasticsearchDocument = new ElasticsearchDocument();
             elasticsearchDocument.setId(hashMapGetResponse.id()).setIndex(hashMapGetResponse.index()).setSource(hashMapGetResponse.source());
             elasticsearchDocuments.add(elasticsearchDocument);
-            return  elasticsearchDocuments;
+            ElasticsearchDocumentPage elasticsearchDocumentPage = new ElasticsearchDocumentPage();
+            elasticsearchDocumentPage.setRows(elasticsearchDocuments).setCount(1L);
+
+            return  elasticsearchDocumentPage;
         }
 
-        builder.query(q -> q.bool(b -> b.filter(this.searchFilter(searchFields, null, null))));
+        builder.query(q -> q.bool(b -> b.filter(this.searchFilter(searchFields, null, null)))).ignoreUnavailable(true);
+        countBuilder.query(q -> q.bool(b -> b.filter(this.searchFilter(searchFields, null, null)))).ignoreUnavailable(true);
+        if (StringUtils.isNotBlank(sortField) && StringUtils.isNotBlank(sortOrder)) {
+            builder.sort(sort->sort.field(f->f.field(sortField).order(SortOrder.valueOf(sortOrder))));
+        }
 
         client.search(builder.build(), HashMap.class).hits().hits().forEach(item ->{
             ElasticsearchDocument elasticsearchDocument = new ElasticsearchDocument();
             elasticsearchDocument.setId(item.id()).setIndex(item.index()).setSource(item.source());
             elasticsearchDocuments.add(elasticsearchDocument);
         });
+        ElasticsearchDocumentPage elasticsearchDocumentPage = new ElasticsearchDocumentPage();
+        elasticsearchDocumentPage.setRows(elasticsearchDocuments).setCount(client.count(countBuilder.build()).count());
 
-        return elasticsearchDocuments;
+        return elasticsearchDocumentPage;
     }
 
     /**
@@ -155,9 +165,12 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
             filterQuery.add(rangeQuery);
         }
 
-        for (SearchFields searchField: searchFields) {
-            filterQuery.add(TermQuery.of(m -> m.field(searchField.getKey()).value(searchField.getValue()))._toQuery());
+        if (ObjectUtil.isNotNull(searchFields)) {
+            for (SearchFields searchField: searchFields) {
+                filterQuery.add(TermQuery.of(m -> m.field(searchField.getKey()).value(searchField.getValue()))._toQuery());
+            }
         }
+
         return filterQuery;
     }
 

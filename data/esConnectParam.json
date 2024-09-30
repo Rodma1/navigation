@@ -1,0 +1,50 @@
+[
+  {
+
+    "scheme": "http",
+    "hostName": "192.168.248.128",
+    "userName": "elastic",
+    "password": "chenyunzhi123",
+    "port": "9200"
+  },
+  {
+
+    "scheme": "http",
+    "hostName": "192.168.1.79",
+    "userName": "elastic",
+    "password": "75b9w3BzV_H2FDYdsV-p",
+    "port": "9200"
+  },
+  {
+
+    "scheme": "http",
+    "hostName": "192.168.1.61",
+    "userName": "elastic",
+    "password": "iuVWyUR9S6vDSkfErWaD",
+    "port": "9200"
+  },
+  {
+
+    "scheme": "http",
+    "hostName": "192.168.1.231",
+    "userName": "elastic",
+    "password": "E9hfe*XtZJ+ilyoY8Qzs",
+    "port": "9200"
+  },
+  {
+
+    "scheme": "http",
+    "hostName": "192.168.1.232",
+    "userName": "elastic",
+    "password": "RRzxRGuucg11CdI_cOtY",
+    "port": "9200"
+  },
+  {
+
+    "scheme": "http",
+    "hostName": "日审生产",
+    "userName": "elastic",
+    "password": "FlavuJ2*dMg41o3oFY8u",
+    "port": "9200"
+  }
+]

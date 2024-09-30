@@ -26,6 +26,8 @@ public class ElasticsearchOperationStrategyFactory {
                 return new IndexTemplateOperationStrategy(factoryParam);
             case "TASK":
                 return new TaskOperationStrategy(factoryParam);
+            case "OTHER":
+                return new EsOther();
             default:
                 return null;
         }

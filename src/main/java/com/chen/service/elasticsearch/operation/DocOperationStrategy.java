@@ -12,10 +12,7 @@ import co.elastic.clients.json.JsonData;
 import com.chen.common.exception.ServiceException;
 import com.chen.common.utils.StringUtils;
 import com.chen.common.utils.date.DateTimeUtils;
-import com.chen.domain.elsaticsearch.ElasticsearchDocument;
-import com.chen.domain.elsaticsearch.ElasticsearchDocumentPage;
-import com.chen.domain.elsaticsearch.ElasticsearchFactoryParam;
-import com.chen.domain.elsaticsearch.SearchFields;
+import com.chen.domain.elsaticsearch.*;
 import com.chen.service.elasticsearch.impl.ElasticsearchOperationStrategy;
 
 import java.io.IOException;
@@ -51,7 +48,8 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
                 return this.getDocumentInfo(client ,factoryParam.getIndexName(), factoryParam.getDocumentId());
             case "PAGE":
                 return this.getDocumentsPage(client, factoryParam.getIndices(),factoryParam.getDocumentId(), factoryParam.getPageNum()
-                        , factoryParam.getPageSize(), factoryParam.getSortField(), factoryParam.getSortOrder(), factoryParam.getSearchFields());
+                        , factoryParam.getPageSize(), factoryParam.getSortField(), factoryParam.getSortOrder()
+                        , factoryParam.getSearchFields(), factoryParam.getTimeSearch());
             case "COUNT":
                 return this.getDocumentCount(client, factoryParam.getIndices());
             default:
@@ -107,7 +105,8 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
     /**
      * 获取分页的文档列表
      */
-    public Object getDocumentsPage(ElasticsearchClient client, List<String> indices, String documentId, int pageNum, int pageSize, String sortField, String sortOrder, List<SearchFields> searchFields) throws IOException {
+    public Object getDocumentsPage(ElasticsearchClient client, List<String> indices, String documentId
+            , int pageNum, int pageSize, String sortField, String sortOrder, List<SearchFields> searchFields, ElasticsearchTimeSearch timeSearch) throws IOException {
         SearchRequest.Builder builder = new SearchRequest.Builder();
         CountRequest.Builder countBuilder = new CountRequest.Builder();
         if (ObjectUtil.isNotNull(indices) && !indices.isEmpty()) {
@@ -134,8 +133,8 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
             return  elasticsearchDocumentPage;
         }
 
-        builder.query(q -> q.bool(b -> b.filter(this.searchFilter(searchFields, null, null)))).ignoreUnavailable(true);
-        countBuilder.query(q -> q.bool(b -> b.filter(this.searchFilter(searchFields, null, null)))).ignoreUnavailable(true);
+        builder.query(q -> q.bool(b -> b.filter(this.searchFilter(searchFields, timeSearch)))).ignoreUnavailable(true);
+        countBuilder.query(q -> q.bool(b -> b.filter(this.searchFilter(searchFields, timeSearch)))).ignoreUnavailable(true);
         if (StringUtils.isNotBlank(sortField) && StringUtils.isNotBlank(sortOrder)) {
             builder.sort(sort->sort.field(f->f.field(sortField).order(SortOrder.valueOf(sortOrder))));
         }
@@ -154,14 +153,14 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
     /**
      * 分页查询构造过滤条件
      */
-    private List<Query> searchFilter(List<SearchFields> searchFields, String beginTime, String endTime) {
+    private List<Query> searchFilter(List<SearchFields> searchFields, ElasticsearchTimeSearch timeSearch) {
         // 存储查询条件
         List<Query> filterQuery = new ArrayList<>();
         // 判断是否需要加入时间条件查询
-        if (StringUtils.isNotBlank(beginTime) || StringUtils.isNotBlank(endTime)) {
-            long begin = DateTimeUtils.toDate(beginTime, DateTimeUtils.y4M2d2H2m2s2).getTime();
-            long end = DateTimeUtils.toDate(endTime, DateTimeUtils.y4M2d2H2m2s2).getTime();
-            Query rangeQuery = RangeQuery.of(rangeQueryBuilder -> rangeQueryBuilder.field("timestamp").gte(JsonData.of(begin)).lt(JsonData.of(end)))._toQuery();
+        if (ObjectUtil.isNotNull(timeSearch) && StringUtils.isNotBlank(timeSearch.getBeginTime()) && StringUtils.isNotBlank(timeSearch.getEndTime()) && StringUtils.isNotBlank(timeSearch.getFiled()) ) {
+            long begin = DateTimeUtils.toDate(timeSearch.getBeginTime(), DateTimeUtils.y4M2d2H2m2s2).getTime();
+            long end = DateTimeUtils.toDate(timeSearch.getEndTime(), DateTimeUtils.y4M2d2H2m2s2).getTime();
+            Query rangeQuery = RangeQuery.of(rangeQueryBuilder -> rangeQueryBuilder.field(timeSearch.getFiled()).gte(JsonData.of(begin)).lt(JsonData.of(end)))._toQuery();
             filterQuery.add(rangeQuery);
         }
 

@@ -157,10 +157,10 @@ public class DocOperationStrategy implements ElasticsearchOperationStrategy {
         // 存储查询条件
         List<Query> filterQuery = new ArrayList<>();
         // 判断是否需要加入时间条件查询
-        if (ObjectUtil.isNotNull(timeSearch) && StringUtils.isNotBlank(timeSearch.getBeginTime()) && StringUtils.isNotBlank(timeSearch.getEndTime()) && StringUtils.isNotBlank(timeSearch.getFiled()) ) {
+        if (ObjectUtil.isNotNull(timeSearch) && StringUtils.isNotBlank(timeSearch.getBeginTime()) && StringUtils.isNotBlank(timeSearch.getEndTime()) && StringUtils.isNotBlank(timeSearch.getField()) ) {
             long begin = DateTimeUtils.toDate(timeSearch.getBeginTime(), DateTimeUtils.y4M2d2H2m2s2).getTime();
             long end = DateTimeUtils.toDate(timeSearch.getEndTime(), DateTimeUtils.y4M2d2H2m2s2).getTime();
-            Query rangeQuery = RangeQuery.of(rangeQueryBuilder -> rangeQueryBuilder.field(timeSearch.getFiled()).gte(JsonData.of(begin)).lt(JsonData.of(end)))._toQuery();
+            Query rangeQuery = RangeQuery.of(rangeQueryBuilder -> rangeQueryBuilder.field(timeSearch.getField()).gte(JsonData.of(begin)).lte(JsonData.of(end)))._toQuery();
             filterQuery.add(rangeQuery);
         }
 

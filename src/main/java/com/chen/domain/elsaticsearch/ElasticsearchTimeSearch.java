@@ -24,5 +24,5 @@ public class ElasticsearchTimeSearch {
     /**
      * 时间字段
      */
-    private String filed;
+    private String field;
 }

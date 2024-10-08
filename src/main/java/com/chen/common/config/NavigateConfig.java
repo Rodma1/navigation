@@ -23,7 +23,7 @@ public class NavigateConfig {
      */
     @Getter
     private static String esConnectParamPath;
-    public void setLogSourcePath(String esConnectParamPath) {
+    public void setEsConnectParamPath(String esConnectParamPath) {
         NavigateConfig.esConnectParamPath = esConnectParamPath;
     }
 }

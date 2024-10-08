@@ -1,4 +1,5 @@
 package com.chen.controller.elasticsearch;
+import com.chen.common.config.NavigateConfig;
 import com.chen.common.utils.BeanUtils;
 import com.chen.common.utils.json.FastJsonUtils;
 import com.chen.common.utils.json.ReadJsonUtils;
@@ -47,7 +48,7 @@ public class ElasticsearchController {
     @ApiOperation("获取es连接详细")
     @GetMapping("/connectParam")
     public ResultData<List<ElasticsearchConnectParam>> getConnectParam() {
-        String jsonObject = ReadJsonUtils.readJsonFile("E:\\study\\code\\项目\\cyz_navigate\\data\\esConnectParam.json");
+        String jsonObject = ReadJsonUtils.readJsonFile(NavigateConfig.getEsConnectParamPath());
         return ResultData.success(FastJsonUtils.toList(jsonObject, ElasticsearchConnectParam.class));
     }
 

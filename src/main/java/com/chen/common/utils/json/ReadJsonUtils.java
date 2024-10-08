@@ -1,9 +1,11 @@
 package com.chen.common.utils.json;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 
+@Slf4j
 public class ReadJsonUtils {
 
     public static String readJsonFile(String filename) {
@@ -21,6 +23,7 @@ public class ReadJsonUtils {
             reader.close();
             jsonString = stringBuffer.toString();
         } catch (FileNotFoundException e) {
+            log.error(e.getMessage());
             return null;
         } catch (IOException e) {
             e.printStackTrace();

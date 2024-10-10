@@ -1,5 +1,6 @@
 package com.chen.common.exception;
 
+import cn.dev33.satoken.exception.SaTokenException;
 import com.chen.common.utils.StringUtils;
 import com.chen.common.utils.resultreturn.ResultData;
 import org.slf4j.Logger;
@@ -38,7 +39,13 @@ public class GlobalExceptionHandler {
     public ResultData<Object> handleException(Exception e, HttpServletRequest request) {
         String requestUrl = request.getRequestURI();
         log.error("请求地址'{}',发生系统异常.", requestUrl, e);
-        return ResultData.error(String.format("请求地址'%s',发生未知异常.", requestUrl));
+        return ResultData.error(String.format("请求地址'%s',发生未知异常. %s", requestUrl,e.getMessage()));
     }
-
+    /**
+     * 系统异常
+     */
+    @ExceptionHandler(SaTokenException.class)
+    public ResultData<Object> handlerSaTokenException(SaTokenException  e) {
+        return ResultData.error(e.getCode(),String.format("发生未知异常. %s", e.getMessage()));
+    }
 }

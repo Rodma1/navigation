@@ -1,5 +1,6 @@
 package com.chen.service.tool;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -17,4 +18,14 @@ public interface ToolService {
     List<String> regexMatcher(String regex, List<String> value);
 
     String characterEscapeUtil(String value);
+
+    /**
+     * sha256加密
+     */
+    String encryptSha256(String str);
+
+    /**
+     * 对称加密生成公私钥
+     */
+    HashMap<String, String> rsaGenerateKeyPair() throws Exception;
 }

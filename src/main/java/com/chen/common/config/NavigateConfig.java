@@ -19,11 +19,29 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "navigate")
 public class NavigateConfig {
     /**
-     * logSourcePath下载路径
+     * es连接下载路径
      */
     @Getter
     private static String esConnectParamPath;
     public void setEsConnectParamPath(String esConnectParamPath) {
         NavigateConfig.esConnectParamPath = esConnectParamPath;
+    }
+
+    /**
+     * 用户名
+     */
+    @Getter
+    private static String principal;
+    public void setPrincipal(String principal) {
+        NavigateConfig.principal = principal;
+    }
+
+    /**
+     * 密码
+     */
+    @Getter
+    private static String credential;
+    public void setCredential(String credential) {
+        NavigateConfig.credential = credential;
     }
 }

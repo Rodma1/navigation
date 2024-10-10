@@ -1,5 +1,8 @@
 package com.chen.service.tool.impl;
 
+import cn.dev33.satoken.secure.SaSecureUtil;
+import com.chen.common.utils.algorithm.SHA256Utils;
+import com.chen.common.utils.algorithm.SM2Utils;
 import com.chen.common.utils.json.FastJsonUtils;
 import com.chen.service.tool.ToolService;
 import org.springframework.stereotype.Service;
@@ -67,5 +70,18 @@ public class ToolServiceImpl implements ToolService {
         }
 
         return escapedString.toString();
+    }
+
+    @Override
+    public String encryptSha256(String credential) {
+        return SHA256Utils.buildSHA256String(credential);
+    }
+
+    @Override
+    public HashMap<String, String> rsaGenerateKeyPair() throws Exception {
+        HashMap<String, String> map = new HashMap<>(16);
+        map.put("private", SM2Utils.getPrivateKeyHex());
+        map.put("public", SM2Utils.getPublicKeyHex());
+        return map;
     }
 }

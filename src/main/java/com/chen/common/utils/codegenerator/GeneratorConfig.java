@@ -49,7 +49,7 @@ public class GeneratorConfig {
 //    private static final String TABLE_PREFIX = "sys_";
     private static final String TABLE_PREFIX = "cyz_";
 
-    
+
     // 当前包名
     private static final String MODULE_NAME = "phrasesbindcategory";
 

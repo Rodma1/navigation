@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -40,5 +41,17 @@ public class ToolController {
 
         return ResultData.success(toolService.characterEscapeUtil(escapeCommand.getValue()));
 
+    }
+
+    @ApiOperation(value = "sha256加密")
+    @PostMapping(value = "/sha256")
+    public ResultData<String> sha256(String str) {
+        return ResultData.success(toolService.encryptSha256(str));
+    }
+
+    @ApiOperation(value = "对称加密生成公私钥")
+    @PostMapping(value = "/rsaGenerateKeyPair")
+    public ResultData<HashMap<String, String>> rsaGenerateKeyPair() throws Exception {
+        return ResultData.success(toolService.rsaGenerateKeyPair());
     }
 }

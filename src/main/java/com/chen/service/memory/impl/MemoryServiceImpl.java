@@ -8,6 +8,7 @@ import com.chen.common.exception.ServiceException;
 import com.chen.common.utils.StringUtils;
 import com.chen.common.utils.page.PageUtils;
 import com.chen.domain.memory.*;
+import com.chen.domain.phrasesdomain.phrases.PhrasesPO;
 import com.chen.mapper.MemoryMapper;
 import org.springframework.stereotype.Service;
 import com.chen.common.config.mybatisplus.core.ServicePlusImpl;
@@ -28,6 +29,7 @@ public class MemoryServiceImpl extends ServicePlusImpl<MemoryMapper, MemoryPO, M
     public TableDataInfo<MemoryDTO> page(MemoryPagesQuery pagesQuery) {
         LambdaQueryWrapper<MemoryPO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(pagesQuery.getContent()),MemoryPO::getContent,pagesQuery.getContent());
+        queryWrapper.orderByDesc(MemoryPO:: getCreateTime);
         PagePlus<MemoryPO, MemoryDTO> pagedBo= this.pageBo(PageUtils.buildPagePlus(new PageRequest.Builder(pagesQuery.getPageNum(), pagesQuery.getPageSize()).build()),queryWrapper);
 
         return PageUtils.buildDataInfo(pagedBo);

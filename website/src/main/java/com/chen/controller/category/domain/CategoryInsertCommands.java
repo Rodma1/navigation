@@ -1,8 +1,8 @@
 package com.chen.controller.category.domain;
 import com.chen.domain.common.category.BaseCategory;
 import com.chen.domain.common.category.CommandCategory;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,22 +15,22 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@ApiModel(value = "创建类别")
+@Schema(name   = "创建类别")
 public class CategoryInsertCommands {
 
 
-    @ApiModelProperty("父id")
+    @Schema(name ="父id")
     private Long parentId;
 
-    @ApiModelProperty("排序")
+    @Schema(name ="排序")
     private Integer sort;
 
-    @ApiModelProperty("类别名称")
+    @Schema(name ="类别名称")
     private String name;
 
-    @ApiModelProperty("图标")
+    @Schema(name ="图标")
     private String icon;
 
-    @ApiModelProperty("操作类别")
+    @Schema(name ="操作类别")
     private String categoryType;
 }

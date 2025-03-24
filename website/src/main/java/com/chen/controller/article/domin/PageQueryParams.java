@@ -1,8 +1,8 @@
 package com.chen.controller.article.domin;
 
 import com.chen.config.mybatisplus.page.BasePagesQuery;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,16 +15,16 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@ApiModel("分页查询")
+@Schema(name ="分页查询")
 public class PageQueryParams extends BasePagesQuery {
 
-    @ApiModelProperty("文章名称")
+    @Schema(name ="文章名称")
     private String name;
 
-    @ApiModelProperty("文章地址")
+    @Schema(name ="文章地址")
     private String url;
 
-    @ApiModelProperty("文章类别id")
+    @Schema(name ="文章类别id")
     private Long categoryId;
 
 

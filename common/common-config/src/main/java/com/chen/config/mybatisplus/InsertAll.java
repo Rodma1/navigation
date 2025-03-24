@@ -20,6 +20,12 @@ import java.util.List;
  * @author chenyunzhi
  */
 public class InsertAll extends AbstractMethod {
+	/**
+	 * @since 3.5.0
+	 */
+	public InsertAll() {
+		super("pgsqlInsertAllBatch");
+	}
 
 	private final static String[] FILL_PROPERTY = {"createTime", "createBy", "updateTime", "updateBy"};
 

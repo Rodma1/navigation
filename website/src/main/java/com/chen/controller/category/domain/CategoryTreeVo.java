@@ -1,7 +1,7 @@
 package com.chen.controller.category.domain;
 import com.chen.domain.common.category.BaseCategory;
 import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSiteBO;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.List;
@@ -17,9 +17,9 @@ public class CategoryTreeVo extends BaseCategory {
     private static final long serialVersionUID = 1L;
 
 
-    @ApiModelProperty("图标")
+    @Schema(name ="图标")
     private String icon;
 
-    @ApiModelProperty("网站")
+    @Schema(name ="网站")
     private List<CyzNavigateSiteBO> sites;
 }

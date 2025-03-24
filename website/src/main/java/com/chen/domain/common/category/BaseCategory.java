@@ -1,6 +1,6 @@
 package com.chen.domain.common.category;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,19 +18,19 @@ public abstract class BaseCategory extends CommandCategory{
 
     private Long id;
 
-    @ApiModelProperty("父id")
+    @Schema(name ="父id")
     private Long parentId;
 
-    @ApiModelProperty("排序")
+    @Schema(name ="排序")
     private Integer sort;
 
-    @ApiModelProperty("类别名称")
+    @Schema(name ="类别名称")
     private String name;
 
-    @ApiModelProperty("子类别")
+    @Schema(name ="子类别")
     private List<? extends BaseCategory> children;
 
-    @ApiModelProperty("图标")
+    @Schema(name ="图标")
     private String icon;
 
 }

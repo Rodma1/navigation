@@ -1,7 +1,7 @@
 package com.chen.controller.article.domin;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
@@ -12,23 +12,23 @@ import java.util.List;
  * @Description:
  */
 @Data
-@ApiModel("文章更新")
+@Schema(name ="文章更新")
 public class ArticleUpdateCommands {
 
     private Long id;
 
-    @ApiModelProperty("文章地址")
+    @Schema(name ="文章地址")
     private String url;
 
-    @ApiModelProperty("文章名称")
+    @Schema(name ="文章名称")
     private String name;
 
-    @ApiModelProperty("完成状态 0 未完成 1已完成")
+    @Schema(name ="完成状态 0 未完成 1已完成")
     private String state;
 
-    @ApiModelProperty("文章类别id")
+    @Schema(name ="文章类别id")
     private Long categoryId;
 
-    @ApiModelProperty("文章类别ids")
+    @Schema(name ="文章类别ids")
     private List<Long> categoryIds;
 }

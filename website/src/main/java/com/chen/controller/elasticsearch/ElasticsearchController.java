@@ -8,8 +8,9 @@ import com.chen.controller.elasticsearch.domin.OperationCommand;
 import com.chen.config.elasticsearch.ElasticsearchConnectParam;
 import com.chen.domain.elsaticsearch.ElasticsearchFactoryParam;
 import com.chen.service.elasticsearch.ElasticsearchService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @RestController
-@Api(value = "接口控制器", tags = "elasticsearch接口")
+@Tag(name = "接口控制器", description ="elasticsearch接口")
 @RequestMapping("/elasticsearch")
 public class ElasticsearchController {
 
@@ -32,7 +33,7 @@ public class ElasticsearchController {
     /**
      * 基本的操作接口
      */
-    @ApiOperation("es基本的操作接口")
+    @Operation(summary ="es基本的操作接口")
     @PostMapping("/operation")
     public ResultData<Object> performOperation(@RequestBody OperationCommand operationCommand) throws IOException {
         return ResultData.success(elasticsearchService.performOperation(
@@ -43,7 +44,7 @@ public class ElasticsearchController {
     /**
      * 基本的操作接口
      */
-    @ApiOperation("获取es连接详细")
+    @Operation(summary ="获取es连接详细")
     @GetMapping("/connectParam")
     public ResultData<List<ElasticsearchConnectParam>> getConnectParam() {
         String jsonObject = ReadJsonUtils.readJsonFile(NavigateConfig.getEsConnectParamPath());

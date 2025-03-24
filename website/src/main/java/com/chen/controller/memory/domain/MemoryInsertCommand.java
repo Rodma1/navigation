@@ -1,7 +1,7 @@
 package com.chen.controller.memory.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -12,10 +12,10 @@ import lombok.Data;
  */
 
 @Data
-@ApiModel(value = "创建备忘录")
+@Schema(name   = "创建备忘录")
 public class MemoryInsertCommand {
 
-    @ApiModelProperty("内容")
+    @Schema(name ="内容")
     private String content;
 
 }

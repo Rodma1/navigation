@@ -18,8 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 
 /**
  * @author: 神的孩子都在歌唱
@@ -28,37 +28,37 @@ import io.swagger.annotations.ApiOperation;
  */
 @RequiredArgsConstructor
 @RestController
-@Api(value = "接口控制器", tags = "")
+@Tag(name = "接口控制器", description ="")
 @RequestMapping("/phrases")
 public class PhrasesController {
 
     private final PhrasesService phrasesService;
 
-    @ApiOperation(value = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping(value = "/pages")
     public ResultData<TableDataInfo<PhrasesDTO>> pages(PageQueryParams pageQueryParams) {
         return ResultData.success(phrasesService.page(BeanUtils.copyObject(pageQueryParams, PhrasesPagesQuery.class)));
     }
 
-    @ApiOperation(value = "查询")
+    @Operation(summary = "查询")
     @GetMapping(value = "/query")
     public ResultData<PhrasesVO> query() {
         return ResultData.success();
     }
 
-    @ApiOperation(value = "新增")
+    @Operation(summary = "新增")
     @PostMapping(value = "/insert")
     public ResultData<Boolean> insert(@Validated(AddGroup.class) @RequestBody PhrasesInsertCommands insertCommands) {
         return ResultData.success(phrasesService.insert(BeanUtils.copyObject(insertCommands, PhrasesBO.class)));
     }
 
-    @ApiOperation(value = "删除")
+    @Operation(summary = "删除")
     @DeleteMapping(value = "/delete")
     public ResultData<Boolean> delete(@Validated(DeleteGroup.class) @RequestBody PhrasesDeleteCommands deleteCommands) {
         return ResultData.success(phrasesService.delete(deleteCommands.getIds()));
     }
 
-    @ApiOperation(value = "更新")
+    @Operation(summary = "更新")
     @PutMapping(value = "/update")
     public ResultData<Boolean> update(@RequestBody PhrasesUpdateCommands updateCommands) {
         return ResultData.success( phrasesService.update(BeanUtils.copyObject(updateCommands, PhrasesBO.class)));

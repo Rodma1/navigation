@@ -15,8 +15,8 @@ import com.chen.service.memory.MemoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 
 /**
  * @author: 神的孩子都在歌唱
@@ -26,38 +26,38 @@ import io.swagger.annotations.ApiOperation;
 
 @RequiredArgsConstructor
 @RestController
-@Api(value = "接口控制器", tags = "")
+@Tag(name = "接口控制器", description ="")
 @RequestMapping("/memory")
 public class MemoryController {
 
     private final MemoryService memoryService;
 
-    @ApiOperation(value = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping(value = "/pages")
     public ResultData<TableDataInfo<MemoryDTO>> pages(MemoryPageQueryParams pagesQuery) {
         return ResultData.success(memoryService.page(BeanUtils.copyObject(pagesQuery, MemoryPagesQuery.class)));
     }
 
-    @ApiOperation(value = "查询")
+    @Operation(summary = "查询")
     @GetMapping(value = "/query")
     public ResultData<MemoryQuery> query() {
         return ResultData.success();
     }
 
-    @ApiOperation(value = "新增")
+    @Operation(summary = "新增")
     @PostMapping(value = "/insert")
     public ResultData<Boolean> insert(@RequestBody MemoryInsertCommand insertCommand) {
         memoryService.insert(BeanUtils.copyObject(insertCommand, MemoryBO.class));
         return ResultData.success(true);
     }
 
-    @ApiOperation(value = "删除")
+    @Operation(summary = "删除")
     @DeleteMapping(value = "/delete")
     public ResultData<Boolean> delete(@RequestBody MemoryDeleteCommand deleteCommand) {
         return ResultData.success(memoryService.delete(deleteCommand.getIds()));
     }
 
-    @ApiOperation(value = "更新")
+    @Operation(summary = "更新")
     @PutMapping(value = "/update")
     public ResultData<Boolean> update(@RequestBody MemoryUpdateCommand updateCommand) {
         memoryService.update(BeanUtils.copyObject(updateCommand, MemoryBO.class));

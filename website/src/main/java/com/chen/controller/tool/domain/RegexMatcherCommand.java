@@ -1,6 +1,6 @@
 package com.chen.controller.tool.domain;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
@@ -10,16 +10,16 @@ import java.util.List;
  * @DATE 2024/8/1 9:29
  * @Description:
  */
-@ApiModel(value = "正则",description = "正则")
+@Schema(name   = "正则",description = "正则")
 @Data
 public class RegexMatcherCommand {
 
-    @ApiModelProperty("正则")
+    @Schema(name ="正则")
     private String regex;
 
-    @ApiModelProperty("匹配项")
+    @Schema(name ="匹配项")
     private List<String> values;
 
-    @ApiModelProperty("匹配项")
+    @Schema(name ="匹配项")
     private String value;
 }

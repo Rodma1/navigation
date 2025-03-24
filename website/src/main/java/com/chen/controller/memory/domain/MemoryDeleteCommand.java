@@ -1,7 +1,7 @@
 package com.chen.controller.memory.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 @Data
-@ApiModel(value = "删除备忘录")
+@Schema(name   = "删除备忘录")
 public class MemoryDeleteCommand {
 
     private List<Long> ids;

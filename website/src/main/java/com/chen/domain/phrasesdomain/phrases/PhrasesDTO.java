@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,43 +22,43 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("cyz_phrases")
-@ApiModel(value = "PhrasesDTO对象", description = "")
+@Schema(name   = "PhrasesDTO对象", description = "")
 public class PhrasesDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("句子")
+    @Schema(name ="句子")
     private String sentence;
 
-    @ApiModelProperty("创建时间")
+    @Schema(name ="创建时间")
     private Date createTime;
 
-    @ApiModelProperty("更新时间")
+    @Schema(name ="更新时间")
     private Date updateTime;
 
-    @ApiModelProperty("删除标志(0代表存在 1代表删除)")
+    @Schema(name ="删除标志(0代表存在 1代表删除)")
     @TableLogic
     private String delFlag;
 
-    @ApiModelProperty("创建者")
+    @Schema(name ="创建者")
     private String createBy;
 
-    @ApiModelProperty("更新者")
+    @Schema(name ="更新者")
     private String updateBy;
 
-    @ApiModelProperty("类别")
+    @Schema(name ="类别")
     private Long categoryId;
 
-    @ApiModelProperty("文章类别ids")
+    @Schema(name ="文章类别ids")
     private List<Long> categoryIds;
 
-    @ApiModelProperty("推荐等级")
+    @Schema(name ="推荐等级")
     private String rank;
 
     private Long id;
 
 
-    @ApiModelProperty("类别名称")
+    @Schema(name ="类别名称")
     private String categoryName;
 
 }

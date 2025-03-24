@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("cyz_navigate_category")
-@ApiModel(value = "CyzNavigateCategoryPO对象", description = "")
+@Schema(name   = "CyzNavigateCategoryPO对象", description = "")
 public class CyzNavigateCategoryPO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,27 +29,27 @@ public class CyzNavigateCategoryPO implements Serializable {
     @TableId("id")
     private Long id;
 
-    @ApiModelProperty("父id")
+    @Schema(name ="父id")
     @TableField("parent_id")
     private Long parentId;
 
-    @ApiModelProperty("排序")
+    @Schema(name ="排序")
     @TableField("sort")
     private Integer sort;
 
-    @ApiModelProperty("类别名称")
+    @Schema(name ="类别名称")
     @TableField("name")
     private String name;
 
-    @ApiModelProperty("图标")
+    @Schema(name ="图标")
     @TableField("icon")
     private String icon;
 
-    @ApiModelProperty("创建时间")
+    @Schema(name ="创建时间")
     @TableField("create_time")
     private Timestamp createTime;
 
-    @ApiModelProperty("更新时间")
+    @Schema(name ="更新时间")
     @TableField("update_time")
     private Timestamp updateTime;
 

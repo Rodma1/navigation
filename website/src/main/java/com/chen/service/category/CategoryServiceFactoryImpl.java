@@ -6,10 +6,10 @@ import com.chen.domain.phrasesdomain.phrasesCategory.PhrasesCategoryBO;
 import com.chen.service.category.articlecategory.ArticleCategoryService;
 import com.chen.service.category.common.CategoryService;
 import com.chen.service.category.phrasesCategory.PhrasesCategoryService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 

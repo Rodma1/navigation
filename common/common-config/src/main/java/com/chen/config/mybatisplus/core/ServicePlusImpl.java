@@ -59,12 +59,12 @@ public class ServicePlusImpl<M extends BaseMapperPlus<T>, T, B> extends ServiceI
 		return boClass;
 	}
 
-	@Override
+
 	protected Class<M> currentMapperClass() {
 		return (Class<M>) ReflectionKit.getSuperClassGenericType(this.getClass(), ServicePlusImpl.class, 0);
 	}
 
-	@Override
+
 	protected Class<T> currentModelClass() {
 		return (Class<T>) ReflectionKit.getSuperClassGenericType(this.getClass(), ServicePlusImpl.class, 1);
 	}

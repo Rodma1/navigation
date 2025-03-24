@@ -1,6 +1,7 @@
 package com.chen.utils;
 
 import com.google.common.collect.Sets;
+import org.apache.commons.beanutils.BeanMap;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -335,7 +336,7 @@ public class CollectionUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> Map<String, Object> beanToMap(T bean) {
+    public static <T> BeanMap beanToMap(T bean) {
         if (bean == null) {
             return null;
         }

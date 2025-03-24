@@ -15,12 +15,14 @@ import com.chen.domain.articledomain.article.CyzArticleDTO;
 import com.chen.domain.articledomain.article.CyzArticlePagesQuery;
 import com.chen.domain.articledomain.article.CyzArticleVO;
 import com.chen.service.articleservice.article.CyzArticleService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 
 /**
  * @author: 神的孩子都在歌唱
@@ -29,46 +31,46 @@ import io.swagger.annotations.ApiOperation;
  */
 @RequiredArgsConstructor
 @RestController
-@Api(value = "接口控制器", tags = "文章接口")
+@Tag(name = "接口控制器", description ="文章接口")
 @RequestMapping("/cyzArticle")
 public class CyzArticleController {
 
     private final CyzArticleService articleService;
 
-    @ApiOperation(value = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping(value = "/pages")
     public ResultData<TableDataInfo<CyzArticleDTO>> pages(PageQueryParams queryParams) {
         return ResultData.success(articleService.page(BeanUtils.copyObject(queryParams, CyzArticlePagesQuery.class)));
     }
 
-    @ApiOperation(value = "查询")
+    @Operation(summary = "查询")
     @GetMapping(value = "/query")
     public ResultData<CyzArticleVO> query() {
         return ResultData.success();
     }
 
-    @ApiOperation(value = "新增")
+    @Operation(summary = "新增")
     @PostMapping(value = "/insert")
     public ResultData<Boolean> insert(@Validated(AddGroup.class) @RequestBody ArticleInsertCommands insertCommands) {
         articleService.insert(BeanUtils.copyObject(insertCommands, CyzArticleBO.class));
         return ResultData.success(true);
     }
 
-    @ApiOperation(value = "删除")
+    @Operation(summary = "删除")
     @DeleteMapping(value = "/delete")
     public ResultData<Boolean> delete(@Validated(DeleteGroup.class) @RequestBody ArticleDeleteCommands deleteCommands) {
         return ResultData.success(articleService.delete(deleteCommands.getIds())
 );
     }
 
-    @ApiOperation(value = "更新")
+    @Operation(summary = "更新")
     @PutMapping(value = "/update")
     public ResultData<Boolean> update(@Validated(EditGroup.class) @RequestBody ArticleUpdateCommands updateCommands) {
         articleService.update(BeanUtils.copyObject(updateCommands, CyzArticleBO.class));
         return ResultData.success(true);
     }
 
-    @ApiOperation(value = "更新状态")
+    @Operation(summary = "更新状态")
     @PutMapping(value = "/updateStatus")
     public ResultData<Boolean> updateStatus(@Validated(EditGroup.class) @RequestBody ArticleUpdateCommands updateCommands) {
         articleService.updateStatus(BeanUtils.copyObject(updateCommands, CyzArticleBO.class));

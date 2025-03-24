@@ -8,8 +8,8 @@ import com.chen.service.category.navigatecategory.CyzNavigateCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
  * @description: Controller
  */
 @RestController
-@Api(value = "接口控制器", tags = "导航网站接口")
+@Tag(name = "接口控制器", description ="导航网站接口")
 @RequestMapping("/cyzNavigateCategory")
 public class CyzNavigateCategoryController {
 
@@ -27,7 +27,7 @@ public class CyzNavigateCategoryController {
     @Autowired
     private CyzNavigateCategoryService navigateCategoryService;
 
-    @ApiOperation("获取网站类别树")
+    @Operation(summary ="获取网站类别树")
     @GetMapping("/tree")
     public ResultData<List<NavigateCategoryTreeVo>> getAllCategories() {
         List<CyzNavigateCategoryDTO> allCategories = navigateCategoryService.getAllCategories();
@@ -35,31 +35,31 @@ public class CyzNavigateCategoryController {
     }
 
 
-    @ApiOperation(value = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping(value = "/pages")
     public ResultData pages() {
         return ResultData.success();
     }
 
-    @ApiOperation(value = "查询")
+    @Operation(summary = "查询")
     @GetMapping(value = "/query")
     public ResultData query() {
         return ResultData.success();
     }
 
-    @ApiOperation(value = "新增")
+    @Operation(summary = "新增")
     @PostMapping(value = "/insert")
     public ResultData insert() {
         return ResultData.success();
     }
 
-    @ApiOperation(value = "删除")
+    @Operation(summary = "删除")
     @DeleteMapping(value = "/delete")
     public ResultData delete() {
         return ResultData.success();
     }
 
-    @ApiOperation(value = "更新")
+    @Operation(summary = "更新")
     @PutMapping(value = "/update")
     public ResultData update() {
         return ResultData.success();

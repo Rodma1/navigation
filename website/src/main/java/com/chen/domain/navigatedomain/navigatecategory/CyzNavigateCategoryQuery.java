@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,29 +20,29 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("cyz_navigate_category")
-@ApiModel(value = "CyzNavigateCategoryQuery对象", description = "")
+@Schema(name   = "CyzNavigateCategoryQuery对象", description = "")
 public class CyzNavigateCategoryQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
-    @ApiModelProperty("父id")
+    @Schema(name ="父id")
     private Long parentId;
 
-    @ApiModelProperty("排序")
+    @Schema(name ="排序")
     private Integer sort;
 
-    @ApiModelProperty("类别名称")
+    @Schema(name ="类别名称")
     private String name;
 
-    @ApiModelProperty("图标")
+    @Schema(name ="图标")
     private String icon;
 
-    @ApiModelProperty("创建时间")
+    @Schema(name ="创建时间")
     private Date createTime;
 
-    @ApiModelProperty("更新时间")
+    @Schema(name ="更新时间")
     private Date updateTime;
 
     @TableField("del_flag")

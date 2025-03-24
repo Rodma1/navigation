@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,16 +20,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("cyz_phrases_bind_category")
-@ApiModel(value = "PhrasesBindCategoryPO对象", description = "")
+@Schema(name   = "PhrasesBindCategoryPO对象", description = "")
 public class PhrasesBindCategoryPO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("句子id")
+    @Schema(name ="句子id")
     @TableField("phrases_id")
     private Long phrasesId;
 
-    @ApiModelProperty("文章类别id")
+    @Schema(name ="文章类别id")
     @TableField("category_id")
     private Long categoryId;
 

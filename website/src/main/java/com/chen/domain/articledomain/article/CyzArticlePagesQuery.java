@@ -7,8 +7,9 @@ import java.util.Date;
 
 import com.chen.config.mybatisplus.page.BasePagesQuery;
 import com.chen.config.mybatisplus.page.PageRequest;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,38 +24,38 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("cyz_article")
-@ApiModel(value = "CyzArticlePagesQuery对象", description = "")
+@Schema(name   = "CyzArticlePagesQuery对象", description = "")
 public class CyzArticlePagesQuery extends BasePagesQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("文章地址")
+    @Schema(name  = "文章地址")
     private String url;
 
-    @ApiModelProperty("文章名称")
+    @Schema(name ="文章名称")
     private String name;
 
-    @ApiModelProperty("完成状态 0 未完成 1已完成")
+    @Schema(name ="完成状态 0 未完成 1已完成")
     private String state;
 
 
-    @ApiModelProperty("文章类别id")
+    @Schema(name ="文章类别id")
     private Long categoryId;
 
-    @ApiModelProperty("创建时间")
+    @Schema(name ="创建时间")
     private Date createTime;
 
-    @ApiModelProperty("更新时间")
+    @Schema(name ="更新时间")
     private Date updateTime;
 
-    @ApiModelProperty("删除标志(0代表存在 1代表删除)")
+    @Schema(name ="删除标志(0代表存在 1代表删除)")
     @TableLogic
     private String delFlag;
 
-    @ApiModelProperty("创建者")
+    @Schema(name ="创建者")
     private String createBy;
 
-    @ApiModelProperty("更新者")
+    @Schema(name ="更新者")
     private String updateBy;
 
     private Long id;

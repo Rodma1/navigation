@@ -1,7 +1,7 @@
 package com.chen.controller.phrases.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
@@ -12,16 +12,16 @@ import java.util.List;
  * @Description:
  */
 @Data
-@ApiModel("句子新增")
+@Schema(name ="句子新增")
 public class PhrasesInsertCommands {
 
-    @ApiModelProperty("类别Id")
+    @Schema(name ="类别Id")
     private List<Long> categoryIds;
 
-    @ApiModelProperty("推荐等级")
+    @Schema(name ="推荐等级")
     private String rank;
 
-    @ApiModelProperty("句子")
+    @Schema(name ="句子")
     private String sentence;
 
 }

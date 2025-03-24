@@ -1,6 +1,6 @@
 package com.chen.config.mybatisplus.page;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,10 +16,10 @@ import lombok.Setter;
 @Setter
 public class BasePagesQuery {
 
-    @ApiModelProperty("页码")
+    @Schema(name ="页码")
     private Integer pageNum = 1;
 
-    @ApiModelProperty("每页数量")
+    @Schema(name ="每页数量")
     private Integer pageSize = 10;
 
     public BasePagesQuery() {

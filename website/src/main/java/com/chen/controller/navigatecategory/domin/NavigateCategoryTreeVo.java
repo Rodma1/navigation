@@ -3,7 +3,7 @@ package com.chen.controller.navigatecategory.domin;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryBO;
 import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSiteBO;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.Date;
@@ -20,30 +20,30 @@ public class NavigateCategoryTreeVo {
 
     private Long id;
 
-    @ApiModelProperty("父id")
+    @Schema(name ="父id")
     private Long parentId;
 
-    @ApiModelProperty("排序")
+    @Schema(name ="排序")
     private Integer sort;
 
-    @ApiModelProperty("类别名称")
+    @Schema(name ="类别名称")
     private String name;
 
-    @ApiModelProperty("图标")
+    @Schema(name ="图标")
     private String icon;
 
-    @ApiModelProperty("创建时间")
+    @Schema(name ="创建时间")
     private Date createTime;
 
-    @ApiModelProperty("更新时间")
+    @Schema(name ="更新时间")
     private Date updateTime;
 
-    @ApiModelProperty("子类别")
+    @Schema(name ="子类别")
     private List<CyzNavigateCategoryBO> children;
 
     @TableField("del_flag")
     private String delFlag;
 
-    @ApiModelProperty("网站")
+    @Schema(name ="网站")
     private List<CyzNavigateSiteBO> sites;
 }

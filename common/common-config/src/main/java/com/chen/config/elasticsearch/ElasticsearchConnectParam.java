@@ -1,6 +1,6 @@
 package com.chen.config.elasticsearch;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,19 +14,19 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class ElasticsearchConnectParam implements Serializable {
 
-    @ApiModelProperty("用户名")
+    @Schema(name ="用户名")
     private String userName;
 
-    @ApiModelProperty("密码")
+    @Schema(name ="密码")
     private String password;
 
-    @ApiModelProperty("ip地址")
+    @Schema(name ="ip地址")
     private String hostName;
 
-    @ApiModelProperty("端口")
+    @Schema(name ="端口")
     private Integer port;
 
-    @ApiModelProperty("协议 http  https")
+    @Schema(name ="协议 http  https")
     private String scheme;
 
     public ElasticsearchConnectParam() {

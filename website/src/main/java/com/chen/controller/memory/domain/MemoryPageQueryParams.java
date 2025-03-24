@@ -1,8 +1,8 @@
 package com.chen.controller.memory.domain;
 
 import com.chen.config.mybatisplus.page.BasePagesQuery;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,13 +15,13 @@ import java.util.Date;
  */
 @Getter
 @Setter
-@ApiModel("分页查询")
+@Schema(name ="分页查询")
 public class MemoryPageQueryParams extends BasePagesQuery {
 
-    @ApiModelProperty("内容")
+    @Schema(name ="内容")
     private String content;
 
-    @ApiModelProperty("创建时间")
+    @Schema(name ="创建时间")
     private Date createTime;
 
 

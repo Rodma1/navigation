@@ -4,8 +4,8 @@ import com.chen.utils.resultreturn.ResultData;
 import com.chen.controller.tool.domain.CharacterEscapeCommand;
 import com.chen.controller.tool.domain.RegexMatcherCommand;
 import com.chen.service.tool.ToolService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,14 +20,14 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@Api(value = "工具", tags = "工具")
+@Tag(name = "工具", description ="工具")
 @RequestMapping("/tool")
 public class ToolController {
 
 
     private final ToolService toolService;
 
-    @ApiOperation(value = "正则匹配")
+    @Operation(summary = "正则匹配")
     @PostMapping(value = "/regexMatcher")
     public ResultData<List<String>> regexMatcher(RegexMatcherCommand matcherCommand) {
         matcherCommand.getValues().add(matcherCommand.getValue());
@@ -35,7 +35,7 @@ public class ToolController {
 
     }
 
-    @ApiOperation(value = "字符转义")
+    @Operation(summary = "字符转义")
     @PostMapping(value = "/characterEscape")
     public ResultData<String> characterEscape(CharacterEscapeCommand escapeCommand) {
 
@@ -43,13 +43,13 @@ public class ToolController {
 
     }
 
-    @ApiOperation(value = "sha256加密")
+    @Operation(summary = "sha256加密")
     @PostMapping(value = "/sha256")
     public ResultData<String> sha256(String str) {
         return ResultData.success(toolService.encryptSha256(str));
     }
 
-    @ApiOperation(value = "对称加密生成公私钥")
+    @Operation(summary = "对称加密生成公私钥")
     @PostMapping(value = "/rsaGenerateKeyPair")
     public ResultData<HashMap<String, String>> rsaGenerateKeyPair() throws Exception {
         return ResultData.success(toolService.rsaGenerateKeyPair());

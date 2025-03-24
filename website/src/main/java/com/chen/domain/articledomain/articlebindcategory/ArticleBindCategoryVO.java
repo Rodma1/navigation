@@ -2,8 +2,8 @@ package com.chen.domain.articledomain.articlebindcategory;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,15 +18,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("cyz_article_bind_category")
-@ApiModel(value = "ArticleBindCategoryVO对象", description = "")
+@Schema(name   = "ArticleBindCategoryVO对象", description = "")
 public class ArticleBindCategoryVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("文章id")
+    @Schema(name ="文章id")
     private Long articleId;
 
-    @ApiModelProperty("文章类别id")
+    @Schema(name ="文章类别id")
     private Long categoryId;
 
 

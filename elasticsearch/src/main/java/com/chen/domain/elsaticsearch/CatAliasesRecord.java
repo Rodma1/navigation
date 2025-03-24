@@ -1,6 +1,6 @@
 package com.chen.domain.elsaticsearch;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.annotation.Nullable;
@@ -14,22 +14,22 @@ import java.io.Serializable;
 @Data
 public class CatAliasesRecord implements Serializable {
 
-    @ApiModelProperty("别名")
+    @Schema(name ="别名")
     public String alias;
 
-    @ApiModelProperty("索引名")
+    @Schema(name ="索引名")
     public String index;
 
-    @ApiModelProperty("")
+    @Schema(name ="")
     public String filter;
 
-    @ApiModelProperty("")
+    @Schema(name ="")
     public String routingIndex;
 
-    @ApiModelProperty("")
+    @Schema(name ="")
     public String routingSearch;
 
-    @ApiModelProperty("是否是写入索引")
+    @Schema(name ="是否是写入索引")
     public String isWriteIndex;
 
 }

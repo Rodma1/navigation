@@ -2,8 +2,8 @@ package com.chen.controller.elasticsearch.domin;
 
 import com.chen.domain.elsaticsearch.ElasticsearchTimeSearch;
 import com.chen.domain.elsaticsearch.SearchFields;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
@@ -13,78 +13,78 @@ import java.util.List;
  * @DATE 2024/7/2 18:02
  * @Description:
  */
-@ApiModel("基本操作的请求参数")
+@Schema(name ="基本操作的请求参数")
 @Data
 public class OperationCommand {
 
-    @ApiModelProperty("用户名")
+    @Schema(name ="用户名")
     private String userName;
 
-    @ApiModelProperty("密码")
+    @Schema(name ="密码")
     private String password;
 
-    @ApiModelProperty("ip地址")
+    @Schema(name ="ip地址")
     private String hostName;
 
-    @ApiModelProperty("端口")
+    @Schema(name ="端口")
     private Integer port;
 
-    @ApiModelProperty("协议 http  https")
+    @Schema(name ="协议 http  https")
     private String scheme;
 
 
-    @ApiModelProperty("操作类别 文档  索引")
+    @Schema(name ="操作类别 文档  索引")
     public String operationCategory;
 
-    @ApiModelProperty("操作类型 添加 删除 修改等等")
+    @Schema(name ="操作类型 添加 删除 修改等等")
     public String operationType;
 
-    @ApiModelProperty("索引名")
+    @Schema(name ="索引名")
     public String indexName;
 
-    @ApiModelProperty("索引列表")
+    @Schema(name ="索引列表")
     public List<String> indices;
 
-    @ApiModelProperty("文档")
+    @Schema(name ="文档")
     public String document;
 
-    @ApiModelProperty("文档Id")
+    @Schema(name ="文档Id")
     public String documentId;
 
-    @ApiModelProperty("文档Id列表")
+    @Schema(name ="文档Id列表")
     public List<String> documentIds;
 
-    @ApiModelProperty("索引别名")
+    @Schema(name ="索引别名")
     public String alias;
 
-    @ApiModelProperty("索引别名的写入索引")
+    @Schema(name ="索引别名的写入索引")
     public String aliasWriteIndex;
 
-    @ApiModelProperty("页数")
+    @Schema(name ="页数")
     public int pageNum;
 
-    @ApiModelProperty("页数大小")
+    @Schema(name ="页数大小")
     public int pageSize;
 
-    @ApiModelProperty("要排序的字段")
+    @Schema(name ="要排序的字段")
     public String sortField;
 
-    @ApiModelProperty("排序 Asc 升序  Desc降序")
+    @Schema(name ="排序 Asc 升序  Desc降序")
     public String sortOrder;
 
 
-    @ApiModelProperty("索引模板名")
+    @Schema(name ="索引模板名")
     public String indexTemplate;
 
-    @ApiModelProperty("任务Id")
+    @Schema(name ="任务Id")
     public String taskId;
 
-    @ApiModelProperty("索引模板内容")
+    @Schema(name ="索引模板内容")
     public String indexTemplateContent;
 
-    @ApiModelProperty("查询字段")
+    @Schema(name ="查询字段")
     public List<SearchFields> searchFields;
 
-    @ApiModelProperty("时间查询")
+    @Schema(name ="时间查询")
     public ElasticsearchTimeSearch timeSearch;
 }

@@ -1,7 +1,7 @@
 package com.chen.controller.category.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -10,12 +10,12 @@ import lombok.Data;
  * @Description:
  */
 @Data
-@ApiModel(value = "删除类别")
+@Schema(name   = "删除类别")
 public class CategoryDeleteCommands {
 
-    @ApiModelProperty("操作类别")
+    @Schema(name ="操作类别")
     private String categoryType;
 
-    @ApiModelProperty("类别Id")
+    @Schema(name ="类别Id")
     private Long id;
 }

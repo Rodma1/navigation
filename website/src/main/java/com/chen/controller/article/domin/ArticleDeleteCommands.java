@@ -1,6 +1,6 @@
 package com.chen.controller.article.domin;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 @Data
-@ApiModel("文章删除")
+@Schema(name ="文章删除")
 public class ArticleDeleteCommands {
 
     private List<Long> ids;

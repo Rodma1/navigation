@@ -1,8 +1,8 @@
 package com.chen.controller.phrases.domain;
 
 import com.chen.config.mybatisplus.page.BasePagesQuery;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,10 +13,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@ApiModel("分页查询")
+@Schema(name ="分页查询")
 public class PageQueryParams extends BasePagesQuery {
 
-    @ApiModelProperty("句子")
+    @Schema(name ="句子")
     private String sentence;
 
 

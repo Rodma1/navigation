@@ -3,12 +3,12 @@ package com.chen.common.exception;
 import cn.dev33.satoken.exception.SaTokenException;
 import com.chen.utils.StringUtils;
 import com.chen.utils.resultreturn.ResultData;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author chenyunzhi

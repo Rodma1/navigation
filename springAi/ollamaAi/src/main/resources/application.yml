@@ -1,0 +1,66 @@
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8089
+  port: 9090
+
+spring:
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 动态数据源文档 https://www.kancloud.cn/tracy5546/dynamic-datasource/content
+    dynamic:
+      # 设置默认的数据源或者数据源组,默认值即为 master
+      primary: master
+      datasource:
+        # 主库数据源
+        master:
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://192.168.235.129:5432/postgres
+          username: postgres
+          password: postgres
+      druid:
+        # 初始连接数
+        initialSize: 5
+        # 最小连接池数量
+        minIdle: 10
+        # 最大连接池数量
+        maxActive: 20
+        # 配置获取连接等待超时的时间
+        maxWait: 60000
+        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        timeBetweenEvictionRunsMillis: 60000
+        # 配置一个连接在池中最小生存的时间，单位是毫秒
+        minEvictableIdleTimeMillis: 300000
+        # 配置一个连接在池中最大生存的时间，单位是毫秒
+        maxEvictableIdleTimeMillis: 900000
+        # 配置检测连接是否有效
+        validationQuery: SELECT 1
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        # 注意这个值和druid原生不一致，默认启动了stat
+        filters: stat
+  ai:
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 5120
+        max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
+---
+spring:
+  ai:
+    ollama:
+      base-url: http://192.168.1.9:11434
+      chat:
+        options:
+          model: deepseek-r1:32b
+          temperature: 0.7
+#          top_p: 0.9
+      embedding:
+        options:
+          model: deepseek-r1:32b
+
+
+
+

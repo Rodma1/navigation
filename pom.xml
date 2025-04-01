@@ -19,6 +19,7 @@
         <module>website</module>
         <module>elasticsearch</module>
         <module>springAi</module>
+        <module>practice</module>
     </modules>
 
 
@@ -29,6 +30,9 @@
         <mybatis.jsqlparser>3.5.10.1</mybatis.jsqlparser>
         <java.version>17</java.version>
         <hutool.version>5.8.35</hutool.version>
+        <guava-retrying.version>2.0.0</guava-retrying.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencyManagement>
@@ -225,7 +229,6 @@
             <artifactId>bcprov-ext-jdk15to18</artifactId>
             <version>1.74</version>
         </dependency>
-
     </dependencies>
 
 

@@ -54,7 +54,7 @@ public class FileService {
      * 获取重命名的文件名称
      */
     public String getRenameFileName(String fileName) {
-        return DateTimeUtils.getCurrentDateTime(DateTimeUtils.y4M2d2_NON) + "_" + fileName;
+        return DateTimeUtils.getCurrentDateTime(DateTimeUtils.y4M2d2H2m2s2S3_NON) + "_" + fileName;
     }
 
 

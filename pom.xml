@@ -20,6 +20,7 @@
         <module>elasticsearch</module>
         <module>springAi</module>
         <module>practice</module>
+        <module>common/minio</module>
     </modules>
 
 
@@ -32,6 +33,7 @@
         <hutool.version>5.8.35</hutool.version>
         <guava-retrying.version>2.0.0</guava-retrying.version>
         <commons-collections4.version>4.4</commons-collections4.version>
+        <minio.version>8.5.17</minio.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

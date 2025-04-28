@@ -50,8 +50,7 @@ public final class ServiceException extends RuntimeException {
     public ServiceException(Throwable throwable) {
         super(throwable);
         this.throwable = throwable;
-            this.message = throwable.getMessage();
-        throwable.printStackTrace();
+        this.message = throwable.getMessage();
     }
 
     public String getDetailMessage() {

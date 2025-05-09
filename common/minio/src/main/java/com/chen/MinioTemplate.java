@@ -3,6 +3,7 @@ package com.chen;
 import com.chen.utils.date.DateTimeUtils;
 import domain.MinioItemVo;
 import io.minio.*;
+import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 @Component
@@ -113,6 +115,21 @@ public class MinioTemplate implements InitializingBean {
         return objectList;
     }
 
-
-
+    /**
+     * 获取文件访问URL
+     * @param bucketName 存储桶名称
+     * @param objectName 对象名称
+     * @return 文件访问URL
+     */
+    @SneakyThrows
+    public String getObjectUrl(String bucketName, String objectName) {
+        return minioClient.getPresignedObjectUrl(
+                GetPresignedObjectUrlArgs.builder()
+                        .method(Method.GET)
+                        .bucket(bucketName)
+                        .object(objectName)
+                        .expiry(7, TimeUnit.DAYS) // URL有效期7天
+                        .build()
+        );
+    }
 }

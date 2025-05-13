@@ -34,7 +34,7 @@
         <guava-retrying.version>2.0.0</guava-retrying.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <minio.version>8.5.17</minio.version>
-
+        <ulid.version>5.2.3</ulid.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencyManagement>

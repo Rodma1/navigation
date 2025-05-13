@@ -19,5 +19,6 @@
     <modules>
         <module>common-config</module>
         <module>common-utils</module>
+        <module>common-crud-jpa</module>
     </modules>
 </project>

@@ -1,13 +1,15 @@
 package com.chen.service.category;
 
 import com.chen.domain.articledomain.articlecategory.ArticleCategoryBO;
-import com.chen.domain.common.category.CommandCategory;
+import com.chen.common.category.CommandCategory;
 import com.chen.domain.phrasesdomain.phrasesCategory.PhrasesCategoryBO;
 import com.chen.service.category.articlecategory.ArticleCategoryService;
-import com.chen.service.category.common.CategoryService;
+import com.chen.common.category.CategoryService;
 import com.chen.service.category.phrasesCategory.PhrasesCategoryService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import com.chen.domain.filecategory.FileCategoryBo;
+import com.chen.service.FileCategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -26,12 +28,16 @@ public class CategoryServiceFactoryImpl implements CategoryServiceFactory{
 
     private final PhrasesCategoryService phrasesCategoryService;
 
+    private final FileCategoryService fileCategoryService;
+
     private final Map<Class<? extends CommandCategory>, CategoryService<? extends CommandCategory>> services = new HashMap<>();
 
     @PostConstruct
     public void init() {
         services.put(ArticleCategoryBO.class, articleCategoryService);
         services.put(PhrasesCategoryBO.class, phrasesCategoryService);
+        services.put(FileCategoryBo.class, fileCategoryService);
+
     }
 
     @Override
@@ -51,6 +57,8 @@ public class CategoryServiceFactoryImpl implements CategoryServiceFactory{
                 return (Class<T>) ArticleCategoryBO.class;
             case "PHRASES":
                 return (Class<T>) PhrasesCategoryBO.class;
+            case "FILE":
+                return (Class<T>) FileCategoryBo.class;
             default:
                 return null;
         }

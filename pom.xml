@@ -21,6 +21,7 @@
         <module>springAi</module>
         <module>practice</module>
         <module>common/minio</module>
+        <module>filemanage</module>
     </modules>
 
 

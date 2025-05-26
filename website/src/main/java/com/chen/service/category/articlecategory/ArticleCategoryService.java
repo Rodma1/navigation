@@ -1,6 +1,6 @@
 package com.chen.service.category.articlecategory;
 import com.chen.domain.articledomain.articlecategory.ArticleCategoryBO;
-import com.chen.service.category.common.CategoryService;
+import com.chen.common.category.CategoryService;
 
 /**
  * @author: 神的孩子都在歌唱

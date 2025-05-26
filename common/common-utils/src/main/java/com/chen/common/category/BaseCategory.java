@@ -1,19 +1,22 @@
-package com.chen.controller.category.domain;
+package com.chen.common.category;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * @Author chenyunzhi
- * @DATE 2024/8/2 10:23
+ * @DATE 2024/7/29 14:03
  * @Description:
  */
 
-@Setter
 @Getter
-@Schema(name   = "创建类别")
-public class CategoryInsertCommands {
+@Setter
+public abstract class BaseCategory extends CommandCategory{
 
+    private Long id;
 
     @Schema(name ="父id")
     private Long parentId;
@@ -24,9 +27,10 @@ public class CategoryInsertCommands {
     @Schema(name ="类别名称")
     private String name;
 
+    @Schema(name ="子类别")
+    private List<? extends BaseCategory> children;
+
     @Schema(name ="图标")
     private String icon;
 
-    @Schema(name ="操作类别")
-    private String categoryType;
 }

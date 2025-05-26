@@ -9,7 +9,7 @@ import com.chen.domain.articledomain.articlecategory.ArticleCategoryPO;
 import com.chen.domain.articledomain.articlecategory.ArticleCategoryBO;
 import com.chen.service.articleservice.articlebindcategory.ArticleBindCategoryService;
 import com.chen.service.category.articlecategory.ArticleCategoryService;
-import com.chen.service.category.common.impl.AbstractCategoryService;
+import com.chen.common.category.AbstractCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.chen.config.mybatisplus.core.ServicePlusImpl;

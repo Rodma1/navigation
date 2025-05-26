@@ -18,8 +18,9 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()).isAnnotation(false))
                 .addPathPatterns("/**")
                 .excludePathPatterns("/user/doLogin").excludePathPatterns("/tool/**")
-                .excludePathPatterns("/doc.html/**").excludePathPatterns("/swagger-resources/**").excludePathPatterns("/swagger-ui/**")
-                .excludePathPatterns("/v3/api-docs/**").excludePathPatterns("/error")
-                .excludePathPatterns("/elasticsearch/**").excludePathPatterns("/cyzNavigateCategory/**");
+                .excludePathPatterns("/doc.html/**").excludePathPatterns("/**/swagger-resources/**").excludePathPatterns("/**/swagger-ui/**")
+                .excludePathPatterns("/**/v3/**").excludePathPatterns("/error")
+                .excludePathPatterns("/elasticsearch/**").excludePathPatterns("/cyzNavigateCategory/**")
+                .excludePathPatterns("/categories/**");
     }
 }

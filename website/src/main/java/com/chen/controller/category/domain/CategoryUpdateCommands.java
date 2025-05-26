@@ -1,7 +1,4 @@
 package com.chen.controller.category.domain;
-import com.chen.domain.common.category.BaseCategory;
-import com.chen.domain.common.category.CommandCategory;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;

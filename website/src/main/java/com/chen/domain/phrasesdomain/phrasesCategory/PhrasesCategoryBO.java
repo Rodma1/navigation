@@ -8,9 +8,7 @@ import java.util.Date;
 import com.chen.config.mybatisplus.core.command.BaseBizCommand;
 import com.chen.common.exception.ServiceException;
 import com.chen.utils.BeanUtils;
-import com.chen.domain.articledomain.article.CyzArticlePO;
-import com.chen.domain.common.category.BaseCategory;
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.chen.common.category.BaseCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

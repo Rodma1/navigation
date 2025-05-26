@@ -1,6 +1,6 @@
 package com.chen.service.category.phrasesCategory;
 import com.chen.domain.phrasesdomain.phrasesCategory.PhrasesCategoryBO;
-import com.chen.service.category.common.CategoryService;
+import com.chen.common.category.CategoryService;
 
 /**
  * @author: 神的孩子都在歌唱

@@ -71,6 +71,7 @@ public class PhrasesCategoryBO extends BaseCategory implements Serializable, Bas
 
     @Override
     public PhrasesCategoryPO buildUpdatePo() throws ServiceException {
-        return null;
+        this.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        return  BeanUtils.copyObject(this, PhrasesCategoryPO.class);
     }
 }

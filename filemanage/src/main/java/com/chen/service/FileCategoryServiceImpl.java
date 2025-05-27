@@ -1,6 +1,8 @@
 package com.chen.service;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.chen.common.category.AbstractCategoryService;
+import com.chen.common.exception.ServiceException;
 import com.chen.dao.FileCategoryDao;
 import com.chen.domain.filecategory.FileCategoryBo;
 import com.chen.domain.filecategory.FileCategoryPo;
@@ -41,16 +43,19 @@ public class FileCategoryServiceImpl extends AbstractBaseLongIdService<FileCateg
 
     @Override
     public void createCategory(FileCategoryBo category) {
-
+        if (ObjectUtil.isNull(category.getParentId())) {
+            category.setParentId(0L);
+        }
+        this.save(category.buildInsertPo());
     }
 
     @Override
     public void updateCategory(FileCategoryBo category) {
-
+        this.update(category.buildUpdatePo());
     }
 
     @Override
     public void deleteCategory(Long id) {
-
+        this.deleteById(id);
     }
 }

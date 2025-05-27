@@ -1,6 +1,9 @@
 package com.chen.domain.filecategory;
 
 import com.chen.common.category.BaseCategory;
+import com.chen.common.exception.ServiceException;
+import com.chen.core.BaseBizCommand;
+import com.chen.utils.BeanUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +13,7 @@ import java.io.Serializable;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class FileCategoryBo extends BaseCategory  implements Serializable{
+public class FileCategoryBo extends BaseCategory  implements Serializable, BaseBizCommand<FileCategoryPo> {
     @Schema(name ="类别名称")
     @Comment("类别名称")
     private String name;
@@ -26,4 +29,19 @@ public class FileCategoryBo extends BaseCategory  implements Serializable{
     @Schema(name ="父id")
     @Comment("父id")
     private Long parentId;
+
+    @Override
+    public FileCategoryPo buildInsertPo() throws ServiceException {
+        return BeanUtils.copyObject(this, FileCategoryPo.class);
+    }
+
+    @Override
+    public FileCategoryPo buildDeletePo() throws ServiceException {
+        return null;
+    }
+
+    @Override
+    public FileCategoryPo buildUpdatePo() throws ServiceException {
+        return BeanUtils.copyObject(this, FileCategoryPo.class);
+    }
 }

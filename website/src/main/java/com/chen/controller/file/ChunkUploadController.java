@@ -1,6 +1,6 @@
 package com.chen.controller.file;
 
-import com.chen.service.file.ChunkUploadService;
+import com.chen.domain.file.ChunkUploadService;
 import com.chen.utils.resultreturn.ResultData;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;

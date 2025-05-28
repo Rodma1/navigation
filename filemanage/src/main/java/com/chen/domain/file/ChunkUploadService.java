@@ -1,4 +1,4 @@
-package com.chen.service.file;
+package com.chen.domain.file;
 
 import org.springframework.web.multipart.MultipartFile;
 

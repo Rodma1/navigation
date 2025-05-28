@@ -1,7 +1,7 @@
 package com.chen.controller.file;
 
 import com.chen.MinioTemplate;
-import com.chen.service.file.FileService;
+import com.chen.domain.file.FileService;
 import com.chen.utils.resultreturn.ResultData;
 import domain.MinioItemVo;
 import io.swagger.v3.oas.annotations.tags.Tag;

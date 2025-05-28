@@ -1,7 +1,7 @@
-package com.chen.service.file.impl;
+package com.chen.domain.file.impl;
 
 import com.chen.MinioTemplate;
-import com.chen.service.file.ChunkUploadService;
+import com.chen.domain.file.ChunkUploadService;
 import com.chen.utils.date.DateTimeUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;

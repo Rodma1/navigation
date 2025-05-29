@@ -1,34 +1,3 @@
-# 项目相关配置
-# 开发环境配置
-server:
-  # 服务器的HTTP端口，默认为8089
-  port: 8089
-  servlet:
-    # 应用的访问路径
-    context-path: /
-  # undertow 配置
-  undertow:
-    # HTTP post内容的最大大小。当值为-1时，默认值为大小是无限的
-    max-http-post-size: -1
-    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
-    # 每块buffer的空间大小,越小的空间被利用越充分
-    buffer-size: 512
-    # 是否分配的直接内存
-    direct-buffers: true
-    threads:
-      # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
-      io: 8
-      # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
-      worker: 256
-
-navigate:
-  # es连接下载路径
-  esConnectParamPath: /study/project/navigate/data/esConnectParam.json
-  # 用户名
-  principal: navigate
-  # 密码
-  credential: d0cda6559bb347db706f6fa92a5b2491658e0c1e5bda98bb14e3c8a711b8fa33
-
 # Spring配置
 spring:
   application:
@@ -37,12 +6,15 @@ spring:
   messages:
     # 国际化资源文件路径
     basename: i18n/messages
----
+  profiles:
+    active: prod
+
 
 # MyBatisPlus配置
 mybatis-plus:
   # 不支持多包, 如有需要可在注解配置 或 提升扫包等级
   # 例如 com.**.**.mapper
+  sqlInjector: com.chen.config.mybatisplus.sqlInjector
   mapperPackage: com.chen.**.mapper
   # 对应的 XML 文件位置
   mapperLocations: classpath*:mapper/**/*Mapper.xml
@@ -132,45 +104,6 @@ mybatis-plus:
       # 字段验证策略之 select,在 select 的时候的字段验证策略既 wrapper 根据内部 entity 生成的 where 条件
       where-strategy: NOT_NULL
 
-
-# 数据源配置
-spring:
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    # 动态数据源文档 https://www.kancloud.cn/tracy5546/dynamic-datasource/content
-    dynamic:
-      # 设置默认的数据源或者数据源组,默认值即为 master
-      primary: master
-      datasource:
-        # 主库数据源
-        master:
-          driverClassName: org.postgresql.Driver
-          url: jdbc:postgresql://192.168.1.47:5432/navigation
-          username: postgres
-          password: chenyunzhi
-      druid:
-        # 初始连接数
-        initialSize: 5
-        # 最小连接池数量
-        minIdle: 10
-        # 最大连接池数量
-        maxActive: 20
-        # 配置获取连接等待超时的时间
-        maxWait: 60000
-        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-        timeBetweenEvictionRunsMillis: 60000
-        # 配置一个连接在池中最小生存的时间，单位是毫秒
-        minEvictableIdleTimeMillis: 300000
-        # 配置一个连接在池中最大生存的时间，单位是毫秒
-        maxEvictableIdleTimeMillis: 900000
-        # 配置检测连接是否有效
-        validationQuery: select version()
-        testWhileIdle: true
-        testOnBorrow: false
-        testOnReturn: false
-        # 注意这个值和druid原生不一致，默认启动了stat
-        filters: stat
-
 # Swagger配置
 swagger:
   # 是否开启swagger
@@ -188,7 +121,6 @@ swagger:
     name: ---
     email: ---
     url: 192.168.1.xxx
-
 
 sa-token:
   # token 名称（同时也是 cookie 名称）

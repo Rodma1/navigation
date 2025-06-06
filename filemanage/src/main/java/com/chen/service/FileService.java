@@ -1,4 +1,4 @@
-package com.chen.domain.file;
+package com.chen.service;
 
 import cn.hutool.core.io.unit.DataUnit;
 import com.chen.MinioTemplate;

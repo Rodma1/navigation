@@ -1,7 +1,9 @@
-package com.chen.domain.file.impl;
+package com.chen.service.impl;
 
 import com.chen.MinioTemplate;
-import com.chen.domain.file.ChunkUploadService;
+import com.chen.domain.file.FileBo;
+import com.chen.domain.file.FileUploadInfo;
+import com.chen.service.ChunkUploadService;
 import com.chen.utils.date.DateTimeUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +30,10 @@ public class ChunkUploadServiceImpl implements ChunkUploadService {
     private String tempDir;
 
     @Override
-    public String uploadChunk(MultipartFile file, Integer chunkNumber, Integer totalChunks, String identifier, String filename) {
+    public String uploadChunk(FileUploadInfo fileUploadInfo) {
         try {
+            String identifier = fileUploadInfo.getIdentifier();
+            int chunkNumber = fileUploadInfo.getChunkNumber();
             // 创建临时目录
             String chunkDir = getChunkDir(identifier);
             Files.createDirectories(Paths.get(chunkDir));
@@ -37,11 +41,11 @@ public class ChunkUploadServiceImpl implements ChunkUploadService {
             // 保存分片文件
             String chunkPath = chunkDir + File.separator + chunkNumber;
             File chunkFile = new File(chunkPath);
-            file.transferTo(chunkFile);
+            fileUploadInfo.getFile().transferTo(chunkFile);
 
             // 如果所有分片都已上传，自动触发合并
-            if (isAllChunksUploaded(identifier, totalChunks)) {
-                return mergeChunks(identifier, filename, totalChunks);
+            if (isAllChunksUploaded(identifier, fileUploadInfo.getTotalChunks())) {
+                return mergeChunks(identifier, fileUploadInfo.getFilename(), fileUploadInfo.getTotalChunks());
             }
 
             return chunkPath;
@@ -91,8 +95,6 @@ public class ChunkUploadServiceImpl implements ChunkUploadService {
 
             // 清理临时文件
             cleanupTempFiles(chunkDir, mergedFilePath);
-
-            // 返回文件访问URL
             return minioTemplate.getObjectUrl(bucketName, objectName);
         } catch (IOException e) {
             log.error("合并分片失败", e);

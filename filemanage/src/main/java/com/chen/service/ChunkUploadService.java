@@ -1,18 +1,13 @@
-package com.chen.domain.file;
+package com.chen.service;
 
+import com.chen.domain.file.FileUploadInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ChunkUploadService {
     /**
      * 上传分片
-     * @param file 分片文件
-     * @param chunkNumber 当前分片序号
-     * @param totalChunks 总分片数
-     * @param identifier 文件唯一标识
-     * @param filename 文件名
-     * @return 分片存储路径
      */
-    String uploadChunk(MultipartFile file, Integer chunkNumber, Integer totalChunks, String identifier, String filename);
+    String uploadChunk(FileUploadInfo fileUploadInfo);
 
     /**
      * 检查分片是否存在

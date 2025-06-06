@@ -1,6 +1,7 @@
 package com.chen.controller.file;
 
-import com.chen.domain.file.ChunkUploadService;
+import com.chen.domain.file.FileUploadInfo;
+import com.chen.service.ChunkUploadService;
 import com.chen.utils.resultreturn.ResultData;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,13 +19,8 @@ public class ChunkUploadController {
 
     @PostMapping("/upload")
     @Operation(summary = "上传分片")
-    public ResultData<String> uploadChunk(
-            @RequestParam("file") MultipartFile file,
-            @RequestParam("chunkNumber") Integer chunkNumber,
-            @RequestParam("totalChunks") Integer totalChunks,
-            @RequestParam("identifier") String identifier,
-            @RequestParam("filename") String filename) {
-        String chunkPath = chunkUploadService.uploadChunk(file, chunkNumber, totalChunks, identifier, filename);
+    public ResultData<String> uploadChunk(FileUploadInfo fileUploadInfo) {
+        String chunkPath = chunkUploadService.uploadChunk(fileUploadInfo);
         return ResultData.success(chunkPath);
     }
 

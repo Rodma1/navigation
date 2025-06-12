@@ -7,7 +7,7 @@ spring:
     # 国际化资源文件路径
     basename: i18n/messages
   profiles:
-    active: dev
+    active: prod
 # 启动命令  java -jar test.jar --spring.profiles.active=prod
 
 # MyBatisPlus配置

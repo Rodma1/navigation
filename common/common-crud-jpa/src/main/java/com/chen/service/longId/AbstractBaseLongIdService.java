@@ -1,0 +1,208 @@
+package com.chen.service.longId;
+
+import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
+import com.chen.common.exception.ServiceException;
+import com.chen.dao.BaseDao;
+import com.chen.utils.BeanCopyUtils;
+import com.chen.utils.BeanUtils;
+import lombok.extern.slf4j.Slf4j;
+import com.chen.entity.LongIdEntity;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Objects;
+
+@Slf4j
+@Transactional(rollbackFor = Exception.class)
+public abstract class AbstractBaseLongIdService<E extends LongIdEntity,B, Dao extends BaseDao<E,Long>> implements BaseDataLongIdService<E,B> {
+	protected final Dao dao;
+
+	protected Class<B> boClass = currentBoClass();
+	protected Class<B> currentBoClass() {
+		return (Class<B>) ReflectionKit.getSuperClassGenericType(this.getClass(), AbstractBaseLongIdService.class, 1);
+	}
+
+	protected AbstractBaseLongIdService(Dao dao) {
+		this.dao = dao;
+	}
+
+
+	public List<E> findAll(Sort.Direction sort, String field) {
+		return dao.findAll(Sort.by(sort, field));
+	}
+
+	public E add(E entity) {
+		if (Objects.nonNull(entity.getId())) {
+			throw new ServiceException("新增id必须为空");
+		}
+		fillDefaultFields(entity);
+		log.info("新增实体: {}", entity);
+		return dao.save(entity);
+	}
+
+	@Override
+	public E save(E entity) {
+		fillDefaultFields(entity);
+		return dao.save(entity);
+	}
+
+	@Override
+	public List<E> saveAll(List<E> list) {
+		list.forEach(this::fillDefaultFields);
+		return dao.saveAll(list);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<E> findAll(Specification<E> spec, Pageable pageable) {
+		return dao.findAll(spec, pageable);
+	}
+
+	@Transactional(readOnly = true)
+	public List<E> findAll(Specification<E> spec, Sort sort) {
+		return dao.findAll(spec, sort);
+	}
+
+	@Transactional(readOnly = true)
+	public List<E> findAll(Specification<E> spec) {
+		return dao.findAll(spec);
+	}
+
+	@Transactional(readOnly = true)
+	public E findOne(Specification<E> spec) {
+		return dao.findOne(spec).orElse(null);
+	}
+	@Override
+	public E find(Long id) {
+		return dao.findByIdAndDelFlag(id, "0");
+	}
+	@Override
+	public E update(E entity) {
+		entity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		fillDefaultFields(entity);
+		log.info("更新实体: {}", entity);
+		return dao.save(entity);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public E get(Long id) {
+		return dao.findById(id).orElse(null);
+	}
+
+	@Transactional(readOnly = true)
+	public List<E> list() {
+		return dao.findAll();
+	}
+
+	public List<E> listNotDeleted() {
+		return dao.findAll(notDeletedSpec());
+	}
+
+	public void logicalDelete(E entity) {
+		entity.setDelFlag("1");
+		dao.save(entity);
+		log.info("逻辑删除实体: {}", entity);
+	}
+
+	public long physicalDelete(Specification<E> spec) {
+		return dao.delete(spec);
+	}
+
+	public void logicalDeleteAll(Specification<E> spec) {
+		List<E> all = dao.findAll(spec);
+		if (CollUtil.isNotEmpty(all)) {
+			all.forEach(e -> e.setDelFlag("1"));
+			dao.saveAll(all);
+			log.info("批量逻辑删除 {} 条数据", all.size());
+		}
+	}
+
+	@Transactional(readOnly = true)
+	public long count(Specification<E> spec) {
+		return dao.count(spec);
+	}
+
+	@Transactional(readOnly = true)
+	public boolean exists(Specification<E> spec) {
+		return dao.exists(spec);
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		dao.findById(id).ifPresent(e -> {
+			e.setDelFlag("1");
+			dao.save(e);
+			log.info("根据 ID [{}] 逻辑删除实体", id);
+		});
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public boolean exists(Long id) {
+		return dao.existsById(id);
+	}
+
+	/**
+	 * 是否存在(不含已标记为删除的数据)
+	 */
+	@Transactional(readOnly = true)
+	public boolean existsAndNotDeleted(Long id) {
+		return dao.exists((root, query, cb) -> cb.and(
+				cb.equal(root.get("id"), id),
+				cb.equal(root.get("delFlag"), "0")
+		));
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<E> find(Example<E> example) {
+		return dao.findAll(example);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<E> find(Pageable pageable) {
+		return dao.findAll(pageable);
+	}
+
+	/** 公共填充方法 */
+	protected void fillDefaultFields(E entity) {
+		if (Objects.isNull(entity.getDelFlag())) {
+			entity.setDelFlag("0");
+		}
+	}
+
+	/** 未删除的默认筛选器 */
+	protected Specification<E> notDeletedSpec() {
+		return (root, query, cb) -> cb.equal(root.get("delFlag"), "0");
+	}
+
+	/**
+	 * copy成BO
+	 */
+
+	@Override
+	public B getBoById(Serializable id, CopyOptions copyOptions) {
+		E e = dao.findByIdAndDelFlag(Long.valueOf(id.toString()), "0");
+		return BeanCopyUtils.oneCopy(e, copyOptions, boClass);
+	}
+
+	@Override
+	public List<B> listBo() {
+		List<E> list = this.list();
+		if (list == null) {
+			return null;
+		}
+		return BeanUtils.copyList(list, boClass);
+	}
+}

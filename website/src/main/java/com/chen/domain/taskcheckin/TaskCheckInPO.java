@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.springframework.data.annotation.Transient;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -60,4 +61,12 @@ public class TaskCheckInPO implements Serializable {
     @TableField("update_by")
     @Schema(name = "更新者")
     private String updateBy;
+
+    @Transient
+    @Schema(name = "总数")
+    private Integer totalCount;
+
+    @Transient
+    @Schema(name = "完成数")
+    private Integer completedCount;
 } 

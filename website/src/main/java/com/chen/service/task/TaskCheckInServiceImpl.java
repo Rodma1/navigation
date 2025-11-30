@@ -1,38 +1,54 @@
 package com.chen.service.task;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chen.config.mybatisplus.core.ServicePlusImpl;
 import com.chen.domain.taskcheckin.TaskCheckInBO;
 import com.chen.domain.taskcheckin.TaskCheckInPO;
+import com.chen.domain.taskplan.TaskPlanPO;
 import com.chen.mapper.TaskCheckInMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class TaskCheckInServiceImpl extends ServicePlusImpl<TaskCheckInMapper, TaskCheckInPO, TaskCheckInBO> implements TaskCheckInService {
 
+    private final TaskPlanService taskPlanService;
     @Override
-    public IPage<TaskCheckInBO> selectTaskCheckInPage(Page<TaskCheckInPO> page, Long userId, Long taskPlanId, LocalDate startTime, LocalDate endTime) {
+    public IPage<TaskCheckInBO> selectTaskCheckInPage(Page<TaskCheckInPO> page, Long userId, Long taskPlanId, Date startTime, Date endTime) {
         IPage<TaskCheckInPO> poPage = baseMapper.selectTaskCheckInPage(page, userId, taskPlanId, startTime, endTime);
-        return poPage.convert(po -> BeanUtil.copyProperties(po, TaskCheckInBO.class));
+        IPage<TaskCheckInBO> convert = poPage.convert(po -> BeanUtil.copyProperties(po, TaskCheckInBO.class));
+        List<Long> taskPlanIds = convert.getRecords().stream().map(TaskCheckInBO::getTaskId).toList();
+        if (ObjectUtil.isNotEmpty(taskPlanIds)) {
+            Map<Long, String> taskPlanNameMaps = taskPlanService.list(new LambdaQueryWrapper<TaskPlanPO>().in(TaskPlanPO::getId, taskPlanIds))
+                    .stream().collect(Collectors.toMap(TaskPlanPO::getId, TaskPlanPO::getTaskName));
+            // 设置名字
+            convert.getRecords().forEach(record -> record.setTaskPlanName(taskPlanNameMaps.get(record.getTaskId())));
+        }
+        return convert;
     }
 
     @Override
-    public List<TaskCheckInBO> selectTaskCheckInList(Long userId, LocalDate startTime, LocalDate endTime) {
+    public List<TaskCheckInBO> selectTaskCheckInList(Long userId, Date startTime, Date endTime) {
         List<TaskCheckInPO> poList = baseMapper.selectTaskCheckInList(userId, startTime, endTime);
         return BeanUtil.copyToList(poList, TaskCheckInBO.class);
     }
 
     @Override
-    public List<TaskCheckInBO> selectTaskCheckInListByDate(Long userId, LocalDate date) {
+    public List<TaskCheckInBO> selectTaskCheckInListByDate(Long userId, Date date) {
         List<TaskCheckInPO> poList = baseMapper.selectTaskCheckInListByDate(userId, date);
         return BeanUtil.copyToList(poList, TaskCheckInBO.class);
     }
@@ -44,27 +60,17 @@ public class TaskCheckInServiceImpl extends ServicePlusImpl<TaskCheckInMapper, T
     }
 
     @Override
-    public Map<LocalDate, Map<String, Integer>> selectTaskCheckInStatistics(Long userId, LocalDate startTime, LocalDate endTime) {
+    public Map<LocalDate, Map<String, Integer>> selectTaskCheckInStatistics(Long userId, Date startTime, Date endTime) {
         List<TaskCheckInPO> poList = baseMapper.selectTaskCheckInStatistics(userId, startTime, endTime);
         Map<LocalDate, Map<String, Integer>> result = new HashMap<>();
-        
+        Map<String, Integer> map = new HashMap<>();
+        map.put("totalCount", 0);
+        map.put("completedCount", 0);
         for (TaskCheckInPO po : poList) {
-            LocalDate checkDate = po.getCheckDate().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-            Map<String, Integer> stats = result.computeIfAbsent(checkDate, k -> {
-                Map<String, Integer> map = new HashMap<>();
-                map.put("totalCount", 0);
-                map.put("completedCount", 0);
-                return map;
-            });
-            
-            stats.put("totalCount", stats.get("totalCount") + 1);
-            if ("1".equals(po.getCheckStatus())) {
-                stats.put("completedCount", stats.get("completedCount") + 1);
-            }
+            map.put("totalCount", map.get("totalCount")  + po.getTotalCount());
+            map.put("completedCount", map.get("completedCount")  + po.getCompletedCount());
         }
-        
+        result.put( LocalDate.ofInstant(startTime.toInstant(), ZoneId.systemDefault()), map);
         return result;
     }
 

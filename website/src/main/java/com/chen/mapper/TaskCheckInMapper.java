@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,8 +35,8 @@ public interface TaskCheckInMapper extends BaseMapperPlus<TaskCheckInPO> {
         Page<TaskCheckInPO> page,
         @Param("userId") Long userId,
         @Param("taskPlanId") Long taskPlanId,
-        @Param("startTime") LocalDate startTime,
-        @Param("endTime") LocalDate endTime
+        @Param("startTime") Date startTime,
+        @Param("endTime") Date endTime
     );
 
     /**
@@ -48,8 +49,8 @@ public interface TaskCheckInMapper extends BaseMapperPlus<TaskCheckInPO> {
      */
     List<TaskCheckInPO> selectTaskCheckInList(
         @Param("userId") Long userId,
-        @Param("startTime") LocalDate startTime,
-        @Param("endTime") LocalDate endTime
+        @Param("startTime") Date startTime,
+        @Param("endTime") Date endTime
     );
 
     /**
@@ -61,7 +62,7 @@ public interface TaskCheckInMapper extends BaseMapperPlus<TaskCheckInPO> {
      */
     List<TaskCheckInPO> selectTaskCheckInListByDate(
         @Param("userId") Long userId,
-        @Param("date") LocalDate date
+        @Param("date") Date date
     );
 
     /**
@@ -86,7 +87,7 @@ public interface TaskCheckInMapper extends BaseMapperPlus<TaskCheckInPO> {
      */
     List<TaskCheckInPO> selectTaskCheckInStatistics(
         @Param("userId") Long userId,
-        @Param("startTime") LocalDate startTime,
-        @Param("endTime") LocalDate endTime
+        @Param("startTime") Date startTime,
+        @Param("endTime") Date endTime
     );
 } 

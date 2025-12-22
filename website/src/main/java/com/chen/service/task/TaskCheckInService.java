@@ -7,6 +7,7 @@ import com.chen.domain.taskcheckin.TaskCheckInBO;
 import com.chen.domain.taskcheckin.TaskCheckInPO;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,8 +33,8 @@ public interface TaskCheckInService extends IServicePlus<TaskCheckInPO, TaskChec
         Page<TaskCheckInPO> page,
         Long userId,
         Long taskPlanId,
-        LocalDate startTime,
-        LocalDate endTime
+        Date startTime,
+        Date endTime
     );
 
     /**
@@ -46,8 +47,8 @@ public interface TaskCheckInService extends IServicePlus<TaskCheckInPO, TaskChec
      */
     List<TaskCheckInBO> selectTaskCheckInList(
         Long userId,
-        LocalDate startTime,
-        LocalDate endTime
+        Date startTime,
+        Date endTime
     );
 
     /**
@@ -59,7 +60,7 @@ public interface TaskCheckInService extends IServicePlus<TaskCheckInPO, TaskChec
      */
     List<TaskCheckInBO> selectTaskCheckInListByDate(
         Long userId,
-        LocalDate date
+        Date date
     );
 
     /**
@@ -84,8 +85,8 @@ public interface TaskCheckInService extends IServicePlus<TaskCheckInPO, TaskChec
      */
     Map<LocalDate, Map<String, Integer>> selectTaskCheckInStatistics(
         Long userId,
-        LocalDate startTime,
-        LocalDate endTime
+        Date startTime,
+        Date endTime
     );
 
     /**

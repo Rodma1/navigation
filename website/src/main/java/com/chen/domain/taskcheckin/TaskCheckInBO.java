@@ -1,5 +1,6 @@
 package com.chen.domain.taskcheckin;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.chen.common.exception.ServiceException;
 import com.chen.config.mybatisplus.core.command.BaseBizCommand;
@@ -19,7 +20,8 @@ import java.util.Date;
 public class TaskCheckInBO implements Serializable, BaseBizCommand<TaskCheckInPO> {
 
     private static final long serialVersionUID = 1L;
-
+    @Schema(name = "主键")
+    private Long id;
     @Schema(name = "任务ID")
     private Long taskId;
 
@@ -35,6 +37,8 @@ public class TaskCheckInBO implements Serializable, BaseBizCommand<TaskCheckInPO
     @Schema(name = "备注（如遇到的问题、心得等）")
     private String checkNote;
 
+    @Schema(name = "任务名")
+    private String taskPlanName;
     @Override
     public TaskCheckInPO buildInsertPo() throws ServiceException {
         TaskCheckInPO po = BeanUtils.copyObject(this, TaskCheckInPO.class);

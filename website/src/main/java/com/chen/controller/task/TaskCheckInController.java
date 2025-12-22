@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chen.domain.taskcheckin.TaskCheckInBO;
 import com.chen.domain.taskcheckin.TaskCheckInPO;
 import com.chen.service.task.TaskCheckInService;
+import com.chen.utils.StringUtils;
+import com.chen.utils.date.DateTimeUtils;
 import com.chen.utils.resultreturn.ResultData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -44,9 +47,16 @@ public class TaskCheckInController {
             @ApiParam("分页参数") Page<TaskCheckInPO> page,
             @ApiParam("用户ID") @RequestParam Long userId,
             @ApiParam("任务计划ID") @RequestParam(required = false) Long taskPlanId,
-            @ApiParam("开始日期") @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startTime,
-            @ApiParam("结束日期") @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endTime) {
-        return ResultData.success(taskCheckInService.selectTaskCheckInPage(page, userId, taskPlanId, startTime, endTime));
+            @ApiParam("开始日期") @RequestParam(required = false) String  startTime,
+            @ApiParam("结束日期") @RequestParam(required = false) String  endTime) {
+        // 转化为data
+        Date startTimeDate = null;
+        Date endTimeDate = null;
+        if (StringUtils.isNotBlank(startTime) && StringUtils.isNotBlank(endTime)) {
+            startTimeDate = DateTimeUtils.parse(startTime, DateTimeUtils.y4M2d2H2m2s2);
+            endTimeDate = DateTimeUtils.parse(endTime, DateTimeUtils.y4M2d2H2m2s2);
+        }
+        return ResultData.success(taskCheckInService.selectTaskCheckInPage(page, userId, taskPlanId, startTimeDate, endTimeDate));
     }
 
     /**
@@ -60,8 +70,8 @@ public class TaskCheckInController {
     @GetMapping("/list")
     public ResultData<List<TaskCheckInBO>> list(
             @ApiParam("用户ID") @RequestParam Long userId,
-            @ApiParam("开始日期") @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startTime,
-            @ApiParam("结束日期") @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endTime) {
+            @ApiParam("开始日期") @RequestParam(required = false) Date startTime,
+            @ApiParam("结束日期") @RequestParam(required = false) Date  endTime) {
         return ResultData.success(taskCheckInService.selectTaskCheckInList(userId, startTime, endTime));
     }
 
@@ -75,7 +85,7 @@ public class TaskCheckInController {
     @GetMapping("/list/date")
     public ResultData<List<TaskCheckInBO>> listByDate(
             @ApiParam("用户ID") @RequestParam Long userId,
-            @ApiParam("日期") @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+            @ApiParam("日期") @RequestParam @DateTimeFormat(pattern =  DateTimeUtils.y4M2d2H2m2s2) Date date) {
         return ResultData.success(taskCheckInService.selectTaskCheckInListByDate(userId, date));
     }
 
@@ -104,9 +114,17 @@ public class TaskCheckInController {
     @GetMapping("/statistics")
     public ResultData<Map<LocalDate, Map<String, Integer>>> statistics(
             @ApiParam("用户ID") @RequestParam Long userId,
-            @ApiParam("开始日期") @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startTime,
-            @ApiParam("结束日期") @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endTime) {
-        return ResultData.success(taskCheckInService.selectTaskCheckInStatistics(userId, startTime, endTime));
+            @ApiParam("开始日期") @RequestParam String startTime,
+            @ApiParam("结束日期") @RequestParam String endTime) {
+        // 转化为data
+        Date startTimeDate = null;
+        Date endTimeDate = null;
+        if (StringUtils.isNotBlank(startTime) && StringUtils.isNotBlank(endTime)) {
+            startTimeDate = DateTimeUtils.parse(startTime, DateTimeUtils.y4M2d2H2m2s2);
+            endTimeDate = DateTimeUtils.parse(endTime, DateTimeUtils.y4M2d2H2m2s2);
+        }
+
+        return ResultData.success(taskCheckInService.selectTaskCheckInStatistics(userId, startTimeDate, endTimeDate));
     }
 
     /**

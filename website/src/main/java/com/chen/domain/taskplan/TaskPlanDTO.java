@@ -1,6 +1,7 @@
 package com.chen.domain.taskplan;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -13,7 +14,7 @@ import java.sql.Timestamp;
 public class TaskPlanDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Schema(name = "主键")
     private Long id;
 

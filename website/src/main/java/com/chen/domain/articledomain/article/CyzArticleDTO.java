@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -59,7 +60,7 @@ public class CyzArticleDTO implements Serializable {
 
     @Schema(name ="更新者")
     private String updateBy;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long id;
 
 

@@ -1,5 +1,6 @@
 package com.chen.controller.navigatecategory;
 
+import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryBO;
 import com.chen.utils.BeanUtils;
 import com.chen.utils.resultreturn.ResultData;
 import com.chen.controller.navigatecategory.domin.NavigateCategoryTreeVo;
@@ -30,7 +31,7 @@ public class CyzNavigateCategoryController {
     @Operation(summary ="获取网站类别树")
     @GetMapping("/tree")
     public ResultData<List<NavigateCategoryTreeVo>> getAllCategories() {
-        List<CyzNavigateCategoryDTO> allCategories = navigateCategoryService.getAllCategories();
+        List<CyzNavigateCategoryBO> allCategories = navigateCategoryService.getAllCategories();
         return ResultData.success(BeanUtils.copyList(allCategories,NavigateCategoryTreeVo.class));
     }
 

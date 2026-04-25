@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.chen.common.category.BaseCategory;
 import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSiteBO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,7 +25,7 @@ import lombok.Setter;
 @Setter
 @TableName("cyz_navigate_category")
 @Schema(name   = "CyzNavigateCategoryDTO对象", description = "")
-public class CyzNavigateCategoryDTO implements Serializable {
+public class CyzNavigateCategoryDTO extends BaseCategory implements Serializable   {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,8 +49,8 @@ public class CyzNavigateCategoryDTO implements Serializable {
     @Schema(name ="更新时间")
     private Date updateTime;
 
-    @Schema(name ="子类别")
-    private List<CyzNavigateCategoryBO> children;
+//    @Schema(name ="子类别")
+//    private List<CyzNavigateCategoryBO> children;
 
     @TableField("del_flag")
     private String delFlag;

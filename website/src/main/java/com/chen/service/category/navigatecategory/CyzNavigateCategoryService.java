@@ -3,6 +3,7 @@ import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryBO;
 import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryPO;
 import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryDTO;
 import com.chen.config.mybatisplus.core.IServicePlus;
+import com.chen.common.category.CategoryService;
 
 import java.util.List;
 
@@ -11,8 +12,7 @@ import java.util.List;
  * @date: 2023-09-22
  * @description:  业务层接口
  */
-public interface CyzNavigateCategoryService extends IServicePlus<CyzNavigateCategoryPO, CyzNavigateCategoryBO> {
+public interface CyzNavigateCategoryService extends IServicePlus<CyzNavigateCategoryPO, CyzNavigateCategoryBO>, CategoryService<CyzNavigateCategoryBO> {
 
-    List<CyzNavigateCategoryDTO> getAllCategories();
-
+    List<CyzNavigateCategoryDTO> getAllCategoryTree();
 }

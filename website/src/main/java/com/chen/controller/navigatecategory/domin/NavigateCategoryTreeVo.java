@@ -1,6 +1,7 @@
 package com.chen.controller.navigatecategory.domin;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.chen.common.category.BaseCategory;
 import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryBO;
 import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSiteBO;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,7 +16,7 @@ import java.util.List;
  * @Description:
  */
 @Data
-public class NavigateCategoryTreeVo {
+public class NavigateCategoryTreeVo extends BaseCategory {
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -38,8 +39,8 @@ public class NavigateCategoryTreeVo {
     @Schema(name ="更新时间")
     private Date updateTime;
 
-    @Schema(name ="子类别")
-    private List<CyzNavigateCategoryBO> children;
+//    @Schema(name ="子类别")
+//    private List<CyzNavigateCategoryBO> children;
 
     @TableField("del_flag")
     private String delFlag;

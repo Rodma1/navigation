@@ -1,13 +1,15 @@
 package com.chen.domain.navigatedomain.navigatecategory;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import com.chen.config.mybatisplus.core.command.BaseBizCommand;
+import com.chen.common.exception.ServiceException;
+import com.chen.utils.BeanUtils;
+import com.chen.common.category.BaseCategory;
 import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSiteBO;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,40 +24,38 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("cyz_navigate_category")
-@Schema(name   = "CyzNavigateCategoryBO对象", description = "")
-public class CyzNavigateCategoryBO implements Serializable {
+@Schema(name = "CyzNavigateCategoryBO对象", description = "")
+public class CyzNavigateCategoryBO extends BaseCategory implements Serializable, BaseBizCommand<CyzNavigateCategoryPO> {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
-
-    @Schema(name ="父id")
-    private Long parentId;
-
-    @Schema(name ="排序")
-    private Integer sort;
-
-    @Schema(name ="类别名称")
-    private String name;
-
-    @Schema(name ="图标")
-    private String icon;
-
-    @Schema(name ="创建时间")
+    @Schema(name = "创建时间")
     private Date createTime;
 
-    @Schema(name ="更新时间")
+    @Schema(name = "更新时间")
     private Date updateTime;
 
-    @TableField("del_flag")
     private String delFlag;
 
-    @Schema(name ="子类别")
-    private List<CyzNavigateCategoryBO> children;
-
-    @Schema(name ="子类别")
+    @Schema(name = "网站")
     private List<CyzNavigateSiteBO> sites;
 
+    @Override
+    public CyzNavigateCategoryPO buildInsertPo() throws ServiceException {
+        CyzNavigateCategoryPO po = BeanUtils.copyObject(this, CyzNavigateCategoryPO.class);
+        po.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        return po;
+    }
 
+    @Override
+    public CyzNavigateCategoryPO buildDeletePo() throws ServiceException {
+        return null;
+    }
+
+    @Override
+    public CyzNavigateCategoryPO buildUpdatePo() throws ServiceException {
+        CyzNavigateCategoryPO po = BeanUtils.copyObject(this, CyzNavigateCategoryPO.class);
+        po.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        return po;
+    }
 }

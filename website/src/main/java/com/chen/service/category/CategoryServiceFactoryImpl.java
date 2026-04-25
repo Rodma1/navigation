@@ -3,7 +3,9 @@ package com.chen.service.category;
 import com.chen.domain.articledomain.articlecategory.ArticleCategoryBO;
 import com.chen.common.category.CommandCategory;
 import com.chen.domain.phrasesdomain.phrasesCategory.PhrasesCategoryBO;
+import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryBO;
 import com.chen.service.category.articlecategory.ArticleCategoryService;
+import com.chen.service.category.navigatecategory.CyzNavigateCategoryService;
 import com.chen.common.category.CategoryService;
 import com.chen.service.category.phrasesCategory.PhrasesCategoryService;
 import jakarta.annotation.PostConstruct;
@@ -30,6 +32,8 @@ public class CategoryServiceFactoryImpl implements CategoryServiceFactory{
 
     private final FileCategoryService fileCategoryService;
 
+    private final CyzNavigateCategoryService navigateCategoryService;
+
     private final Map<Class<? extends CommandCategory>, CategoryService<? extends CommandCategory>> services = new HashMap<>();
 
     @PostConstruct
@@ -37,6 +41,7 @@ public class CategoryServiceFactoryImpl implements CategoryServiceFactory{
         services.put(ArticleCategoryBO.class, articleCategoryService);
         services.put(PhrasesCategoryBO.class, phrasesCategoryService);
         services.put(FileCategoryBo.class, fileCategoryService);
+        services.put(CyzNavigateCategoryBO.class, navigateCategoryService);
 
     }
 
@@ -59,6 +64,8 @@ public class CategoryServiceFactoryImpl implements CategoryServiceFactory{
                 return (Class<T>) PhrasesCategoryBO.class;
             case "FILE":
                 return (Class<T>) FileCategoryBo.class;
+            case "NAVIGATE":
+                return (Class<T>) CyzNavigateCategoryBO.class;
             default:
                 return null;
         }

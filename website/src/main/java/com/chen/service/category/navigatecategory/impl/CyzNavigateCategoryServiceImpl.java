@@ -1,81 +1,89 @@
 package com.chen.service.category.navigatecategory.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.chen.utils.BeanUtils;
 import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryBO;
+import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryDTO;
 import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSiteBO;
 import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSitePO;
-import com.chen.mapper.CyzNavigateCategoryMapper;
 import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryPO;
-import com.chen.domain.navigatedomain.navigatecategory.CyzNavigateCategoryDTO;
+import com.chen.mapper.CyzNavigateCategoryMapper;
 import com.chen.service.navigatesite.CyzNavigateSiteService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.chen.common.category.AbstractCategoryService;
+import com.chen.common.exception.ServiceException;
+import com.chen.utils.BeanUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.chen.config.mybatisplus.core.ServicePlusImpl;
 import com.chen.service.category.navigatecategory.CyzNavigateCategoryService;
 
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.List;
 
 /**
  * @author: 神的孩子都在歌唱
  * @date: 2023-09-22
  * @description:  业务层接口实现类
  */
+@RequiredArgsConstructor
 @Service
 public class CyzNavigateCategoryServiceImpl extends ServicePlusImpl<CyzNavigateCategoryMapper, CyzNavigateCategoryPO, CyzNavigateCategoryBO> implements CyzNavigateCategoryService {
 
-    @Autowired
-    private CyzNavigateSiteService navigateSiteService;
+    private final CyzNavigateSiteService navigateSiteService;
+
+    private final AbstractCategoryService<CyzNavigateCategoryBO> categoryServiceTemplate = new AbstractCategoryService<CyzNavigateCategoryBO>() {
+        @Override
+        protected List<CyzNavigateCategoryBO> categorieList() {
+            return CyzNavigateCategoryServiceImpl.this.listBo();
+        }
+
+        @Override
+        protected void setParam(CyzNavigateCategoryBO category) {
+            List<CyzNavigateSiteBO> sites = navigateSiteService.listBo(
+                    new LambdaQueryWrapper<CyzNavigateSitePO>().eq(CyzNavigateSitePO::getCategoryId, category.getId()));
+            category.setSites(sites);
+        }
+    };
+
     @Override
-    public List<CyzNavigateCategoryDTO> getAllCategories() {
-
-
-        List<CyzNavigateCategoryBO> navigateCategories = this.listBo();
-
-
-        // 构造一个字典
-        Map<Long, CyzNavigateCategoryBO> cyzNavigateCategoryBoMap = navigateCategories.stream().collect(Collectors.toMap(CyzNavigateCategoryBO::getId, Function.identity()));
-
-        List<CyzNavigateCategoryBO> categoryBOList = new ArrayList<>();
-
-        // 获取所有的顶级节点
-        for (CyzNavigateCategoryBO navigateCategoryBo : navigateCategories) {
-            if (!Objects.isNull(navigateCategoryBo.getParentId()) && navigateCategoryBo.getParentId()==0) {
-                categoryBOList.add(navigateCategoryBo);
-            }
-        }
-
-        // 遍历子节点
-        for (CyzNavigateCategoryBO navigateCategoryBo: categoryBOList) {
-
-            buildSubTree(cyzNavigateCategoryBoMap,navigateCategoryBo);
-
-        }
-
-        return BeanUtils.copyList(categoryBOList,CyzNavigateCategoryDTO.class);
+    public List<CyzNavigateCategoryBO> getAllCategories() {
+        return categoryServiceTemplate.getAllCategories();
     }
 
-    /**
-     * 通过出栈入栈的数据结构构造数据
-     */
-    private void buildSubTree(Map<Long, CyzNavigateCategoryBO> cyzNavigateCategoryBoMap, CyzNavigateCategoryBO navigateCategoryBo) {
-        Deque<CyzNavigateCategoryBO> navigateCategories = new ArrayDeque<>();
-        navigateCategories.push(navigateCategoryBo);
+    @Override
+    public List<CyzNavigateCategoryDTO> getAllCategoryTree() {
+        List<CyzNavigateCategoryBO> categoryBOList = getAllCategories();
+        return BeanUtils.copyList(categoryBOList, CyzNavigateCategoryDTO.class);
+    }
 
-        while (!navigateCategories.isEmpty()) {
-            CyzNavigateCategoryBO categoryBO = navigateCategories.pop();
-            List<CyzNavigateCategoryBO> cyzNavigateCategoryBoS = cyzNavigateCategoryBoMap.values().stream()
-                    .filter(navigateCategoryBO -> Objects.nonNull(navigateCategoryBO.getParentId()) && navigateCategoryBO.getParentId().equals(categoryBO.getId()))
-                    .collect(Collectors.toList());
+    @Override
+    public CyzNavigateCategoryBO getCategoryById(Long id) {
+        return this.getBoById(id);
+    }
 
-            List<CyzNavigateSiteBO> cyzNavigateSiteBoS = navigateSiteService.listBo(
-                    new LambdaQueryWrapper<CyzNavigateSitePO>().eq(CyzNavigateSitePO::getCategoryId, categoryBO.getId()));
-            categoryBO.setSites(cyzNavigateSiteBoS);
-            categoryBO.setChildren(cyzNavigateCategoryBoS);
+    @Override
+    public void createCategory(CyzNavigateCategoryBO category) {
+        if (ObjectUtil.isNull(category.getParentId())) {
+            category.setParentId(0L);
+        }
+        boolean save = this.save(category.buildInsertPo());
+        if (!save) {
+            throw new ServiceException("创建类别失败");
+        }
+    }
 
-            cyzNavigateCategoryBoS.forEach(navigateCategories::push);
+    @Override
+    public void updateCategory(CyzNavigateCategoryBO category) {
+        boolean update = this.updateById(category.buildUpdatePo());
+        if (!update) {
+            throw new ServiceException("更新类别失败");
+        }
+    }
+
+    @Override
+    public void deleteCategory(Long id) {
+        boolean remove = this.removeById(id);
+        if (!remove) {
+            throw new ServiceException("删除类别失败");
         }
     }
 }

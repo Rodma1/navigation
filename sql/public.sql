@@ -1100,7 +1100,10 @@ CREATE TABLE "public"."cyz_task_check_in" (
   "task_id" int8,
   "check_date" date,
   "check_status" varchar(255) COLLATE "pg_catalog"."default",
+  "check_content" varchar(255) COLLATE "pg_catalog"."default",
   "check_note" varchar(255) COLLATE "pg_catalog"."default",
+  "actual_start_time" varchar(255) COLLATE "pg_catalog"."default",
+  "actual_end_time" varchar(255) COLLATE "pg_catalog"."default",
   "create_time" timestamp(6),
   "update_time" timestamp(6),
   "del_flag" char(1) COLLATE "pg_catalog"."default" DEFAULT 0,
@@ -1112,8 +1115,11 @@ CREATE TABLE "public"."cyz_task_check_in" (
 ALTER TABLE "public"."cyz_task_check_in" OWNER TO "postgres";
 COMMENT ON COLUMN "public"."cyz_task_check_in"."task_id" IS '任务ID';
 COMMENT ON COLUMN "public"."cyz_task_check_in"."check_date" IS '打卡日期';
-COMMENT ON COLUMN "public"."cyz_task_check_in"."check_status" IS '完成状态（已完成、部分完成、未完成）';
+COMMENT ON COLUMN "public"."cyz_task_check_in"."check_status" IS '完成状态：0-未完成 1-已完成 2-部分完成';
+COMMENT ON COLUMN "public"."cyz_task_check_in"."check_content" IS '打卡内容（实际完成情况）';
 COMMENT ON COLUMN "public"."cyz_task_check_in"."check_note" IS '备注（如遇到的问题、心得等）';
+COMMENT ON COLUMN "public"."cyz_task_check_in"."actual_start_time" IS '实际开始时间（如 09:30）';
+COMMENT ON COLUMN "public"."cyz_task_check_in"."actual_end_time" IS '实际结束时间（如 11:00）';
 COMMENT ON COLUMN "public"."cyz_task_check_in"."create_time" IS '创建时间';
 COMMENT ON COLUMN "public"."cyz_task_check_in"."update_time" IS '更新时间';
 COMMENT ON COLUMN "public"."cyz_task_check_in"."del_flag" IS '删除标志(0代表存在 1代表删除)';
@@ -1148,10 +1154,10 @@ CREATE TABLE "public"."cyz_task_plan" (
 )
 ;
 ALTER TABLE "public"."cyz_task_plan" OWNER TO "postgres";
-COMMENT ON COLUMN "public"."cyz_task_plan"."task_name" IS '任务ID';
-COMMENT ON COLUMN "public"."cyz_task_plan"."task_type" IS '任务类型（数学、英语、专业课、面试、生活等）';
-COMMENT ON COLUMN "public"."cyz_task_plan"."start_time" IS '开始时间（如：08:30）';
-COMMENT ON COLUMN "public"."cyz_task_plan"."end_time" IS '结束时间（如：10:30）';
+COMMENT ON COLUMN "public"."cyz_task_plan"."task_name" IS '任务名称';
+COMMENT ON COLUMN "public"."cyz_task_plan"."task_type" IS '任务类型：1-考研 2-找工作 3-生活';
+COMMENT ON COLUMN "public"."cyz_task_plan"."start_time" IS '开始日期（如：2026-04-26）';
+COMMENT ON COLUMN "public"."cyz_task_plan"."end_time" IS '完成日期（如：2026-06-30），null表示一直持续';
 COMMENT ON COLUMN "public"."cyz_task_plan"."create_time" IS '创建时间';
 COMMENT ON COLUMN "public"."cyz_task_plan"."update_time" IS '更新时间';
 COMMENT ON COLUMN "public"."cyz_task_plan"."del_flag" IS '删除标志(0代表存在 1代表删除)';
@@ -1160,7 +1166,7 @@ COMMENT ON COLUMN "public"."cyz_task_plan"."update_by" IS '更新者';
 COMMENT ON COLUMN "public"."cyz_task_plan"."task_content" IS '任务内容';
 COMMENT ON COLUMN "public"."cyz_task_plan"."week_day" IS '执行星期（1-7，多个用逗号分隔，null表示每天）';
 COMMENT ON COLUMN "public"."cyz_task_plan"."sort" IS '排序';
-COMMENT ON COLUMN "public"."cyz_task_plan"."status" IS '状态（0正常 1停用）';
+COMMENT ON COLUMN "public"."cyz_task_plan"."status" IS '状态：0-已暂停 1-进行中 2-已结束';
 
 -- ----------------------------
 -- Records of cyz_task_plan

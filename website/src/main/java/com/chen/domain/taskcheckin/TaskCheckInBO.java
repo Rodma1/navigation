@@ -37,6 +37,12 @@ public class TaskCheckInBO implements Serializable, BaseBizCommand<TaskCheckInPO
     @Schema(name = "备注（如遇到的问题、心得等）")
     private String checkNote;
 
+    @Schema(name = "实际开始时间（如 09:30）")
+    private String actualStartTime;
+
+    @Schema(name = "实际结束时间（如 11:00）")
+    private String actualEndTime;
+
     @Schema(name = "任务名")
     private String taskPlanName;
     @Override

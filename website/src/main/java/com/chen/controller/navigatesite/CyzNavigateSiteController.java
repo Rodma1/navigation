@@ -4,6 +4,8 @@ import com.chen.controller.navigatesite.domin.NavigateSiteDeleteCommands;
 import com.chen.controller.navigatesite.domin.NavigateSiteInsertCommands;
 import com.chen.controller.navigatesite.domin.NavigateSiteUpdateCommands;
 import com.chen.domain.navigatedomain.navigatesite.CyzNavigateSiteBO;
+import com.chen.domain.navigatedomain.navigatesite.SiteAnalyzeResult;
+import com.chen.service.ai.SiteAnalyzerService;
 import com.chen.service.navigatesite.CyzNavigateSiteService;
 import com.chen.utils.BeanUtils;
 import com.chen.utils.resultreturn.ResultData;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 public class CyzNavigateSiteController {
 
     private final CyzNavigateSiteService navigateSiteService;
+    private final SiteAnalyzerService siteAnalyzerService;
 
     @Operation(summary = "新增网站")
     @PostMapping(value = "/insert")
@@ -45,5 +48,11 @@ public class CyzNavigateSiteController {
     public ResultData<Boolean> update(@Validated @RequestBody NavigateSiteUpdateCommands updateCommands) {
         navigateSiteService.update(BeanUtils.copyObject(updateCommands, CyzNavigateSiteBO.class));
         return ResultData.success(true);
+    }
+
+    @Operation(summary = "AI智能分析网站")
+    @GetMapping(value = "/analyze")
+    public ResultData<SiteAnalyzeResult> analyze(@RequestParam String url) {
+        return ResultData.success(siteAnalyzerService.analyzeSite(url));
     }
 }

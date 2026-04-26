@@ -137,3 +137,10 @@ sa-token:
   token-style: uuid
   # 是否输出操作日志
   is-log: true
+
+# AI 配置
+ai:
+  site-analyzer:
+    base-url:
+    api-key:
+    model: deepseek-v3.2

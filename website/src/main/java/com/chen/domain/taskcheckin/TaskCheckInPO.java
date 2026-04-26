@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.springframework.data.annotation.Transient;
+import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -42,6 +42,14 @@ public class TaskCheckInPO implements Serializable {
     @Schema(name = "备注（如遇到的问题、心得等）")
     private String checkNote;
 
+    @TableField("actual_start_time")
+    @Schema(name = "实际开始时间（如 09:30）")
+    private String actualStartTime;
+
+    @TableField("actual_end_time")
+    @Schema(name = "实际结束时间（如 11:00）")
+    private String actualEndTime;
+
     @TableField("create_time")
     @Schema(name = "创建时间")
     private Timestamp createTime;
@@ -62,11 +70,11 @@ public class TaskCheckInPO implements Serializable {
     @Schema(name = "更新者")
     private String updateBy;
 
-    @Transient
+    @TableField(exist = false)
     @Schema(name = "总数")
     private Integer totalCount;
 
-    @Transient
+    @TableField(exist = false)
     @Schema(name = "完成数")
     private Integer completedCount;
 } 

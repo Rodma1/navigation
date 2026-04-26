@@ -29,11 +29,11 @@ public class TaskPlanPO implements Serializable {
     private String taskType;
 
     @TableField("start_time")
-    @Schema(name = "开始时间（如：08:30）")
+    @Schema(name = "开始日期（如：2026-04-26）")
     private String startTime;
 
     @TableField("end_time")
-    @Schema(name = "结束时间（如：10:30）")
+    @Schema(name = "完成日期（如：2026-06-30），null表示一直持续")
     private String endTime;
 
     @TableField("task_content")

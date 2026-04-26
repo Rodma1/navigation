@@ -24,10 +24,10 @@ public class TaskPlanDTO implements Serializable {
     @Schema(name = "任务类型（数学、英语、专业课、面试、生活等）")
     private String taskType;
 
-    @Schema(name = "开始时间（如：08:30）")
+    @Schema(name = "开始日期（如：2026-04-26）")
     private String startTime;
 
-    @Schema(name = "结束时间（如：10:30）")
+    @Schema(name = "完成日期（如：2026-06-30），null表示一直持续")
     private String endTime;
 
     @Schema(name = "任务内容")

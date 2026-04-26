@@ -34,6 +34,7 @@ public interface TaskPlanMapper extends BaseMapperPlus<TaskPlanPO> {
         Page<TaskPlanPO> page,
         @Param("userId") Long userId,
         @Param("taskType") String taskType,
+        @Param("status") String status,
         @Param("startTime") LocalDate startTime,
         @Param("endTime") LocalDate endTime
     );

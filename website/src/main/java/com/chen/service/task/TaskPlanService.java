@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chen.config.mybatisplus.core.IServicePlus;
 import com.chen.domain.taskplan.TaskPlanBO;
 import com.chen.domain.taskplan.TaskPlanPO;
+import com.chen.domain.taskplan.TaskPlanStatsVO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,6 +32,7 @@ public interface TaskPlanService extends IServicePlus<TaskPlanPO, TaskPlanBO> {
         Page<TaskPlanPO> page,
         Long userId,
         String taskType,
+        String status,
         LocalDate startTime,
         LocalDate endTime
     );
@@ -92,4 +94,6 @@ public interface TaskPlanService extends IServicePlus<TaskPlanPO, TaskPlanBO> {
      * @return 是否成功
      */
     boolean deleteTaskPlanBatch(List<Long> ids);
+
+    TaskPlanStatsVO getPlanStats(String taskType, LocalDate startTime, LocalDate endTime);
 } 

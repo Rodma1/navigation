@@ -2,6 +2,7 @@ package com.chen.domain.navigatedomain.navigatesite;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -66,6 +67,7 @@ public class CyzNavigateSitePO implements Serializable {
     private String updateBy;
 
     @TableField("del_flag")
+    @TableLogic
     private String delFlag;
 
 

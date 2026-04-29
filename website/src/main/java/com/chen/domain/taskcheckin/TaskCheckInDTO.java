@@ -1,7 +1,6 @@
 package com.chen.domain.taskcheckin;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -15,7 +14,7 @@ import java.util.Date;
 public class TaskCheckInDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
+
     @Schema(name = "主键")
     private Long id;
 

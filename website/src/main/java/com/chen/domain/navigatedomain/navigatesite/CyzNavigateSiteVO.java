@@ -1,6 +1,7 @@
 package com.chen.domain.navigatedomain.navigatesite;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.util.Date;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,9 +25,11 @@ public class CyzNavigateSiteVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long id;
 
     @Schema(name ="类别id")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long categoryId;
 
     @Schema(name ="网站标题")

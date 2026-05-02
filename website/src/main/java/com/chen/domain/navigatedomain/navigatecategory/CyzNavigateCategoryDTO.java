@@ -2,6 +2,7 @@ package com.chen.domain.navigatedomain.navigatecategory;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -29,9 +30,11 @@ public class CyzNavigateCategoryDTO extends BaseCategory implements Serializable
 
     private static final long serialVersionUID = 1L;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long id;
 
     @Schema(name ="父id")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long parentId;
 
     @Schema(name ="排序")

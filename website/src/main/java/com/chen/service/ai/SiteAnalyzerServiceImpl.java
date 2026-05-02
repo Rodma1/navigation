@@ -72,10 +72,11 @@ public class SiteAnalyzerServiceImpl implements SiteAnalyzerService {
                 "- URL: " + url + "\n" +
                 "- 标题: " + nullSafe(pageInfo.getTitle()) + "\n" +
                 "- 描述: " + nullSafe(pageInfo.getDescription()) + "\n" +
+                "- 网站图标: " + nullSafe(pageInfo.getImageUrl()) + "\n" +
                 "- 内容摘要: " + nullSafe(pageInfo.getBodyText()) + "\n\n" +
                 "可选分类列表：\n" + categoryList + "\n\n" +
                 "请返回如下JSON（不要返回其他内容，不要用markdown代码块包裹）：\n" +
-                "{\"name\":\"简洁的网站名称\",\"description\":\"50字以内的网站描述\",\"imageUrl\":\"根据网站URL推测该网站的logo地址，例如https://example.com/favicon.ico或https://example.com/logo.png，无法确定可以从网页中获取，获取不到则留空\",\"categoryId\":最匹配的分类ID}\n\n" +
+                "{\"name\":\"简洁的网站名称\",\"description\":\"50字以内的网站描述\",\"imageUrl\":\"直接使用上面提供的网站图标地址，如果为空则根据URL推测，仍无法确定则留空\",\"categoryId\":最匹配的分类ID}\n\n" +
                 "如果没有合适的分类，categoryId设为null。";
     }
 

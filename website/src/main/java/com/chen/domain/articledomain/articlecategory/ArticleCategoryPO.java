@@ -49,7 +49,7 @@ public class ArticleCategoryPO implements Serializable {
     @TableField("update_by")
     private String updateBy;
 
-    @TableId("id")
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     @Schema(name ="排序")

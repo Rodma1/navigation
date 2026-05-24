@@ -49,6 +49,11 @@
             <artifactId>filemanage</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.chen</groupId>
+            <artifactId>chatAi</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

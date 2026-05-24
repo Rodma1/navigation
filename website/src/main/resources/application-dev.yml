@@ -110,3 +110,23 @@ spring:
       hibernate:
         format_sql: true
         highlight_sql: true
+
+# AI 聊天配置
+
+ai:
+  site-analyzer:
+    base-url: https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1
+    api-key:
+    model: deepseek-v3.2
+  chat:
+    base-url: https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1
+    api-type: openai
+    api-key:
+    default-model: deepseek-v3.2
+    models:
+      - label: DeepSeek V3
+        value: deepseek-v3.2
+      - label: DeepSeek R1
+        value: deepseek-r1
+      - label: deepseek V4
+        value: deepseek-v4-pro

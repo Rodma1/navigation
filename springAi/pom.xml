@@ -19,5 +19,6 @@
 
     <modules>
         <module>ollamaAi</module>
+        <module>chatAi</module>
     </modules>
 </project>
